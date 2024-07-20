@@ -13,7 +13,6 @@
         openssh.authorizedKeys.keys = builtins.attrValues (import ../pubkeys.nix).users;
         extraGroups = ["wheel"];
         linger = true;
-        password = "dominik";
       };
     };
   };
