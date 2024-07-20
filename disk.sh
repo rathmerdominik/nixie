@@ -2,23 +2,17 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-opts=$(getopt --options r:m:b:l:c: --longoptions=root:,mapping:,boot-label:,main-label:,cryptmain-label: --name "$0" -- "$@")
+opts=$(getopt --options r:m:b:l:c: --longoptions=root:,boot-label:,main-label: --name "$0" -- "$@")
 
 eval set -- "$opts"
 
 root=/mnt
-mapping=main
 bootlbl=BOOT
 mainlbl=main
-cryptmainlbl=cryptmain
 while true; do
   case "$1" in
   -r | --root)
     root=$2
-    shift 2
-    ;;
-  -m | --mapping)
-    mapping=$2
     shift 2
     ;;
   -b | --boot-label)
@@ -59,9 +53,9 @@ mainblkdev="${parts[1]}"
 
 mkfs.vfat -F 32 -n "$bootlbl" -- "$bootfs" >/dev/null
 
-mkfs.ext4 -q -F -L "$mainlbl" -- "$mainfs"
+mkfs.ext4 -q -F -L "$mainlbl" -- "$mainblkdev"
 mkdir --parents -- "$root"
-mount --options noatime -- "$mainfs" "$root"
+mount --options noatime -- "$mainblkdev" "$root"
 
 mkdir -- "$root/boot"
 mount -- "$bootfs" "$root/boot"
