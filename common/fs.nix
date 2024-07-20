@@ -5,10 +5,11 @@
     "/" = {
       fsType = "ext4";
       options = ["noatime"];
+      device = "/dev/disk/by-label/main";
     };
     "/boot" = {
-      device = "/dev/disk/by-label/BOOT";
       fsType = "vfat";
+      device = "/dev/disk/by-label/BOOT";
     };
   };
 }
