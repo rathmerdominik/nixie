@@ -9,7 +9,8 @@
       dominik = {
         uid = 1000;
         isNormalUser = true;
-        hashedPasswordFile = config.age.secrets.user-dominik.path;
+        # hashedPasswordFile = config.age.secrets.user-dominik.path;
+        initialPassword = "dominik";
         openssh.authorizedKeys.keys = builtins.attrValues (import ../pubkeys.nix).users;
         extraGroups = ["wheel"];
         linger = true;
