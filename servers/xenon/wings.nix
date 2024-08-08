@@ -9,7 +9,7 @@ in {
   virtualisation.oci-containers.containers.wings = {
     image = "ghcr.io/pterodactyl/wings:develop";
     ports = [
-      "9595:8080"
+      "9595:443"
       "2022:2022"
     ];
     volumes = [
