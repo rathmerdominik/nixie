@@ -1,5 +1,2 @@
 {
-  services.netdata = {
-    
-  }
 }

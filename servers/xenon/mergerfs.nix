@@ -1,6 +1,6 @@
-{
-  environment.systemPackages = with pkgs; [
-    mergerfs
+{pkgs, ...}: {
+  environment.systemPackages = [
+    pkgs.mergerfs
   ];
 
   fileSystems = let

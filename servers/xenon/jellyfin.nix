@@ -9,7 +9,7 @@
     pkgs.jellyfin-ffmpeg
   ];
 
-  nixpkgs.overlays = with pkgs; [
+  nixpkgs.overlays = [
     (
       final: prev: {
         jellyfin-web = prev.jellyfin-web.overrideAttrs (finalAttrs: previousAttrs: {
