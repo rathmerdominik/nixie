@@ -72,4 +72,27 @@
   networking.firewall.allowedTCPPorts = [2022];
 
   virtualisation.podman.dockerSocket.enable = true;
+
+  systemd.tmpfiles.settings."10-pterodactyl" = {
+    "/var/log/pterodactyl".d = {
+      group = "root";
+      mode = "0755";
+      user = "root";
+    };
+    "/var/lib/pterodactyl".d = {
+      group = "root";
+      mode = "0755";
+      user = "root";
+    };
+    "/etc/pterodactyl".d = {
+      group = "root";
+      mode = "0755";
+      user = "root";
+    };
+    "/tmp/pterodactyl".d = {
+      group = "root";
+      mode = "0755";
+      user = "root";
+    };
+  };
 }
