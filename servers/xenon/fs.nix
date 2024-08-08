@@ -25,7 +25,7 @@
 
     "/srv/mergerfs/backup/pterodactyl" = {
       device = "/srv/disks/wings-drive/pterodactyl/backups";
-      fsType = "bind";
+      options = ["bind"];
     };
 
     "/srv/mergerfs/storage" = mkMergerfs "/srv/disks/big-storage:/srv/disks/medium-storage";
