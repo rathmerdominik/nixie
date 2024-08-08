@@ -7,9 +7,9 @@
   inherit (config.networking) domain;
 in {
   virtualisation.oci-containers.containers.wings = {
-    image = "ghcr.io/pterodactyl/wings:develop";
+    image = "ghcr.io/pterodactyl/wings:latest";
     ports = [
-      "9595:8080"
+      "9595:443"
       "2022:2022"
     ];
     volumes = [
@@ -20,7 +20,6 @@ in {
       "/var/log/pterodactyl/:/var/log/pterodactyl/"
       "/tmp/pterodactyl/:/tmp/pterodactyl/"
       "/etc/ssl/certs/ca-certificates.crt:/etc/pki/ca-trust/extracted/openssl/ca-bundle.trust.crt:ro"
-      "/var/lib/acme/:/etc/letsencrypt/live/"
     ];
     environment = {
       TZ = "GMT";
@@ -94,9 +93,6 @@ in {
       group = "root";
       mode = "0755";
       user = "root";
-    };
-    "/var/lib/acme/wings.${domain}/privkey.pem"."C+" = {
-      argument = "/var/lib/acme/wings.${domain}/key.pem";
     };
   };
 }
