@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   services.jellyfin = {
     enable = true;
   };
@@ -28,4 +32,26 @@
       }
     )
   ];
+
+  services.nginx.virtualHosts = let
+    inherit (config.networking) domain;
+  in {
+    "hartzkino.${domain}" = {
+      enableACME = true;
+      forceSSL = true;
+      quic = true;
+
+      locations."/" = {
+        proxyPass = "http://localhost:8096";
+        extraConfig = ''
+          proxy_buffering off;
+        '';
+      };
+
+      locations."/socket" = {
+        proxyWebsockets = true;
+        proxyPass = "http://localhost:8096";
+      };
+    };
+  };
 }

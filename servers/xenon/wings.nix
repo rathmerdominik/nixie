@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  config,
   ...
 }: {
   virtualisation.oci-containers.containers.wings = {
@@ -49,4 +50,25 @@
       fi
     '';
   };
+
+  services.nginx.virtualHosts = let
+    inherit (config.networking) domain;
+  in {
+    "hartzkino.${domain}" = {
+      enableACME = true;
+      forceSSL = true;
+      quic = true;
+
+      locations."/" = {
+        proxyPass = "http://localhost:9595";
+        extraConfig = ''
+          proxy_redirect off;
+          proxy_buffering off;
+          proxy_request_buffering off;
+        '';
+      };
+    };
+  };
+
+  networking.firewall.allowedTCPPorts = [2022];
 }
