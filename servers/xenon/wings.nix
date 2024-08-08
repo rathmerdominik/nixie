@@ -5,8 +5,7 @@
   ...
 }: {
   virtualisation.oci-containers.containers.wings = {
-    image = "pterodactyl/wings:develop";
-    login.registry = "https://ghcr.io";
+    image = "ghcr.io/pterodactyl/wings:develop";
     ports = [
       "9595:8080"
       "2022:2022"
