@@ -54,7 +54,7 @@
   services.nginx.virtualHosts = let
     inherit (config.networking) domain;
   in {
-    "hartzkino.${domain}" = {
+    "wings.${domain}" = {
       enableACME = true;
       forceSSL = true;
       quic = true;
