@@ -70,4 +70,6 @@
   };
 
   networking.firewall.allowedTCPPorts = [2022];
+
+  virtualisation.podman.dockerSocket.enable = true;
 }
