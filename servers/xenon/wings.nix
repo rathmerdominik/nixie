@@ -17,7 +17,7 @@
       "/var/lib/pterodactyl/:/var/lib/pterodactyl/"
       "/var/log/pterodactyl/:/var/log/pterodactyl/"
       "/tmp/pterodactyl/:/tmp/pterodactyl/"
-      "/etc/ssl/certs:/etc/ssl/certs:ro"
+      "/etc/ssl/certs/ca-certificates.crt:/etc/pki/ca-trust/extracted/openssl/ca-bundle.trust.crt:ro"
       "/var/lib/acme/:/etc/letsencrypt/"
     ];
     environment = {
