@@ -21,6 +21,7 @@
     "/srv/disks/medium-backup" = mkDisk "medium_backup";
     "/srv/disks/small-roms-1" = mkDisk "small_roms_1";
     "/srv/disks/small-roms-2" = mkDisk "small_roms_2";
+    "/srv/disks/wings-drive" = mkDisk "wings_drive";
 
     "/srv/mergerfs/storage" = mkMergerfs "/srv/disks/big-storage:/srv/disks/medium-storage";
     "/srv/mergerfs/backup" = mkMergerfs "/srv/disks/big-backup:/srv/disks/medium-backup";
