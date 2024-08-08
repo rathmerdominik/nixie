@@ -2,7 +2,7 @@
   description = "My NixOS server configurations";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     agenix.url = "github:ryantm/agenix";
     hardware.url = "github:NixOS/nixos-hardware";
   };

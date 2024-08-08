@@ -1,5 +1,5 @@
 {
-  services.bazarr = {
+  services.postgresql = {
     enable = true;
   };
 }
