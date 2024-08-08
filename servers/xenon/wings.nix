@@ -59,6 +59,7 @@ in {
       quic = true;
 
       locations."/" = {
+        proxyWebsockets = true;
         proxyPass = "http://localhost:9595";
         extraConfig = ''
           proxy_redirect off;
