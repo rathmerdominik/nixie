@@ -3,7 +3,9 @@
   pkgs,
   config,
   ...
-}: {
+}: let
+  inherit (config.networking) domain;
+in {
   virtualisation.oci-containers.containers.wings = {
     image = "ghcr.io/pterodactyl/wings:develop";
     ports = [
@@ -19,6 +21,7 @@
       "/tmp/pterodactyl/:/tmp/pterodactyl/"
       "/etc/ssl/certs/ca-certificates.crt:/etc/pki/ca-trust/extracted/openssl/ca-bundle.trust.crt:ro"
       "/var/lib/acme/:/etc/letsencrypt/live/"
+      "/var/lib/acme/wings.${domain}/key.pem:/etc/letsencrypt/live/wings.${domain}/privkey.pem"
     ];
     environment = {
       TZ = "GMT";
@@ -51,9 +54,7 @@
     '';
   };
 
-  services.nginx.virtualHosts = let
-    inherit (config.networking) domain;
-  in {
+  services.nginx.virtualHosts = {
     "wings.${domain}" = {
       enableACME = true;
       forceSSL = true;
