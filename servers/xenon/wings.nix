@@ -96,7 +96,7 @@ in {
       user = "root";
     };
     "/var/lib/acme/wings.${domain}/privkey.pem".L = {
-      argument = "key.pem";
+      argument = "/var/lib/acme/wings.${domain}/key.pem";
     };
   };
 }
