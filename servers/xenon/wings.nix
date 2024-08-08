@@ -21,8 +21,8 @@
     ];
     environment = {
       TZ = "GMT";
-      WINGS_UID = 988;
-      WINGS_GID = 988;
+      WINGS_UID = "988";
+      WINGS_GID = "988";
       WINGS_USERNAME = "pterodactyl";
     };
     extraOptions = [
