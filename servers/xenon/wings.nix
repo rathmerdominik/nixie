@@ -95,7 +95,7 @@ in {
       mode = "0755";
       user = "root";
     };
-    "/var/lib/acme/wings.${domain}/privkey.pem".L = {
+    "/var/lib/acme/wings.${domain}/privkey.pem"."C+" = {
       argument = "/var/lib/acme/wings.${domain}/key.pem";
     };
   };
