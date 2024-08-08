@@ -11,7 +11,7 @@
       "2022:2022"
     ];
     volumes = [
-      "/var/run/docker.sock:/var/run/docker.sock"
+      "/run/docker.sock:/var/run/docker.sock"
       "/var/lib/containers/:/var/lib/docker/containers/"
       "/etc/pterodactyl/:/etc/pterodactyl/"
       "/var/lib/pterodactyl/:/var/lib/pterodactyl/"
