@@ -23,6 +23,11 @@
     "/srv/disks/small-roms-2" = mkDisk "small_roms_2";
     "/srv/disks/wings-drive" = mkDisk "wings_drive";
 
+    "/srv/mergerfs/backup/pterodactyl" = {
+      device = "/srv/disks/wings-drive/pterodactyl/backups";
+      fsType = "bind";
+    };
+
     "/srv/mergerfs/storage" = mkMergerfs "/srv/disks/big-storage:/srv/disks/medium-storage";
     "/srv/mergerfs/backup" = mkMergerfs "/srv/disks/big-backup:/srv/disks/medium-backup";
     "/srv/mergerfs/roms" = mkMergerfs "/srv/disks/small-roms-1:/srv/disks/small-roms-2";

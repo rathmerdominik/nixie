@@ -16,7 +16,7 @@ in {
       "/var/run/docker.sock:/var/run/docker.sock"
       "/var/lib/docker/containers/:/var/lib/docker/containers/"
       "/etc/pterodactyl/:/etc/pterodactyl/"
-      "/var/lib/pterodactyl/:/var/lib/pterodactyl/"
+      "/srv/disks/wings-drive/pterodactyl/:/var/lib/pterodactyl/"
       "/var/log/pterodactyl/:/var/log/pterodactyl/"
       "/tmp/pterodactyl/:/tmp/pterodactyl/"
       "/etc/ssl/certs/ca-certificates.crt:/etc/pki/ca-trust/extracted/openssl/ca-bundle.trust.crt:ro"
