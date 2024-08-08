@@ -13,8 +13,8 @@ in {
       "2022:2022"
     ];
     volumes = [
-      "/run/docker.sock:/var/run/docker.sock"
-      "/var/lib/containers/:/var/lib/docker/containers/"
+      "/var/run/docker.sock:/var/run/docker.sock"
+      "/var/lib/docker/containers/:/var/lib/docker/containers/"
       "/etc/pterodactyl/:/etc/pterodactyl/"
       "/var/lib/pterodactyl/:/var/lib/pterodactyl/"
       "/var/log/pterodactyl/:/var/log/pterodactyl/"
@@ -39,15 +39,15 @@ in {
     wantedBy = ["multi-user.target"];
     serviceConfig.Type = "oneshot";
     script = ''
-      check=$(${lib.getExe pkgs.podman} network ls | grep wings0 || true)
+      check=$(${lib.getExe pkgs.docker} network ls | grep wings0 || true)
       if [ -z "$check" ]; then
-        ${lib.getExe pkgs.podman} network create \
+        ${lib.getExe pkgs.docker} network create \
           --subnet 172.21.0.0/16 \
           --driver bridge \
           --opt com.docker.network.bridge.name=wings0 \
           wings0
       else
-        echo "wings0 already exists in podman"
+        echo "wings0 already exists in docker"
       fi
     '';
   };
@@ -71,8 +71,6 @@ in {
   };
 
   networking.firewall.allowedTCPPorts = [2022];
-
-  virtualisation.podman.dockerSocket.enable = true;
 
   systemd.tmpfiles.settings."10-pterodactyl" = {
     "/var/log/pterodactyl".d = {

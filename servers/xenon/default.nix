@@ -13,6 +13,8 @@
 
   powerManagement.cpuFreqGovernor = "performance";
 
+  virtualisation.oci-containers.backend = "docker";
+
   networking = {
     firewall.enable = false;
     domain = "hammerclock.net";

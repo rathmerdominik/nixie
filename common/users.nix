@@ -13,7 +13,7 @@
         # hashedPasswordFile = config.age.secrets.user-dominik.path;
         password = "dominik";
         openssh.authorizedKeys.keys = builtins.attrValues (import ../pubkeys.nix).users;
-        extraGroups = ["wheel" "podman"];
+        extraGroups = ["wheel" "docker"];
         linger = true;
       };
     };
