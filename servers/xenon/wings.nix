@@ -21,7 +21,6 @@ in {
       "/tmp/pterodactyl/:/tmp/pterodactyl/"
       "/etc/ssl/certs/ca-certificates.crt:/etc/pki/ca-trust/extracted/openssl/ca-bundle.trust.crt:ro"
       "/var/lib/acme/:/etc/letsencrypt/live/"
-      "/var/lib/acme/wings.${domain}/key.pem:/etc/letsencrypt/live/wings.${domain}/privkey.pem"
     ];
     environment = {
       TZ = "GMT";
@@ -95,6 +94,9 @@ in {
       group = "root";
       mode = "0755";
       user = "root";
+    };
+    "/var/lib/acme/wings.${domain}/privkey.pem".L = {
+      argument = "key.pem";
     };
   };
 }
