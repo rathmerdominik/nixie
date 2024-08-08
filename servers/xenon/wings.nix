@@ -18,7 +18,7 @@
       "/var/log/pterodactyl/:/var/log/pterodactyl/"
       "/tmp/pterodactyl/:/tmp/pterodactyl/"
       "/etc/ssl/certs/ca-certificates.crt:/etc/pki/ca-trust/extracted/openssl/ca-bundle.trust.crt:ro"
-      "/var/lib/acme/:/etc/letsencrypt/"
+      "/var/lib/acme/:/etc/letsencrypt/live/"
     ];
     environment = {
       TZ = "GMT";
