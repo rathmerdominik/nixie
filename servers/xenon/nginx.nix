@@ -29,4 +29,9 @@
       };
     };
   };
+
+  security.acme = {
+    defaults.email = "dominik@rathmer.me";
+    acceptTerms = true;
+  };
 }
