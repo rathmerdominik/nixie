@@ -17,7 +17,7 @@
       ${mullvad} auto-connect set on
       ${mullvad} lan set allow
     '';
-    after = ["mullvad-vpn.service"];
-    requires = ["mullvad-vpn.service"];
+    after = ["mullvad-daemon.service"];
+    requires = ["mullvad-daemon.service"];
   };
 }
