@@ -42,15 +42,15 @@
       user = "qbittorrent";
       group = "qbittorrent";
     };
-    # "/var/lib/qbittorrent/.config/qBittorrent/qBittorrent.conf".C = {
-    #   mode = "644";
-    #   user = "qbittorrent";
-    #   group = "qbittorrent";
-    #   argument = builtins.toFile "qBittorrent.conf" ''
-    #     [BitTorrent]
-    #     Session\Interface=wg0-mullvad
-    #     Session\InterfaceName=wg0-mullvad
-    #   '';
-    # };
+    "/var/lib/qbittorrent/.config/qBittorrent/qBittorrent.conf".C = {
+      mode = "644";
+      user = "qbittorrent";
+      group = "qbittorrent";
+      argument = builtins.toFile "qBittorrent.conf" ''
+        [BitTorrent]
+        Session\Interface=wg0-mullvad
+        Session\InterfaceName=wg0-mullvad
+      '';
+    };
   };
 }
