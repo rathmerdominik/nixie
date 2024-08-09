@@ -3,7 +3,7 @@
     pkgs.qbittorrent-nox
   ];
 
-  systemd.user.services."qbittorrent-nox@qbittorrent".wantedBy = ["default.target"];
+  systemd.services."qbittorrent-nox@qbittorrent".wantedBy = ["default.target"];
 
   users = {
     users.qbittorrent = {
@@ -18,7 +18,7 @@
     mode = "755";
     user = "qbittorrent";
     group = "root";
-    argument = ''
+    argument = builtins.replaceStrings ["\n"] ["\\n"] ''
       [BitTorrent]
       Session\Interface=wg-mullvad
       Session\InterfaceName=wg-mullvad
