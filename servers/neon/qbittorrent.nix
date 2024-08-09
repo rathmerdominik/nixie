@@ -26,6 +26,7 @@
       isSystemUser = true;
       group = "qbittorrent";
       home = "/var/lib/qbittorrent";
+      createHome = true;
     };
     groups.qbittorrent = {};
   };
