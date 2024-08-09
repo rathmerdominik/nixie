@@ -30,7 +30,20 @@
 
         specialArgs = {
           inherit inputs;
-          # TODO importAll
+        };
+      };
+      neon = nixpkgs.lib.nixosSystem {
+        modules = [
+          inputs.agenix.nixosModules.default
+
+          ./common
+          ./servers/neon
+
+          ({lib, ...}: {networking.hostName = lib.mkDefault "neon";})
+        ];
+
+        specialArgs = {
+          inherit inputs;
         };
       };
     };
