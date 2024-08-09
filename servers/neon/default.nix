@@ -13,5 +13,7 @@
 
   powerManagement.cpuFreqGovernor = "performance";
 
+  services.logind.lidSwitch = "ignore";
+
   console.keyMap = "de";
 }
