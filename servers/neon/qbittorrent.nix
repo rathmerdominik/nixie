@@ -5,8 +5,8 @@
 }: {
   systemd.services.qbittorrent = {
     description = "qBittorrent-nox service";
-    documentation = "man:qbittorrent-nox(1)";
-    wants = "network-online.target";
+    documentation = ["man:qbittorrent-nox(1)"];
+    wants = ["network-online.target"];
 
     script = lib.getExe' pkgs.qbittorrent-nox "qbittorrent-nox";
 
