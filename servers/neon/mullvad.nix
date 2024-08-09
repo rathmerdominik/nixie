@@ -3,11 +3,13 @@
   lib,
   ...
 }: {
+  age.secrets.mullvad.file = ../../secrets/mullvad.age;
+
   services.mullvad-vpn.enable = true;
 
   systemd.services.mullvad-install = {
     script = let
-      mullvad = lib.getExe config.services.mullvad-vpn.package;
+      mullvad = lib.getExe' config.services.mullvad-vpn.package "mullvad";
     in ''
       ${mullvad} account set "$(cat ${config.age.secrets.mullvad.path})"
       ${mullvad} relay set location nl

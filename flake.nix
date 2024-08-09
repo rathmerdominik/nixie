@@ -17,35 +17,25 @@
           config.allowUnfree = true;
         }));
   in {
-    nixosConfigurations = {
-      xenon = nixpkgs.lib.nixosSystem {
-        modules = [
-          inputs.agenix.nixosModules.default
+    nixosConfigurations = let
+      mkSystem = name:
+        nixpkgs.lib.nixosSystem {
+          modules = [
+            inputs.agenix.nixosModules.default
 
-          ./common
-          ./servers/xenon
+            ./common
+            ./servers/${name}
 
-          ({lib, ...}: {networking.hostName = lib.mkDefault "xenon";})
-        ];
+            ({lib, ...}: {networking.hostName = lib.mkDefault name;})
+          ];
 
-        specialArgs = {
-          inherit inputs;
+          specialArgs = {
+            inherit inputs;
+          };
         };
-      };
-      neon = nixpkgs.lib.nixosSystem {
-        modules = [
-          inputs.agenix.nixosModules.default
-
-          ./common
-          ./servers/neon
-
-          ({lib, ...}: {networking.hostName = lib.mkDefault "neon";})
-        ];
-
-        specialArgs = {
-          inherit inputs;
-        };
-      };
+    in {
+      xenon = mkSystem "xenon";
+      neon = mkSystem "neon";
     };
 
     packages = forAllSupportedSystems (pkgs: {
