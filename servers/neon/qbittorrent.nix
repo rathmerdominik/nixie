@@ -32,7 +32,7 @@
   };
 
   systemd.tmpfiles.settings."10-qbittorrent" = {
-    "/var/lib/qbittorrent/.config/qBittorrent/qBittorrent.conf".d = {
+    "/var/lib/qbittorrent/.config/qBittorrent".d = {
       mode = "755";
       user = "qbittorrent";
       group = "qbittorrent";
