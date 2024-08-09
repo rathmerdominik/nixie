@@ -25,10 +25,12 @@
   systemd.services.mullvad-daemon.postStart = let
     mullvad = lib.getExe' config.services.mullvad-vpn.package "mullvad";
   in ''
-    ${mullvad} account login "$(cat ${config.age.secrets.mullvad.path})"
-    ${mullvad} relay set location nl
-    ${mullvad} connect
-    ${mullvad} auto-connect set on
-    ${mullvad} lan set allow
+    if [[ $(mullvad account get) == "Not logged in on any account" ]]; then
+      ${mullvad} account login "$(cat ${config.age.secrets.mullvad.path})"
+      ${mullvad} relay set location nl
+      ${mullvad} connect
+      ${mullvad} auto-connect set on
+      ${mullvad} lan set allow
+    fi
   '';
 }
