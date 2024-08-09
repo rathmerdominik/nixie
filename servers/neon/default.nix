@@ -13,8 +13,5 @@
 
   powerManagement.cpuFreqGovernor = "performance";
 
-  networking = {
-    firewall.enable = false;
-    domain = "hammerclock.net";
-  };
+  console.keyMap = "de";
 }
