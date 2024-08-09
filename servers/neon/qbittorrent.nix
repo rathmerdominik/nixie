@@ -21,6 +21,8 @@
     wantedBy = ["multi-user.target"];
   };
 
+  networking.firewall.allowedTCPPorts = [8080];
+
   users = {
     users.qbittorrent = {
       isSystemUser = true;
