@@ -13,6 +13,8 @@
     };
   };
 
+  networking.firewall.allowedTCPPorts = [2049];
+
   systemd.tmpfiles.settings."10-nfs"."/srv/torrents".d = {
     mode = "755";
     user = "qbittorrent";
