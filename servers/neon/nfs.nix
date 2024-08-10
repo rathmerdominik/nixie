@@ -1,9 +1,12 @@
-{
+{config, ...}: {
   services.nfs = {
     server = {
       enable = true;
-      exports = ''
-        /srv/torrents 192.168.178.0/24(no_subtree_check,rw,all_squash,anonuid=996,anongid=996)
+      exports = let
+        inherit (config.users.users.qbittorrent) uid;
+        inherit (config.users.groups.qbittorrent) gid;
+      in ''
+        /srv/torrents 192.168.178.0/24(no_subtree_check,rw,all_squash,anonuid=${uid},anongid=${gid})
       '';
     };
     settings.nfsd = {
