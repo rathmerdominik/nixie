@@ -12,10 +12,4 @@
   system.stateVersion = "24.11";
 
   powerManagement.cpuFreqGovernor = "performance";
-
-  services.logind.lidSwitch = "ignore";
-
-  networking.useNetworkd = true;
-
-  console.keyMap = "de";
 }
