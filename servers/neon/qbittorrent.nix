@@ -25,34 +25,14 @@
 
   users = {
     users.qbittorrent = {
+      uid = 996;
       isSystemUser = true;
       group = "qbittorrent";
       home = "/var/lib/qbittorrent";
       createHome = true;
     };
-    groups.qbittorrent = {};
-  };
-
-  systemd.tmpfiles.settings."10-qbittorrent" = {
-    "/var/lib/qbittorrent/.config".d = {
-      mode = "755";
-      user = "qbittorrent";
-      group = "qbittorrent";
-    };
-    "/var/lib/qbittorrent/.config/qBittorrent".d = {
-      mode = "755";
-      user = "qbittorrent";
-      group = "qbittorrent";
-    };
-    "/var/lib/qbittorrent/.config/qBittorrent/qBittorrent.conf".C = {
-      mode = "644";
-      user = "qbittorrent";
-      group = "qbittorrent";
-      argument = builtins.toFile "qBittorrent.conf" ''
-        [BitTorrent]
-        Session\Interface=wg0-mullvad
-        Session\InterfaceName=wg0-mullvad
-      '';
+    groups.qbittorrent = {
+      gid = 996;
     };
   };
 }
