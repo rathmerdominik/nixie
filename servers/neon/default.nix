@@ -15,5 +15,7 @@
 
   services.logind.lidSwitch = "ignore";
 
+  networking.useNetworkd = true;
+
   console.keyMap = "de";
 }
