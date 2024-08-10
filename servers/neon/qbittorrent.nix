@@ -32,7 +32,7 @@
       createHome = true;
     };
     groups.qbittorrent = {
-      gid = 996;
+      gid = 995;
     };
   };
 }
