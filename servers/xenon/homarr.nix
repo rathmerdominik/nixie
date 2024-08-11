@@ -1,4 +1,6 @@
-{
+{config, ...}: let
+  inherit (config.networking) domain;
+in {
   virtualisation.oci-containers.containers.homarr = {
     image = "ghcr.io/ajnart/homarr:latest";
     ports = [
@@ -10,5 +12,18 @@
       "/var/lib/homarr/icons:/app/public/icons"
       "/var/lib/homarr/data:/data"
     ];
+  };
+
+  services.nginx.virtualHosts = {
+    "homarr.${domain}" = {
+      enableACME = true;
+      forceSSL = true;
+      quic = true;
+
+      locations."/" = {
+        proxyWebsockets = true;
+        proxyPass = "http://localhost:7575";
+      };
+    };
   };
 }
