@@ -12,7 +12,12 @@
         isNormalUser = true;
         # hashedPasswordFile = config.age.secrets.user-dominik.path;
         password = "dominik";
-        openssh.authorizedKeys.keys = builtins.attrValues (import ../pubkeys.nix).users;
+        openssh.authorizedKeys.keys = let
+          pubkeys = import ../pubkeys.nix;
+        in (
+          builtins.attrValues pubkeys.users
+          ++ builtins.attrValues pubkeys.hosts
+        );
         extraGroups = ["wheel" "docker"];
         linger = true;
       };

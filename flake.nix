@@ -5,6 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     agenix.url = "github:ryantm/agenix";
     hardware.url = "github:NixOS/nixos-hardware";
+    mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
   };
 
   outputs = {nixpkgs, ...} @ inputs: let
@@ -22,6 +23,7 @@
         nixpkgs.lib.nixosSystem {
           modules = [
             inputs.agenix.nixosModules.default
+            inputs.mailserver.nixosModule
 
             ./common
             ./servers/${name}
@@ -36,6 +38,7 @@
     in {
       xenon = mkSystem "xenon";
       neon = mkSystem "neon";
+      krypton = mkSystem "krypton";
     };
 
     packages = forAllSupportedSystems (pkgs: {
