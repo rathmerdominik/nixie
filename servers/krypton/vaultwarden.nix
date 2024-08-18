@@ -11,6 +11,20 @@
     };
   };
 
+  services.nginx.virtualHosts = let
+    inherit (config.networking) domain;
+  in {
+    "bitwarden.${domain}" = {
+      enableACME = true;
+      forceSSL = true;
+      quic = true;
+
+      locations."/" = {
+        proxyPass = "http://localhost:9595";
+      };
+    };
+  };
+
   systemd.tmpfiles.settings."20-vaultwarden" = {
     "/var/lib/vaultwarden".d = {
       group = "vaultwarden";
