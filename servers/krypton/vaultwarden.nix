@@ -20,7 +20,7 @@
       quic = true;
 
       locations."/" = {
-        proxyPass = "http://localhost:9595";
+        proxyPass = "http://localhost:8000";
       };
     };
   };
