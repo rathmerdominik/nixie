@@ -38,7 +38,7 @@ in {
   # FIXME: This is unnecessary when https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/issues/275 is closed <- They still didn't fix this
   services.dovecot2.sieve.extensions = ["fileinto"];
 
-  services.nginx.virtualHosts."_mta-sts.${mail-domain}" = {
+  services.nginx.virtualHosts."mta-sts.${mail-domain}" = {
     enableACME = true;
     forceSSL = true;
     quic = true;
