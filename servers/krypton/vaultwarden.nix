@@ -8,6 +8,9 @@
       DATA_FOLDER = "/var/lib/vaultwarden";
       DOMAIN = "http://bitwarden.hammerclock.net";
       SIGNUPS_ALLOWED = false;
+      WEBSOCKET_ENABLED = true;
+      WEBSOCKET_ADDRESS = "0.0.0.0";
+      WEBSOCKET_PORT = 3012;
     };
   };
 
