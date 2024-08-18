@@ -13,9 +13,9 @@
 
   systemd.tmpfiles.settings."20-vaultwarden" = {
     "/var/lib/vaultwarden".d = {
-      group = "root";
+      group = "vaultwarden";
       mode = "0755";
-      user = "root";
+      user = "vaultwarden";
     };
   };
 }
