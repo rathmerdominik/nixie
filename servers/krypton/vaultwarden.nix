@@ -10,4 +10,12 @@
       SIGNUPS_ALLOWED = false;
     };
   };
+
+  systemd.tmpfiles.settings."20-vaultwarden" = {
+    "/var/lib/vaultwarden".d = {
+      group = "root";
+      mode = "0755";
+      user = "root";
+    };
+  };
 }
