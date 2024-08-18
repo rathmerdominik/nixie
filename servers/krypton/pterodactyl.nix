@@ -14,8 +14,8 @@
     volumes = [
       "/var/lib/pterodactyl/var/:/app/var/"
       "/var/lib/pterodactyl/nginx/:/etc/nginx/http.d/"
-      "/var/libpterodactyl/certs/:/etc/letsencrypt/"
-      "/var/lib/pterodactyl/logs/:/app/storage/logs"
+      "/var/lib/pterodactyl/certs/:/etc/letsencrypt/"
+      "/var/log/pterodactyl/:/app/storage/logs"
     ];
     environment = {
       APP_TIMEZONE = "Europe/Berlin";
@@ -73,6 +73,29 @@
       locations."/" = {
         proxyPass = "http://localhost:9595";
       };
+    };
+  };
+
+  systemd.tmpfiles.settings."10-pterodactyl" = {
+    "/var/log/pterodactyl".d = {
+      group = "root";
+      mode = "0755";
+      user = "root";
+    };
+    "/var/lib/pterodactyl/var".d = {
+      group = "root";
+      mode = "0755";
+      user = "root";
+    };
+    "/var/lib/pterodactyl/nginx".d = {
+      group = "root";
+      mode = "0755";
+      user = "root";
+    };
+    "/var/lib/pterodactyl/certs/".d = {
+      group = "root";
+      mode = "0755";
+      user = "root";
     };
   };
 }
