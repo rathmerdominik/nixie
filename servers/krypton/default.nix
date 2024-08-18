@@ -7,14 +7,14 @@
 
   boot.initrd.availableKernelModules = ["xhci_pci" "virtio_pci" "virtio_scsi" "usbhid" "sr_mod"];
 
-  nixpkgs.hostPlatform = "x86_64-linux";
+  nixpkgs.hostPlatform = "aarch64-linux";
 
   system.stateVersion = "24.11";
 
   powerManagement.cpuFreqGovernor = "performance";
 
   networking = {
-    fqdn = "mail.rathmer.me";
+    fqdn-mail-domain = "mail.rathmer.me";
     domain = "hammerclock.net";
     mail-domain = "rathmer.me";
     firewall.allowedTCPPorts = [80 443];
