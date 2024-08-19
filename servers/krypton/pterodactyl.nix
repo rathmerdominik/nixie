@@ -62,7 +62,7 @@
   };
 
   virtualisation.oci-containers.containers.database = {
-    image = "ghcr.io/mariadb/mariadb:latest";
+    image = "docker.io/mariadb:10.5";
     cmd = ["--default-authentication-plugin=mysql_native_password"];
     volumes = [
       "/var/lib/pterodactyl/database:/var/lib/mysql"
