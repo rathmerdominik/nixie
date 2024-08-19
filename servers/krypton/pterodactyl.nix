@@ -78,6 +78,10 @@
 
   virtualisation.oci-containers.containers.cache = {
     image = "docker.io/library/redis:alpine";
+    extraOptions = [
+      "--network=panel0"
+      "-t"
+    ];
   };
 
   services.nginx.virtualHosts = let
