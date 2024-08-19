@@ -15,11 +15,22 @@
 
   virtualisation.oci-containers.backend = "docker";
 
-  networking = {
+  networking = let
+    interface = "enp1s0";
+  in {
+    interfaces.${interface}.ipv6.addresses = [
+      {
+        address = "2a01:4f8:1c1c:26c9::2";
+        prefixLength = 64;
+      }
+    ];
+    defaultGateway6 = {
+      address = "fe80::1";
+      inherit interface;
+    };
     fqdn-mail-domain = "mail.rathmer.me";
     domain = "hetzner.hammerclock.net";
     mail-domain = "rathmer.me";
     firewall.allowedTCPPorts = [80 443];
-    nameservers = ["1.1.1.1" "1.0.0.1"];
   };
 }
