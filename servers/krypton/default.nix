@@ -13,8 +13,6 @@
 
   powerManagement.cpuFreqGovernor = "performance";
 
-  virtualisation.oci-containers.backend = "docker";
-
   networking = {
     fqdn-mail-domain = "mail.rathmer.me";
     domain = "hammerclock.net";

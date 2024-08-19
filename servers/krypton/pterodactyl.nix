@@ -28,7 +28,7 @@
       QUEUE_DRIVER = "redis";
       REDIS_HOST = "127.0.0.1";
 
-      DB_HOST = "172.17.0.1";
+      DB_HOST = "127.0.0.1";
       DB_DATABASE = "panel";
       DB_USERNAME = "panel";
       DB_PORT = "3306";
@@ -38,22 +38,6 @@
     ];
   };
 
-  virtualisation.oci-containers.containers.database = {
-    image = "ghcr.io/mariadb/mariadb:10.5";
-    cmd = ["--default-authentication-plugin=mysql_native_password"];
-    volumes = [
-      "/srv/pterodactyl/database:/var/lib/mysql"
-    ];
-    environmentFiles = [
-      config.age.secrets.pterodactyl-env.path
-    ];
-  };
-
-  virtualisation.oci-containers.containers.cache = {
-    image = "docker.io/library/redis:alpine";
-  };
-  /*
-  *
   services.mysql = {
     enable = true;
     package = pkgs.mariadb;
@@ -75,11 +59,6 @@
     initialScript = config.age.secrets.pterodactyl-sql.path;
   };
 
-  services.redis.servers.panel = {
-    enable = true;
-    port = 6379;
-  };
-  */
   services.nginx.virtualHosts = let
     inherit (config.networking) domain;
   in {
