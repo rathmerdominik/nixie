@@ -38,6 +38,11 @@
     ];
   };
 
+  services.redis.servers.panel = {
+    enable = true;
+    port = 6379;
+  };
+
   services.mysql = {
     enable = true;
     package = pkgs.mariadb;
