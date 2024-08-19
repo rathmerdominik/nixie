@@ -26,9 +26,9 @@
       CACHE_DRIVER = "redis";
       SESSION_DRIVER = "redis";
       QUEUE_DRIVER = "redis";
-      REDIS_HOST = "redis";
+      REDIS_HOST = "cache";
 
-      DB_HOST = "mariadb";
+      DB_HOST = "database";
       DB_DATABASE = "panel";
       DB_USERNAME = "pterodactyl";
       DB_PORT = "3306";
