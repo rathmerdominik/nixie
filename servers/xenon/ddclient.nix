@@ -2,7 +2,7 @@
   age.secrets.cloudflare-token.file = ../../secrets/cloudflare-token.age;
   services.ddclient = {
     enable = true;
-    usev6 = ;
+    usev6 = "use=cmd, cmd='curl -k -s http://checkip6.spdyn.de'";
     protocol = "cloudflare";
     zone = "hammerclock.net";
     username = "token";
