@@ -8,6 +8,6 @@
     username = "token";
     passwordFile = config.age.secrets.cloudflare-token.path;
     domains = ["@"];
-    extraConfig = "ipv6=yes\nipv4=no";
+    extraConfig = "ipv4=no";
   };
 }
