@@ -8,6 +8,6 @@
     zone = "hammerclock.net";
     username = "token";
     passwordFile = config.age.secrets.cloudflare-token.path;
-    domains = ["@"];
+    domains = [];
   };
 }
