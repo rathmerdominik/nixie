@@ -30,7 +30,7 @@
 
       DB_HOST = "mariadb";
       DB_DATABASE = "panel";
-      DB_USERNAME = "panel";
+      DB_USERNAME = "pterodactyl";
       DB_PORT = "3306";
     };
     environmentFiles = [
@@ -42,13 +42,13 @@
     ];
   };
 
-  systemd.services.init-wings0-network = {
-    description = "Create the network bridge for wings.";
+  systemd.services.init-panel0-network = {
+    description = "Create the network bridge for pterodactyl.";
     after = ["network.target"];
     wantedBy = ["multi-user.target"];
     serviceConfig.Type = "oneshot";
     script = ''
-      check=$(${lib.getExe pkgs.docker} network ls | grep wings0 || true)
+      check=$(${lib.getExe pkgs.docker} network ls | grep panel0 || true)
       if [ -z "$check" ]; then
         ${lib.getExe pkgs.docker} network create \
           --subnet 172.21.0.0/16 \
