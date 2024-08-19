@@ -8,7 +8,6 @@
 
   virtualisation.oci-containers.containers.pterodactyl = {
     image = "ghcr.io/pterodactyl/panel:latest";
-    extraOptions = ["--network=host"];
     ports = [
       "9595:80"
       "9696:443"
@@ -16,6 +15,7 @@
     volumes = [
       "/var/lib/pterodactyl/var/:/app/var/"
       "/var/log/pterodactyl/:/app/storage/logs"
+      "/run/mysql/mysqld.sock:/run/mysql/mysql.sock:ro"
     ];
     environment = {
       APP_TIMEZONE = "Europe/Berlin";
