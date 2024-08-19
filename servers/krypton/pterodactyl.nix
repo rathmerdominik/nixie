@@ -59,10 +59,6 @@
         echo "panel0 already exists in docker"
       fi
     '';
-    extraOptions = [
-      "--network=panel0"
-      "-t"
-    ];
   };
 
   virtualisation.oci-containers.containers.database = {
