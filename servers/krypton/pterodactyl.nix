@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: {
-  age.secrets.pterodactyl-mail.file = ../../secrets/pterodactyl-mail.age;
+  age.secrets.pterodactyl-env.file = ../../secrets/pterodactyl-env.age;
 
   virtualisation.oci-containers.containers.pterodactyl = {
     image = "ghcr.io/pterodactyl/panel:latest";
@@ -35,7 +35,7 @@
       DB_PORT = "3306";
     };
     environmentFiles = [
-      config.age.secrets.pterodactyl-mail.path
+      config.age.secrets.pterodactyl-env.path
     ];
   };
 

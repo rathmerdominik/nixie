@@ -8,6 +8,6 @@ with import ../pubkeys.nix; {
 
   "mail-rathmer.age".publicKeys = (builtins.attrValues users) ++ [hosts.krypton];
   "mail-hammerclock.age".publicKeys = (builtins.attrValues users) ++ [hosts.krypton];
-  "pterodactyl-mail.age".publicKeys = (builtins.attrValues users) ++ [hosts.krypton];
+  "pterodactyl-env.age".publicKeys = (builtins.attrValues users) ++ [hosts.krypton];
   "vaultwarden-env.age".publicKeys = (builtins.attrValues users) ++ [hosts.krypton];
 }
