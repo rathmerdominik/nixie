@@ -1,10 +1,10 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }: {
   age.secrets.pterodactyl-env.file = ../../secrets/pterodactyl-env.age;
-  age.secrets.pterodactyl-sql.file = ../../secrets/pterodactyl-sql.age;
 
   virtualisation.oci-containers.containers.pterodactyl = {
     image = "ghcr.io/pterodactyl/panel:latest";
@@ -15,7 +15,6 @@
     volumes = [
       "/var/lib/pterodactyl/var/:/app/var/"
       "/var/log/pterodactyl/:/app/storage/logs"
-      "/run/mysql/mysqld.sock:/run/mysql/mysql.sock:ro"
     ];
     environment = {
       APP_TIMEZONE = "Europe/Berlin";
@@ -27,9 +26,9 @@
       CACHE_DRIVER = "redis";
       SESSION_DRIVER = "redis";
       QUEUE_DRIVER = "redis";
-      REDIS_HOST = "127.0.0.1";
+      REDIS_HOST = "redis";
 
-      DB_HOST = "127.0.0.1";
+      DB_HOST = "mariadb";
       DB_DATABASE = "panel";
       DB_USERNAME = "panel";
       DB_PORT = "3306";
@@ -37,31 +36,52 @@
     environmentFiles = [
       config.age.secrets.pterodactyl-env.path
     ];
-  };
-
-  services.redis.servers.panel = {
-    enable = true;
-    port = 6379;
-  };
-
-  services.mysql = {
-    enable = true;
-    package = pkgs.mariadb;
-    settings = {
-      mysqld = {
-        max_connections = 512;
-      };
-    };
-    ensureDatabases = ["panel"];
-    ensureUsers = [
-      {
-        name = "panel";
-        ensurePermissions = {
-          "panel.*" = "ALL PRIVILEGES";
-        };
-      }
+    extraOptions = [
+      "--network=panel0"
+      "-t"
     ];
-    initialScript = config.age.secrets.pterodactyl-sql.path;
+  };
+
+  systemd.services.init-wings0-network = {
+    description = "Create the network bridge for wings.";
+    after = ["network.target"];
+    wantedBy = ["multi-user.target"];
+    serviceConfig.Type = "oneshot";
+    script = ''
+      check=$(${lib.getExe pkgs.docker} network ls | grep wings0 || true)
+      if [ -z "$check" ]; then
+        ${lib.getExe pkgs.docker} network create \
+          --subnet 172.21.0.0/16 \
+          --driver bridge \
+          --opt com.docker.network.bridge.name=panel0 \
+          wings0
+      else
+        echo "panel0 already exists in docker"
+      fi
+    '';
+    extraOptions = [
+      "--network=panel0"
+      "-t"
+    ];
+  };
+
+  virtualisation.oci-containers.containers.database = {
+    image = "ghcr.io/mariadb/mariadb:latest";
+    cmd = "--default-authentication-plugin=mysql_native_password";
+    volumes = [
+      "/var/lib/pterodactyl/database:/var/lib/mysql"
+    ];
+    environmentFiles = [
+      config.age.secrets.pterodactyl-env.path
+    ];
+    extraOptions = [
+      "--network=panel0"
+      "-t"
+    ];
+  };
+
+  virtualisation.oci-containers.containers.cache = {
+    image = "docker.io/library/redis:alpine";
   };
 
   services.nginx.virtualHosts = let
