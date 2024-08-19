@@ -29,7 +29,7 @@
       REDIS_HOST = "127.0.0.1";
       REDIS_PORT = "6379";
 
-      DB_HOST = "127.0.0.1";
+      DB_HOST = "172.17.0.1";
       DB_DATABASE = "panel";
       DB_USERNAME = "panel";
       DB_PORT = "3306";
