@@ -11,7 +11,6 @@
     ports = [
       "9595:80"
       "9696:443"
-      "3306:3306"
     ];
     volumes = [
       "/var/lib/pterodactyl/var/:/app/var/"
@@ -30,7 +29,7 @@
       REDIS_HOST = "127.0.0.1";
       REDIS_PORT = "6379";
 
-      DB_HOST = "127.0.0.1";
+      DB_HOST = "host.docker.internal";
       DB_DATABASE = "panel";
       DB_USERNAME = "panel";
       DB_PORT = "3306";
