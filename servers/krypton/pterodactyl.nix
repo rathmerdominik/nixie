@@ -4,6 +4,7 @@
   ...
 }: {
   age.secrets.pterodactyl-env.file = ../../secrets/pterodactyl-env.age;
+  age.secrets.pterodactyl-sql.file = ../../secrets/pterodactyl-sql.age;
 
   virtualisation.oci-containers.containers.pterodactyl = {
     image = "ghcr.io/pterodactyl/panel:latest";
@@ -11,7 +12,6 @@
       "9595:80"
       "9696:443"
     ];
-    extraOptions = ["--network=host"];
     volumes = [
       "/var/lib/pterodactyl/var/:/app/var/"
       "/var/log/pterodactyl/:/app/storage/logs"
@@ -56,6 +56,7 @@
         };
       }
     ];
+    initialScript = config.age.secrets.pterodactyl-sql.path;
   };
 
   services.redis.servers.panel = {
