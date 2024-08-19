@@ -11,10 +11,9 @@
       "9595:80"
       "9696:443"
     ];
+    extraOptions = ["--network=host"];
     volumes = [
       "/var/lib/pterodactyl/var/:/app/var/"
-      "/var/lib/pterodactyl/nginx/:/etc/nginx/http.d/"
-      "/var/lib/pterodactyl/certs/:/etc/letsencrypt/"
       "/var/log/pterodactyl/:/app/storage/logs"
     ];
     environment = {
@@ -27,10 +26,12 @@
       CACHE_DRIVER = "redis";
       SESSION_DRIVER = "redis";
       QUEUE_DRIVER = "redis";
-      REDIS_HOST = "localhost:6379";
+      REDIS_HOST = "127.0.0.1";
+      REDIS_PORT = "6379";
 
-      DB_PASSWORD = "";
-      DB_HOST = "localhost";
+      DB_HOST = "127.0.0.1";
+      DB_DATABASE = "panel";
+      DB_USERNAME = "panel";
       DB_PORT = "3306";
     };
     environmentFiles = [
@@ -39,14 +40,17 @@
   };
 
   services.mysql = {
-    package = pkgs.mariadb;
     enable = true;
-    ensureDatabases = [
-      "panel"
-    ];
+    package = pkgs.mariadb;
+    settings = {
+      mysqld = {
+        max_connections = 512;
+      };
+    };
+    ensureDatabases = ["panel"];
     ensureUsers = [
       {
-        name = "pterodactyl";
+        name = "panel";
         ensurePermissions = {
           "panel.*" = "ALL PRIVILEGES";
         };
@@ -54,12 +58,9 @@
     ];
   };
 
-  services.redis = {
-    package = pkgs.valkey;
-    servers.valkey = {
-      port = 6379;
-      enable = true;
-    };
+  services.redis.servers.panel = {
+    enable = true;
+    port = 6379;
   };
 
   services.nginx.virtualHosts = let
@@ -83,16 +84,6 @@
       user = "root";
     };
     "/var/lib/pterodactyl/var".d = {
-      group = "root";
-      mode = "0755";
-      user = "root";
-    };
-    "/var/lib/pterodactyl/nginx".d = {
-      group = "root";
-      mode = "0755";
-      user = "root";
-    };
-    "/var/lib/pterodactyl/certs/".d = {
       group = "root";
       mode = "0755";
       user = "root";
