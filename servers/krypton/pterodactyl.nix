@@ -44,6 +44,7 @@
     package = pkgs.mariadb;
     settings = {
       mysqld = {
+        bind-address = "172.17.0.1";
         max_connections = 512;
       };
     };
