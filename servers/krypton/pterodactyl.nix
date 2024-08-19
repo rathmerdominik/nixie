@@ -11,6 +11,7 @@
     ports = [
       "9595:80"
       "9696:443"
+      "3306:3306"
     ];
     volumes = [
       "/var/lib/pterodactyl/var/:/app/var/"
