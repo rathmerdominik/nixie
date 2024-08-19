@@ -17,7 +17,7 @@
 
   networking = {
     fqdn-mail-domain = "mail.rathmer.me";
-    domain = "hammerclock.net";
+    domain = "hetzner.hammerclock.net";
     mail-domain = "rathmer.me";
     firewall.allowedTCPPorts = [80 443];
     nameservers = ["1.1.1.1" "0.0.0.0"];
