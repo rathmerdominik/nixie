@@ -3,12 +3,12 @@ with import ../pubkeys.nix; {
 
   "microbin.age".publicKeys = (builtins.attrValues users) ++ [hosts.xenon];
   "paperless-ngx.age".publicKeys = (builtins.attrValues users) ++ [hosts.xenon];
+  "cloudflare-token.age".publicKeys = (builtins.attrValues users) ++ [hosts.xenon];
 
   "mullvad.age".publicKeys = (builtins.attrValues users) ++ [hosts.neon];
 
   "mail-rathmer.age".publicKeys = (builtins.attrValues users) ++ [hosts.krypton];
   "mail-hammerclock.age".publicKeys = (builtins.attrValues users) ++ [hosts.krypton];
   "pterodactyl-env.age".publicKeys = (builtins.attrValues users) ++ [hosts.krypton];
-  "pterodactyl-sql.age".publicKeys = (builtins.attrValues users) ++ [hosts.krypton];
   "vaultwarden-env.age".publicKeys = (builtins.attrValues users) ++ [hosts.krypton];
 }
