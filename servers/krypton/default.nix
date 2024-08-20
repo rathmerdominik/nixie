@@ -15,7 +15,10 @@
 
   virtualisation.oci-containers.backend = "docker";
 
-  virtualisation.docker.daemon.settings.ipv6 = true;
+  virtualisation.docker.daemon.settings = {
+    ipv6 = true;
+    fixed-cidr-v6 = "fd00::/80";
+  };
 
   networking = let
     interface = "enp1s0";

@@ -50,7 +50,8 @@
       check=$(${lib.getExe pkgs.docker} network ls | grep panel0 || true)
       if [ -z "$check" ]; then
         ${lib.getExe pkgs.docker} network create \
-          --subnet 172.21.0.0/16 \
+          --ipv6 \
+          --subnet fd00::/80 \
           --driver bridge \
           --opt com.docker.network.bridge.name=panel0 \
           panel0
