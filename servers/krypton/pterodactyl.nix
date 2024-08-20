@@ -26,9 +26,9 @@
       CACHE_DRIVER = "redis";
       SESSION_DRIVER = "redis";
       QUEUE_DRIVER = "redis";
-      REDIS_HOST = "localhost";
+      REDIS_HOST = "127.0.0.1";
 
-      DB_HOST = "localhost";
+      DB_HOST = "127.0.0.1";
       DB_DATABASE = "panel";
       DB_USERNAME = "pterodactyl";
       DB_PORT = "3306";
@@ -56,7 +56,7 @@
       else
         echo "panel0 already exists in docker"
       fi
-    '';
+    '';/nix/store/k5ib592dlmbkcazjl75d5yb5mmwf2in2-unit-script-docker-cache-post-stop/bin/docker-cache-post-stop
   };
   */
   virtualisation.oci-containers.containers.database = {
