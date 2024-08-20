@@ -26,9 +26,9 @@
       CACHE_DRIVER = "redis";
       SESSION_DRIVER = "redis";
       QUEUE_DRIVER = "redis";
-      REDIS_HOST = "127.0.0.1";
+      REDIS_HOST = "cache";
 
-      DB_HOST = "127.0.0.1";
+      DB_HOST = "database";
       DB_DATABASE = "panel";
       DB_USERNAME = "pterodactyl";
       DB_PORT = "3306";
@@ -68,18 +68,10 @@
     environmentFiles = [
       config.age.secrets.pterodactyl-env.path
     ];
-    extraOptions = [
-      "--network=container:pterodactyl"
-      # "-t"
-    ];
   };
 
   virtualisation.oci-containers.containers.cache = {
     image = "docker.io/library/redis:alpine";
-    extraOptions = [
-      "--network=container:pterodactyl"
-      # "-t"
-    ];
   };
 
   services.nginx.virtualHosts = let
