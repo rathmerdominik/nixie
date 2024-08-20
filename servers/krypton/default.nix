@@ -13,11 +13,7 @@
 
   powerManagement.cpuFreqGovernor = "performance";
 
-  virtualisation.podman = {
-    dockerSocket.enable = true;
-    dockerCompat = true;
-    defaultNetwork.settings = {dns_enabled = true;};
-  };
+  virtualisation.oci-containers.backend = "docker";
 
   networking = let
     interface = "enp1s0";
