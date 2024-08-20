@@ -7,6 +7,6 @@
 
   services.zeronsd.servedNetworks."a84ac5c10acf5761".settings = {
     token = config.age.secrets.zerotier-api.path;
-    domain = "clock.net";
+    domain = "fritz.box";
   };
 }
