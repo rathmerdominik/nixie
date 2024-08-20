@@ -62,15 +62,6 @@ in {
         proxyWebsockets = true;
         proxyPass = "http://localhost:9595/api/servers/$serverid/ws";
         extraConfig = ''
-          proxy_http_version 1.1;
-          proxy_set_header Upgrade $http_upgrade;
-          proxy_set_header Connection "upgrade";
-          proxy_set_header Host $host;
-          client_max_body_size 1024m;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-Proto $scheme;
-          proxy_redirect off;
           proxy_buffering off;
           proxy_request_buffering off;
         '';
@@ -80,7 +71,6 @@ in {
         proxyWebsockets = true;
         proxyPass = "http://localhost:9595";
         extraConfig = ''
-          proxy_redirect off;
           proxy_buffering off;
           proxy_request_buffering off;
         '';
@@ -88,7 +78,7 @@ in {
     };
   };
 
-  networking.firewall.allowedTCPPorts = [2022 9595 25565];
+  networking.firewall.allowedTCPPorts = [2022 25565];
 
   systemd.tmpfiles.settings."10-pterodactyl" = {
     "/var/log/pterodactyl".d = {
