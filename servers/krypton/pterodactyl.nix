@@ -37,11 +37,13 @@
       config.age.secrets.pterodactyl-env.path
     ];
     extraOptions = [
-      "--network=panel0"
-      "-t"
+      "--network=container:pterodactyl"
+      # "-t"
     ];
   };
 
+  /*
+  *
   systemd.services.init-panel0-network = {
     description = "Create the network bridge for pterodactyl.";
     after = ["network.target"];
@@ -60,7 +62,7 @@
       fi
     '';
   };
-
+  */
   virtualisation.oci-containers.containers.database = {
     image = "docker.io/mariadb:10.5";
     cmd = ["--default-authentication-plugin=mysql_native_password"];
@@ -71,16 +73,16 @@
       config.age.secrets.pterodactyl-env.path
     ];
     extraOptions = [
-      "--network=panel0"
-      "-t"
+      "--network=container:pterodactyl"
+      # "-t"
     ];
   };
 
   virtualisation.oci-containers.containers.cache = {
     image = "docker.io/library/redis:alpine";
     extraOptions = [
-      "--network=panel0"
-      "-t"
+      "--network=container:pterodactyl"
+      # "-t"
     ];
   };
 
