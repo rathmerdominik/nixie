@@ -38,7 +38,6 @@
     ];
     extraOptions = [
       "--network=panel0"
-      "-t"
     ];
   };
 
@@ -72,7 +71,6 @@
     ];
     extraOptions = [
       "--network=panel0"
-      "-t"
     ];
   };
 
@@ -80,7 +78,6 @@
     image = "docker.io/library/redis:alpine";
     extraOptions = [
       "--network=panel0"
-      "-t"
     ];
   };
 
