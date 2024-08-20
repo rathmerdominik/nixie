@@ -18,7 +18,7 @@
           builtins.attrValues pubkeys.users
           ++ builtins.attrValues pubkeys.hosts
         );
-        extraGroups = ["wheel" "docker" "podman"];
+        extraGroups = ["wheel" "docker"];
         linger = true;
       };
     };
