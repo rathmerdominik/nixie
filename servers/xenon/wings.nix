@@ -70,7 +70,7 @@ in {
     };
   };
 
-  networking.firewall.allowedTCPPorts = [2022];
+  networking.firewall.allowedTCPPorts = [2022 9595 25565];
 
   systemd.tmpfiles.settings."10-pterodactyl" = {
     "/var/log/pterodactyl".d = {
