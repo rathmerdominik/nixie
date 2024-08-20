@@ -26,19 +26,15 @@
       CACHE_DRIVER = "redis";
       SESSION_DRIVER = "redis";
       QUEUE_DRIVER = "redis";
-      REDIS_HOST = "cache";
+      REDIS_HOST = "localhost";
 
-      DB_HOST = "database";
+      DB_HOST = "localhost";
       DB_DATABASE = "panel";
       DB_USERNAME = "pterodactyl";
       DB_PORT = "3306";
     };
     environmentFiles = [
       config.age.secrets.pterodactyl-env.path
-    ];
-    extraOptions = [
-      "--network=container:pterodactyl"
-      # "-t"
     ];
   };
 
