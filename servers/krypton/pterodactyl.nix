@@ -51,7 +51,7 @@
       if [ -z "$check" ]; then
         ${lib.getExe pkgs.docker} network create \
           --ipv6 \
-          --subnet fd00::/80 \
+          --subnet 2001:db8::/64 \
           --driver bridge \
           --opt com.docker.network.bridge.name=panel0 \
           panel0
