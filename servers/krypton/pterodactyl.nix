@@ -36,10 +36,12 @@
     environmentFiles = [
       config.age.secrets.pterodactyl-env.path
     ];
+    extraOptions = [
+      "--network=panel0"
+      "-t"
+    ];
   };
 
-  /*
-  *
   systemd.services.init-panel0-network = {
     description = "Create the network bridge for pterodactyl.";
     after = ["network.target"];
@@ -56,9 +58,9 @@
       else
         echo "panel0 already exists in docker"
       fi
-    '';/nix/store/k5ib592dlmbkcazjl75d5yb5mmwf2in2-unit-script-docker-cache-post-stop/bin/docker-cache-post-stop
+    '';
   };
-  */
+
   virtualisation.oci-containers.containers.database = {
     image = "docker.io/mariadb:10.5";
     cmd = ["--default-authentication-plugin=mysql_native_password"];
@@ -68,10 +70,18 @@
     environmentFiles = [
       config.age.secrets.pterodactyl-env.path
     ];
+    extraOptions = [
+      "--network=panel0"
+      "-t"
+    ];
   };
 
   virtualisation.oci-containers.containers.cache = {
     image = "docker.io/library/redis:alpine";
+    extraOptions = [
+      "--network=panel0"
+      "-t"
+    ];
   };
 
   services.nginx.virtualHosts = let
