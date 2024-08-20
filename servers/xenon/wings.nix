@@ -14,7 +14,7 @@ in {
     ];
     volumes = [
       "/var/run/docker.sock:/var/run/docker.sock"
-      "/srv/disks/wings-drive/pterodactyl/volumes:/var/lib/docker/containers/"
+      "/var/lib/docker/containers/:/var/lib/docker/containers/"
       "/etc/pterodactyl/:/etc/pterodactyl/"
       "/srv/disks/wings-drive/pterodactyl/:/var/lib/pterodactyl/"
       "/var/log/pterodactyl/:/var/log/pterodactyl/"
@@ -82,11 +82,6 @@ in {
 
   systemd.tmpfiles.settings."10-pterodactyl" = {
     "/var/log/pterodactyl".d = {
-      group = "root";
-      mode = "0755";
-      user = "root";
-    };
-    "/var/lib/pterodactyl".d = {
       group = "root";
       mode = "0755";
       user = "root";

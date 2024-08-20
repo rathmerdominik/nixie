@@ -21,7 +21,7 @@
     "/srv/disks/medium-backup" = mkDisk "medium_backup";
     "/srv/disks/small-roms-1" = mkDisk "small_roms_1";
     "/srv/disks/small-roms-2" = mkDisk "small_roms_2";
-    "/srv/disks/wings-drive" = mkDisk "wings_drive";
+    "/var/lib/pterodactyl" = mkDisk "wings_drive";
 
     "/srv/mergerfs/backup/pterodactyl" = {
       device = "/srv/disks/wings-drive/pterodactyl/backups";
