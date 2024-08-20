@@ -93,6 +93,7 @@
       quic = true;
 
       locations."/" = {
+        proxyWebsockets = true;
         proxyPass = "http://localhost:9595";
       };
     };
