@@ -60,7 +60,7 @@ in {
 
       locations."~ ^\/api\/servers\/(?<serverid>.*)?\/ws$" = {
         proxyWebsockets = true;
-        proxyPass = "http://localhost:9595/api/servers/$serverid/ws";
+        proxyPass = "http://0.0.0.0:9595/api/servers/$serverid/ws";
         extraConfig = ''
           proxy_buffering off;
           proxy_request_buffering off;
@@ -69,7 +69,7 @@ in {
 
       locations."/" = {
         proxyWebsockets = true;
-        proxyPass = "http://localhost:9595";
+        proxyPass = "http://0.0.0.0:9595";
         extraConfig = ''
           proxy_buffering off;
           proxy_request_buffering off;
