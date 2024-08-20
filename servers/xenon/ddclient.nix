@@ -1,7 +1,7 @@
 {config, ...}: {
   age.secrets.cloudflare-token.file = ../../secrets/cloudflare-token.age;
   services.ddclient = {
-    enable = true;
+    enable = false;
     usev6 = "webv6, webv6=https://ipv6.nsupdate.info/myip";
     usev4 = "";
     protocol = "cloudflare";
