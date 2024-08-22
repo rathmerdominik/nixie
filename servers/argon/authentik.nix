@@ -3,8 +3,6 @@
   config,
   ...
 }: {
-  age.secrets.authentik-env.file = ../../secrets/authentik-env.age;
-
   services.nginx = {
     enable = true;
 

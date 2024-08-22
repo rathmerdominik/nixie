@@ -24,7 +24,6 @@
           modules = [
             inputs.agenix.nixosModules.default
             inputs.mailserver.nixosModule
-            inputs.authentik-nix.nixosModules.default
 
             ./common
             ./servers/${name}
