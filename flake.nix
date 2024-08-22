@@ -6,7 +6,6 @@
     agenix.url = "github:ryantm/agenix";
     hardware.url = "github:NixOS/nixos-hardware";
     mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
-    authentik-nix.url = "github:nix-community/authentik-nix";
   };
 
   outputs = {nixpkgs, ...} @ inputs: let
