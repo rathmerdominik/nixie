@@ -40,6 +40,7 @@
     nginx = {
       enable = true;
       enableACME = true;
+      package = pkgs.nginxQuic;
       host = "auth.hammerclock.net";
     };
   };
