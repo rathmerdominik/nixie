@@ -9,8 +9,8 @@
   virtualisation.oci-containers.containers.pterodactyl = {
     image = "ghcr.io/pterodactyl/panel:latest";
     ports = [
-      "9595:80"
-      "9696:443"
+      "9393:80"
+      "9494:443"
     ];
     volumes = [
       "/var/lib/pterodactyl/var/:/app/var/"
@@ -50,8 +50,7 @@
       check=$(${lib.getExe pkgs.docker} network ls | grep panel0 || true)
       if [ -z "$check" ]; then
         ${lib.getExe pkgs.docker} network create \
-          --ipv6 \
-          --subnet 2001:db8::/64 \
+          --subnet 172.21.0.0/16 \
           --driver bridge \
           --opt com.docker.network.bridge.name=panel0 \
           panel0
@@ -80,25 +79,6 @@
     extraOptions = [
       "--network=panel0"
     ];
-  };
-
-  services.nginx.virtualHosts = let
-    inherit (config.networking) domain;
-  in {
-    "panel.${domain}" = {
-      enableACME = true;
-      forceSSL = true;
-      quic = true;
-
-      locations."/" = {
-        proxyWebsockets = true;
-        proxyPass = "http://localhost:9595";
-        extraConfig = ''
-          proxy_buffering off;
-          proxy_request_buffering off;
-        '';
-      };
-    };
   };
 
   systemd.tmpfiles.settings."10-pterodactyl" = {

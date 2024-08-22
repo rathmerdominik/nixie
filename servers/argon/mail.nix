@@ -3,27 +3,27 @@
   pkgs,
   ...
 }: let
-  inherit (config.networking) domain mail-domain;
+  inherit (config.networking) domain mail-domain fqdn-mail-domain;
 
   wellKnownMtaSts = pkgs.writeText "" ''
     version: STSv1
     mode: enforce
-    mx: mail.rathmer.me
+    mx: ${fqdn-mail-domain}
     max_age: 86400
   '';
 in {
-  age.secrets.mail-rathmer.file = ../../secrets/mail-rathmer.age;
+  age.secrets.mail-rathmer.file = ../../secrets/mail-hammerclock.age;
 
   mailserver = {
     enable = true;
     openFirewall = true;
-    fqdn = "mail.rathmer.me";
+    fqdn = "mail.hammerclock.net";
     domains = [domain];
 
     loginAccounts = {
       "dominik@${mail-domain}" = {
         hashedPasswordFile = config.age.secrets.mail-rathmer.path;
-        aliases = ["postmaster@${domain}" "panel@${domain}" "vault@${domain}"];
+        aliases = ["postmaster@${domain}"];
       };
     };
 

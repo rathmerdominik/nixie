@@ -5,18 +5,15 @@
       "${modulesPath}/profiles/qemu-guest.nix"
     ];
 
-  boot.initrd.availableKernelModules = ["xhci_pci" "virtio_pci" "virtio_scsi" "usbhid" "sr_mod"];
+  boot.initrd.availableKernelModules = ["ata_piix" "uhci_hcd" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" "virtio_blk"];
 
-  nixpkgs.hostPlatform = "aarch64-linux";
+  nixpkgs.hostPlatform = "x86_64-linux";
 
   system.stateVersion = "24.11";
 
   powerManagement.cpuFreqGovernor = "performance";
 
-  virtualisation.oci-containers.backend = "docker";
-
   networking = {
     domain = "hammerclock.net";
-    firewall.allowedTCPPorts = [80 443];
   };
 }

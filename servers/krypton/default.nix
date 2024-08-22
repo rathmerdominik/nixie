@@ -33,9 +33,7 @@
       address = "fe80::1";
       inherit interface;
     };
-    fqdn-mail-domain = "mail.rathmer.me";
-    domain = "hammerclock.net";
-    mail-domain = "rathmer.me";
-    firewall.allowedTCPPorts = [80 443];
+    domain = "rathmer.me";
+    firewall.enable = false;
   };
 }
