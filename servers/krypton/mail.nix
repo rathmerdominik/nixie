@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: let
-  inherit (config.networking) domain mail-domain;
+  inherit (config.networking) domain;
 
   wellKnownMtaSts = pkgs.writeText "" ''
     version: STSv1
@@ -21,7 +21,7 @@ in {
     domains = [domain];
 
     loginAccounts = {
-      "dominik@${mail-domain}" = {
+      "dominik@${domain}" = {
         hashedPasswordFile = config.age.secrets.mail-rathmer.path;
         aliases = ["postmaster@${domain}" "panel@${domain}" "vault@${domain}"];
       };
@@ -33,7 +33,7 @@ in {
   # FIXME: This is unnecessary when https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/issues/275 is closed <- They still didn't fix this
   services.dovecot2.sieve.extensions = ["fileinto"];
 
-  services.nginx.virtualHosts."mta-sts.${mail-domain}" = {
+  services.nginx.virtualHosts."mta-sts.${domain}" = {
     enableACME = true;
     forceSSL = true;
     quic = true;
