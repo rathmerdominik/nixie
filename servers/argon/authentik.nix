@@ -26,7 +26,8 @@
       globalRedirect = config.networking.domain;
     };
   };
-
+  /*
+  *
   services.authentik = {
     enable = true;
     environmentFile = config.age.secrets.authentik-env.path;
@@ -48,6 +49,6 @@
       host = "auth.hammerclock.net";
     };
   };
-
+  */
   networking.firewall.allowedTCPPorts = [80 443];
 }
