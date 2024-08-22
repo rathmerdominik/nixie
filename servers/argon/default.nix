@@ -16,4 +16,9 @@
   networking = {
     domain = "hammerclock.net";
   };
+
+  security.acme = {
+    defaults.email = "dominik@rathmer.me";
+    acceptTerms = true;
+  };
 }
