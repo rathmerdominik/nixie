@@ -2,7 +2,7 @@
   description = "My NixOS server configurations";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/f8e45876ff87bc8de25cbf54ae82bcb8e2ff2910";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     agenix.url = "github:ryantm/agenix";
     hardware.url = "github:NixOS/nixos-hardware";
     mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
