@@ -12,4 +12,6 @@ with import ../pubkeys.nix; {
   "pterodactyl-env.age".publicKeys = (builtins.attrValues users) ++ [hosts.krypton];
   "vaultwarden-env.age".publicKeys = (builtins.attrValues users) ++ [hosts.krypton];
   "zerotier-api.age".publicKeys = (builtins.attrValues users) ++ [hosts.krypton];
+
+  "authentik-env.age".publicKeys = (builtins.attrValues users) ++ [hosts.argon];
 }
