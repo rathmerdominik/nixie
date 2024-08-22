@@ -41,6 +41,7 @@
       xenon = mkSystem "xenon";
       neon = mkSystem "neon";
       krypton = mkSystem "krypton";
+      argon = mkSystem "argon";
     };
 
     packages = forAllSupportedSystems (pkgs: {
