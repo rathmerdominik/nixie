@@ -8,6 +8,7 @@
   services.nginx = {
     enable = true;
 
+    package = pkgs.nginxQuic;
     recommendedGzipSettings = true;
     recommendedOptimisation = true;
     recommendedProxySettings = true;
@@ -44,7 +45,6 @@
     nginx = {
       enable = true;
       enableACME = true;
-      quic = true;
       host = "auth.hammerclock.net";
     };
   };
