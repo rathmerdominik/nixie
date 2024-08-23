@@ -6,7 +6,7 @@
     ];
 
   boot.initrd.availableKernelModules = ["ata_piix" "uhci_hcd" "virtio_pci" "virtio_scsi" "sr_mod" "virtio_blk"];
-  boot.kernelModules = - ["kvm-amd"];
+  boot.kernelModules = ["kvm-amd"];
   boot.loader = {
     efi = {
       canTouchEfiVariables = false;
