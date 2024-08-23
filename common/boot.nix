@@ -1,13 +1,13 @@
-{
+{lib, ...}: {
   boot = {
     loader = {
       systemd-boot = {
-        enable = true;
+        enable = lib.mkDefault true;
         consoleMode = "max";
       };
 
       efi = {
-        canTouchEfiVariables = true;
+        canTouchEfiVariables = lib.mkDefault true;
         efiSysMountPoint = "/boot";
       };
     };
