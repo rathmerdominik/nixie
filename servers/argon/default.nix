@@ -7,6 +7,7 @@
 
   boot.initrd.availableKernelModules = ["ata_piix" "uhci_hcd" "virtio_pci" "virtio_scsi" "sr_mod" "virtio_blk"];
   boot.kernelModules = - ["kvm-amd"];
+  boot.loader.grub.efiSupport = true;
 
   nixpkgs.hostPlatform = "x86_64-linux";
 
