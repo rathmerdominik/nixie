@@ -23,8 +23,6 @@
     acceptTerms = true;
   };
 
-  # BuyVM's shitty service take 7 euro for a suboptimal 2 GB RAM and intel based single core 3.5 Ghz VPS.
-  # But with additional 3 Euro you get a very good Anti-DDOS solution...
   swapDevices = [
     {
       device = "/swapfile";
