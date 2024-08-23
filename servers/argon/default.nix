@@ -5,18 +5,20 @@
       "${modulesPath}/profiles/qemu-guest.nix"
     ];
 
-  boot.initrd.availableKernelModules = ["ata_piix" "uhci_hcd" "virtio_pci" "virtio_scsi" "sr_mod" "virtio_blk"];
-  boot.kernelModules = ["kvm-amd"];
-  boot.loader = {
-    efi = {
-      canTouchEfiVariables = false;
-    };
-    systemd-boot = {
-      enable = false;
-    };
-    grub = {
-      enable = true;
-      device = "/dev/vda";
+  boot = {
+    initrd.availableKernelModules = ["ata_piix" "uhci_hcd" "virtio_pci" "virtio_scsi" "sr_mod" "virtio_blk"];
+    kernelModules = ["kvm-amd"];
+    loader = {
+      efi = {
+        canTouchEfiVariables = false;
+      };
+      systemd-boot = {
+        enable = false;
+      };
+      grub = {
+        enable = true;
+        device = "/dev/vda";
+      };
     };
   };
 

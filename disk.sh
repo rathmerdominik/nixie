@@ -2,14 +2,13 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-opts=$(getopt --options r:m:b:l:c:L --longoptions=root:,boot-label:,main-label:,legacy --name "$0" -- "$@")
+opts=$(getopt --options r:m:b:l:c: --longoptions=root:,boot-label:,main-label: --name "$0" -- "$@")
 
 eval set -- "$opts"
 
 root=/mnt
 bootlbl=BOOT
 mainlbl=main
-firmware=uefi
 while true; do
   case "$1" in
   -r | --root)
@@ -23,10 +22,6 @@ while true; do
   -l | --main-label)
     mainlbl=$2
     shift 2
-    ;;
-  -L | --legacy)
-    firmware=legacy
-    shift
     ;;
   --)
     shift
@@ -42,17 +37,10 @@ fi
 
 blkdev=$1
 
-if [[ $firmware == "uefi" ]]; then
-  sfdisk --label gpt --quiet -- "$blkdev" <<EOF
+sfdisk --label gpt --quiet -- "$blkdev" <<EOF
 ,512M,U;
 ,,L;
 EOF
-elif [[ $firmware == "legacy" ]]; then
-  sfdisk --label mbr --quiet -- "$blkdev" <<EOF
-,512M,L,boot;
-,,L;
-EOF
-fi
 
 parts=()
 json=$(sfdisk --json -- "$blkdev")
