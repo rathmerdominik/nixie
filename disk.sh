@@ -42,12 +42,12 @@ fi
 
 blkdev=$1
 
-if [[ $firmware == "uefi"]]; then
+if [[ $firmware == "uefi" ]]; then
   sfdisk --label gpt --quiet -- "$blkdev" <<EOF
 ,512M,U;
 ,,L;
 EOF
-elif [[ $firmware == "legacy"]]; then
+elif [[ $firmware == "legacy" ]]; then
   sfdisk --label mbr --quiet -- "$blkdev" <<EOF
 ,512M,L,boot;
 ,,L;
