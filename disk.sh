@@ -49,7 +49,8 @@ if [[ $firmware == "uefi"]]; then
 EOF
 elif [[ $firmware == "legacy"]]; then
   sfdisk --label mbr --quiet -- "$blkdev" <<EOF
-,512M,83,boot
+,512M,L,boot;
+,,L;
 EOF
 fi
 
