@@ -10,8 +10,7 @@
       dominik = {
         uid = 1000;
         isNormalUser = true;
-        # hashedPasswordFile = config.age.secrets.user-dominik.path;
-        password = "dominik";
+        hashedPasswordFile = config.age.secrets.user-dominik.path;
         openssh.authorizedKeys.keys = let
           pubkeys = import ../pubkeys.nix;
         in (
