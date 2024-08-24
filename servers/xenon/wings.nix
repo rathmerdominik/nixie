@@ -1,11 +1,8 @@
 {
   lib,
   pkgs,
-  config,
   ...
-}: let
-  inherit (config.networking) domain;
-in {
+}: {
   virtualisation.oci-containers.containers.wings = {
     image = "ghcr.io/pterodactyl/wings:latest";
     ports = [
@@ -50,32 +47,6 @@ in {
         echo "wings0 already exists in docker"
       fi
     '';
-  };
-
-  services.nginx.virtualHosts = {
-    "wings.${domain}" = {
-      enableACME = true;
-      forceSSL = true;
-      quic = true;
-
-      locations."~ ^\/api\/servers\/(?<serverid>.*)?\/ws$" = {
-        proxyWebsockets = true;
-        proxyPass = "http://172.21.0.1:9595/api/servers/$serverid/ws";
-        extraConfig = ''
-          proxy_buffering off;
-          proxy_request_buffering off;
-        '';
-      };
-
-      locations."/" = {
-        proxyWebsockets = true;
-        proxyPass = "http://172.21.0.1:9595";
-        extraConfig = ''
-          proxy_buffering off;
-          proxy_request_buffering off;
-        '';
-      };
-    };
   };
 
   networking.firewall.allowedTCPPorts = [2022 25565];
