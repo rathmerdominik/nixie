@@ -5,7 +5,7 @@ in {
 
   services.authentik = {
     enable = true;
-    environmentFile = config.age.secrets.mail-hammerclock.file.path;
+    environmentFile = "${config.age.secrets.mail-hammerclock.file.path}";
     settings = {
       email = {
         host = "mail.${domain}";
