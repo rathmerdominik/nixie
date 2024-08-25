@@ -26,7 +26,7 @@ in {
         '';
       };
     };
-    "bitwarden".${domain} = {
+    "bitwarden.${domain}" = {
       enableACME = true;
       forceSSL = true;
       quic = true;
