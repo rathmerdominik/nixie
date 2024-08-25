@@ -31,6 +31,8 @@
       DB_DATABASE = "panel";
       DB_USERNAME = "pterodactyl";
       DB_PORT = "3306";
+
+      TRUSTED_PROXIES = ["10.147.18.13"];
     };
     environmentFiles = [
       config.age.secrets.pterodactyl-env.path
