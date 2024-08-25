@@ -13,19 +13,4 @@
       WEBSOCKET_PORT = 3012;
     };
   };
-
-  services.nginx.virtualHosts = let
-    inherit (config.networking) domain;
-  in {
-    "bitwarden.${domain}" = {
-      enableACME = true;
-      forceSSL = true;
-      quic = true;
-
-      locations."/" = {
-        proxyPass = "http://localhost:8000";
-        proxyWebsockets = true;
-      };
-    };
-  };
 }
