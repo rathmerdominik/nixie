@@ -23,7 +23,13 @@ in {
     loginAccounts = {
       "der@${domain}" = {
         hashedPasswordFile = config.age.secrets.mail-hammerclock.path;
-        aliases = ["panel@${domain}" "vault@${domain}" "security@${domain}"];
+        aliases = ["security@${domain}" "postmaster@${domain}"];
+      };
+      "panel@${domain}" = {
+        hashedPasswordFile = config.age.secrets.mail-hammerclock.path;
+      };
+      "vault@${domain}" = {
+        hashedPasswordFile = config.age.secrets.mail-hammerclock.path;
       };
     };
 
