@@ -43,4 +43,6 @@
       size = 6 * 1024;
     }
   ];
+
+  networking.firewall.enable = false;
 }
