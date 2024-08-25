@@ -31,6 +31,9 @@ in {
       "vault@${domain}" = {
         hashedPasswordFile = config.age.secrets.mail-hammerclock.path;
       };
+      "auth@${domain}" = {
+        hashedPasswordFile = config.age.secrets.mail-hammerclock.path;
+      };
     };
 
     certificateScheme = "acme-nginx";

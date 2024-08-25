@@ -88,6 +88,10 @@ in {
           listen 25565;
           proxy_pass xenon:25565;
         }
+        server {
+          listen 2022;
+          proxy_pass ${ports.wings.sftp};
+        }
       }
     '';
   };
