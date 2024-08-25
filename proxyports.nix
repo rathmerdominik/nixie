@@ -15,6 +15,6 @@
   qbittorrent = "neon:8080";
 
   # krypton
-  pterodactyl = "krypton:9494";
+  pterodactyl = "krypton:9393";
   vaultwarden = "krypton:8000";
 }
