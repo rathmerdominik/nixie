@@ -31,11 +31,6 @@ in {
     };
   };
 
-  security.acme = {
-    defaults.email = "security@rathmer.me";
-    acceptTerms = true;
-  };
-
   services.nginx.virtualHosts = {
     "wings.${domain}" = {
       enableACME = true;
