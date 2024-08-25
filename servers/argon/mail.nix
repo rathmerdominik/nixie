@@ -8,7 +8,7 @@
   wellKnownMtaSts = pkgs.writeText "" ''
     version: STSv1
     mode: enforce
-    mx: mail.rathmer.me
+    mx: mail.${domain}
     max_age: 86400
   '';
 in {
@@ -17,13 +17,13 @@ in {
   mailserver = {
     enable = true;
     openFirewall = true;
-    fqdn = "mail.hammerclock.net";
+    fqdn = "mail.${domain}";
     domains = [domain];
 
     loginAccounts = {
-      "dominik@${domain}" = {
+      "der@${domain}" = {
         hashedPasswordFile = config.age.secrets.mail-rathmer.path;
-        aliases = ["postmaster@${domain}"];
+        aliases = ["panel@${domain}" "vault@${domain}"];
       };
     };
 
