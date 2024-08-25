@@ -84,6 +84,10 @@ in {
           listen 25566;
           proxy_pass xenon:25566;
         }
+        server {
+          listen 25565;
+          proxy_pass xenon:25565;
+        }
       }
     '';
   };
