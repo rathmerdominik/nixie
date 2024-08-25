@@ -12,7 +12,7 @@
     max_age: 86400
   '';
 in {
-  age.secrets.mail-rathmer.file = ../../secrets/mail-hammerclock.age;
+  age.secrets.mail-hammerclock.file = ../../secrets/mail-hammerclock.age;
 
   mailserver = {
     enable = true;
@@ -22,7 +22,7 @@ in {
 
     loginAccounts = {
       "der@${domain}" = {
-        hashedPasswordFile = config.age.secrets.mail-rathmer.path;
+        hashedPasswordFile = config.age.secrets.mail-hammerclock.path;
         aliases = ["panel@${domain}" "vault@${domain}" "security@${domain}"];
       };
     };
