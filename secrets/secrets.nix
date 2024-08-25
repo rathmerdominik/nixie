@@ -12,4 +12,5 @@ with import ../pubkeys.nix; {
   "vaultwarden-env.age".publicKeys = (builtins.attrValues users) ++ [hosts.krypton];
 
   "mail-hammerclock.age".publicKeys = (builtins.attrValues users) ++ [hosts.argon];
+  "authentik.age".publicKeys = (builtins.attrValues users) ++ [hosts.argon];
 }
