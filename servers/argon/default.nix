@@ -33,7 +33,7 @@
   };
 
   security.acme = {
-    defaults.email = "security@rathmer.me";
+    defaults.email = "security@hammerclock.net";
     acceptTerms = true;
   };
 

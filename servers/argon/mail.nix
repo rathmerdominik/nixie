@@ -23,7 +23,7 @@ in {
     loginAccounts = {
       "der@${domain}" = {
         hashedPasswordFile = config.age.secrets.mail-rathmer.path;
-        aliases = ["panel@${domain}" "vault@${domain}"];
+        aliases = ["panel@${domain}" "vault@${domain}" "security@${domain}"];
       };
     };
 
