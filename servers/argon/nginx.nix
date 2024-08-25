@@ -20,7 +20,9 @@ in {
       error_log stderr;
       access_log /var/log/nginx/access.log;
     '';
+  };
 
+  services.nginx = {
     virtualHosts = {
       "~.*" = {
         default = true;
@@ -28,11 +30,6 @@ in {
 
         globalRedirect = domain;
       };
-    };
-  };
-
-  services.nginx = {
-    virtualHosts = {
       "wings.${domain}" = {
         enableACME = true;
         forceSSL = true;
