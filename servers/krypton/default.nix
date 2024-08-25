@@ -34,6 +34,5 @@
       inherit interface;
     };
     domain = "rathmer.me";
-    firewall.enable = false;
   };
 }

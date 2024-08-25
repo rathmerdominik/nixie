@@ -9,7 +9,6 @@
   virtualisation.oci-containers.containers.pterodactyl = {
     image = "ghcr.io/pterodactyl/panel:latest";
     ports = [
-      "9393:80"
       "9494:443"
     ];
     volumes = [

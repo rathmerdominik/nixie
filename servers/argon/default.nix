@@ -33,7 +33,7 @@
   };
 
   security.acme = {
-    defaults.email = "dominik@rathmer.me";
+    defaults.email = "security@rathmer.me";
     acceptTerms = true;
   };
 

@@ -11,4 +11,6 @@
       ROCKET_ADDRESS = "0.0.0.0";
     };
   };
+
+  networking.firewall.allowedTCPPorts = [8000];
 }
