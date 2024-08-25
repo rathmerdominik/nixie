@@ -26,6 +26,16 @@ in {
         '';
       };
     };
+    "bitwarden".${domain} = {
+      enableACME = true;
+      forceSSL = true;
+      quic = true;
+
+      locations."/" = {
+        proxyWebsockets = true;
+        proxyPass = "http://${ports.vaultwarden}";
+      };
+    };
   };
 
   networking.firewall.allowedTCPPorts = [80 443];
