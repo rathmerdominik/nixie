@@ -70,7 +70,7 @@ in {
         proxyPass = "http://${ports.vaultwarden}";
       };
     };
-    "pterodactyl.${domain}" = {
+    "panel.${domain}" = {
       enableACME = true;
       forceSSL = true;
       quic = true;
