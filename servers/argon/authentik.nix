@@ -5,5 +5,6 @@ in {
 
   services.authentik = {
     enable = true;
+    environmentFile = config.age.secrets.mail-hammerclock.path;
   };
 }
