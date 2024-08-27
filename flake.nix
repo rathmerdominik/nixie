@@ -21,6 +21,9 @@
           inherit system;
           config.allowUnfree = true;
         }));
+
+    mylib = import ./lib/mylib.nix {inherit (nixpkgs) lib;};
+    proxy-ports = import ./proxy-ports.nix {inherit mylib;};
   in {
     nixosConfigurations = let
       mkSystem = name:
@@ -38,6 +41,8 @@
 
           specialArgs = {
             inherit inputs;
+            inherit mylib;
+            inherit proxy-ports;
           };
         };
     in {

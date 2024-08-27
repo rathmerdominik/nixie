@@ -1,9 +1,10 @@
 {
   config,
   pkgs,
+  proxy-ports,
+  mylib,
   ...
 }: let
-  ports = import ../../proxyports.nix;
   inherit (config.networking) domain;
 in {
   services.nginx = {
@@ -37,7 +38,7 @@ in {
 
         locations."~ ^\/api\/servers\/(?<serverid>.*)?\/ws$" = {
           proxyWebsockets = true;
-          proxyPass = "http://${ports.wings.daemon}/api/servers/$serverid/ws";
+          proxyPass = "${mylib.formatMapping proxy-ports.wings}/api/servers/$serverid/ws";
           extraConfig = ''
             proxy_buffering off;
             proxy_request_buffering off;
@@ -46,7 +47,7 @@ in {
 
         locations."/" = {
           proxyWebsockets = true;
-          proxyPass = "http://${ports.wings.daemon}";
+          proxyPass = mylib.formatMapping proxy-ports.wings;
           extraConfig = ''
             proxy_buffering off;
             proxy_request_buffering off;
@@ -60,7 +61,7 @@ in {
 
         locations."/" = {
           proxyWebsockets = true;
-          proxyPass = "http://${ports.vaultwarden}";
+          proxyPass = mylib.formatMapping proxy-ports.vaultwarden;
         };
       };
       "panel.${domain}" = {
@@ -70,7 +71,7 @@ in {
 
         locations."/" = {
           proxyWebsockets = true;
-          proxyPass = "http://${ports.pterodactyl}";
+          proxyPass = mylib.formatMapping proxy-ports.pterodactyl;
           extraConfig = ''
             proxy_buffering off;
             proxy_request_buffering off;
@@ -90,7 +91,7 @@ in {
         }
         server {
           listen 2022;
-          proxy_pass ${ports.wings.sftp};
+          proxy_pass ${mylib.formatMapping proxy-ports.wings-sftp};
         }
       }
     '';

@@ -1,22 +1,27 @@
 {
-  lib,
   config,
+  proxy-ports,
+  mylib,
   ...
 }: let
   inherit (config.networking) domain;
-  ports = import ../../proxyports.nix;
-  certPath = /var/lib/acme/auth.${domain}/cert.pem;
-  certKeyPath = /var/lib/acme/auth.${domain}/key.pem;
+  certPath = "/var/lib/acme/auth.${domain}/cert.pem";
+  certKeyPath = "/var/lib/acme/auth.${domain}/key.pem";
 in {
-  age.secrets.mail-hammerclock.file = ../../secrets/mail-hammerclock.age;
+  age.secrets.keycloak-database.file = ../../secrets/keycloak-database.age;
 
   services.keycloak = {
+    plugins = [../../pkgs/keycloak-discord.nix];
     enable = true;
     sslCertificate = certPath;
     sslCertificateKey = certKeyPath;
     settings = {
       http-host = "127.0.0.1";
-      https-port = builtins.elemAt (lib.strings.splitString ":" "${ports.keycloak}") 1;
+      https-port = proxy-ports.keycloak.port;
+      hostname = "auth.${domain}";
+    };
+    database = {
+      passwordFile = config.age.secrets.keycloak-database.path;
     };
   };
 
@@ -25,7 +30,7 @@ in {
     forceSSL = true;
 
     locations."/" = {
-      proxyPass = "${ports.keycloak}";
+      proxyPass = mylib.formatMapping proxy-ports.keycloak;
     };
   };
 }
