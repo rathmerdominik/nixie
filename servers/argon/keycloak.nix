@@ -19,7 +19,7 @@ in {
     settings = {
       http-host = "127.0.0.1";
       http-port = proxy-ports.keycloak-http.port;
-      hostname = "https://auth.${domain}";
+      hostname = "auth.${domain}";
     };
     database = {
       passwordFile = config.age.secrets.keycloak-database.path;
