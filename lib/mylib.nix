@@ -20,5 +20,5 @@ in {
   formatMapping = {
     host,
     port,
-  }: "http://${host}:${builtins.toString port}";
+  }: "${host}:${builtins.toString port}";
 }
