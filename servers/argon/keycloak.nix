@@ -31,7 +31,7 @@ in {
     forceSSL = true;
 
     locations."/" = {
-      proxyPass = mylib.formatMapping proxy-ports.keycloak;
+      proxyPass = mylib.formatMappingHttp proxy-ports.keycloak;
     };
   };
 }

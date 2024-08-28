@@ -12,6 +12,11 @@ in {
   in
     builtins.foldl' (acc: next: acc // next) {} (builtins.attrValues restructured);
 
+  formatMappingHttp = {
+    host,
+    port,
+  }: "http://${host}:${builtins.toString port}";
+
   formatMapping = {
     host,
     port,
