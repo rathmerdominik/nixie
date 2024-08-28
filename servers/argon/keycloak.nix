@@ -19,7 +19,6 @@ in {
     settings = {
       http-host = "127.0.0.1";
       http-port = proxy-ports.keycloak-http.port;
-      https-port = proxy-ports.keycloak-https.port;
       hostname = "https://auth.${domain}";
     };
     database = {
