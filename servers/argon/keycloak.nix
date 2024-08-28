@@ -17,9 +17,10 @@ in {
     sslCertificate = certPath;
     sslCertificateKey = certKeyPath;
     settings = {
+      proxy = "edge";
       http-host = "127.0.0.1";
       http-port = proxy-ports.keycloak-http.port;
-      hostname = "auth.${domain}";
+      hostname = "https://auth.${domain}";
     };
     database = {
       passwordFile = config.age.secrets.keycloak-database.path;
