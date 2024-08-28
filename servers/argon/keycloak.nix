@@ -21,12 +21,12 @@ in {
       http-host = proxy-ports.keycloak-http.host;
       http-port = proxy-ports.keycloak-http.port;
       https-port = proxy-ports.keycloak-https.port;
-
       hostname = "auth.${domain}";
     };
     database = {
       passwordFile = config.age.secrets.keycloak-database.path;
     };
+    initialAdminPassword = "d00hickey";
   };
 
   services.nginx.virtualHosts."auth.${domain}" = {
