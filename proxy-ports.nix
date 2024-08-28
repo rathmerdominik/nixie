@@ -21,6 +21,7 @@ mylib.restructure {
   };
 
   argon = {
-    keycloak = 8443;
+    keycloak-https = 8443;
+    keycloak-http = 880;
   };
 }

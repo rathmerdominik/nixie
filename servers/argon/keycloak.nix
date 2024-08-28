@@ -18,7 +18,8 @@ in {
     sslCertificateKey = certKeyPath;
     settings = {
       http-host = "127.0.0.1";
-      https-port = proxy-ports.keycloak.port;
+      http-port = proxy-ports.keycloak-http.port;
+      https-port = proxy-ports.keycloak-https.port;
       hostname = "https://auth.${domain}";
     };
     database = {
@@ -32,7 +33,7 @@ in {
     quic = true;
 
     locations."/" = {
-      proxyPass = mylib.formatMappingHttp proxy-ports.keycloak;
+      proxyPass = mylib.formatMappingHttp proxy-ports.keycloak-http;
     };
   };
 }
