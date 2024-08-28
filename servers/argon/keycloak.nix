@@ -19,7 +19,7 @@ in {
     settings = {
       http-host = "127.0.0.1";
       https-port = proxy-ports.keycloak.port;
-      hostname = "auth.${domain}";
+      hostname = "https://auth.${domain}";
     };
     database = {
       passwordFile = config.age.secrets.keycloak-database.path;
@@ -29,6 +29,7 @@ in {
   services.nginx.virtualHosts."auth.${domain}" = {
     enableACME = true;
     forceSSL = true;
+    quic = true;
 
     locations."/" = {
       proxyPass = mylib.formatMappingHttp proxy-ports.keycloak;
