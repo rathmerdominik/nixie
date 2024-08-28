@@ -2,6 +2,7 @@
   config,
   proxy-ports,
   mylib,
+  pkgs,
   ...
 }: let
   inherit (config.networking) domain;
@@ -11,7 +12,7 @@ in {
   age.secrets.keycloak-database.file = ../../secrets/keycloak-database.age;
 
   services.keycloak = {
-    plugins = [../../pkgs/keycloak-discord.nix];
+    plugins = [pkgs.keycloak.plugins.keycloak-discord];
     enable = true;
     sslCertificate = certPath;
     sslCertificateKey = certKeyPath;
