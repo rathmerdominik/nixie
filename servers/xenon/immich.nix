@@ -34,6 +34,7 @@ in {
     log-driver = "journald";
     extraOptions = [
       "--network=immich"
+      "--network-alias=immich-server"
       "--device=/dev/dri:/dev/dri"
     ];
   };
@@ -52,6 +53,7 @@ in {
     log-driver = "journald";
     extraOptions = [
       "--network=immich"
+      "--network-alias=immich-machine-learning"
       "--gpus=all"
     ];
   };
@@ -73,6 +75,7 @@ in {
       "--health-cmd=pg_isready --dbname='immich' --username='postgres' || exit 1; Chksum=\"$(psql --dbname='immich' --username='postgres' --tuples-only --no-align --command='SELECT COALESCE(SUM(checksum_failures), 0) FROM pg_stat_database')\"; echo \"checksum failure count is $Chksum\"; [ \"$Chksum\" = '0' ] || exit 1"
       "--health-interval=5m0s"
       "--health-start-period=5m0s"
+      "--network-alias=database"
       "--network=immich"
     ];
   };
@@ -82,6 +85,7 @@ in {
     log-driver = "journald";
     extraOptions = [
       "--health-cmd=redis-cli ping || exit 1"
+      "--network-alias=redis"
       "--network=immich"
     ];
   };
