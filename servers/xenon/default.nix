@@ -33,8 +33,6 @@
     domain = "hammerclock.net";
   };
 
-  inputs.hardware.nvidia-container-toolkit.enable = true;
-
   hardware = {
     graphics = {
       enable = true;
@@ -50,5 +48,6 @@
         then nvidiaPackages.beta
         else nvidiaPackages.latest;
     };
+    nvidia-container-toolkit.enable = true;
   };
 }
