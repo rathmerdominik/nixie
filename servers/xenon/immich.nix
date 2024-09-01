@@ -25,7 +25,7 @@ in {
       "${immich-path}/photos:/usr/src/app/upload/library"
     ];
     ports = [
-      "${proxy-ports.immich.port}:3001"
+      "${builtins.toString proxy-ports.immich.port}:3001"
     ];
     dependsOn = [
       "immich-postgres"
