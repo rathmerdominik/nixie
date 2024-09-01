@@ -5,7 +5,7 @@
   proxy-ports,
   ...
 }: let
-  immich-path = /var/lib/immich;
+  immich-path = "/var/lib/immich";
   immich-version = "v1.113.0";
 in {
   age.secrets.immich.file = ../../secrets/immich.age;
