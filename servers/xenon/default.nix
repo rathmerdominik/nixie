@@ -44,9 +44,7 @@
       open = false;
 
       package = with config.boot.kernelPackages;
-        if beta
-        then nvidiaPackages.beta
-        else nvidiaPackages.latest;
+        nvidiaPackages.latest;
     };
     nvidia-container-toolkit.enable = true;
   };
