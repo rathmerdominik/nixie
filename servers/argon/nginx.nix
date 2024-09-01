@@ -64,6 +64,16 @@ in {
           proxyPass = mylib.formatMappingHttp proxy-ports.vaultwarden;
         };
       };
+      "photos.${domain}" = {
+        enableACME = true;
+        forceSSL = true;
+        quic = true;
+
+        locations."/" = {
+          proxyWebsockets = true;
+          proxyPass = mylib.formatMappingHttp proxy-ports.immich;
+        };
+      };
       "panel.${domain}" = {
         enableACME = true;
         forceSSL = true;
