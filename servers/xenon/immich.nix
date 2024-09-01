@@ -95,7 +95,6 @@ in {
       check=$(${lib.getExe pkgs.docker} network ls | grep immich || true)
       if [ -z "$check" ]; then
         ${lib.getExe pkgs.docker} network create \
-          --subnet 172.21.0.0/16 \
           --driver bridge \
           --opt com.docker.network.bridge.name=immich \
           immich
