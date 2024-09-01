@@ -41,7 +41,7 @@ in {
   virtualisation.oci-containers.containers."immich-machine-learning" = {
     image = "ghcr.io/immich-app/immich-machine-learning:${immich-version}";
     environment = {
-      TZ = "Europe/London";
+      TZ = "Europe/Berlin";
     };
     environmentFiles = [
       config.age.secrets.immich.path
