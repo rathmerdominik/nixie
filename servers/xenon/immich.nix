@@ -54,6 +54,7 @@ in {
     extraOptions = [
       "--network=immich"
       "--network-alias=immich-machine-learning"
+      "--gpus=all"
     ];
   };
 
