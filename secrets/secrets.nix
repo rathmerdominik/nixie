@@ -14,4 +14,5 @@ with import ../pubkeys.nix; {
 
   "mail-hammerclock.age".publicKeys = (builtins.attrValues users) ++ [hosts.argon];
   "keycloak-database.age".publicKeys = (builtins.attrValues users) ++ [hosts.argon];
+  "authentik.age".publicKeys = (builtins.attrValues users) ++ [hosts.argon];
 }
