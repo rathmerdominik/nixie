@@ -13,12 +13,6 @@
   nixpkgs.hostPlatform = "x86_64-linux";
 
   boot = {
-    extraModulePackages = with config.boot.kernelPackages;
-      if beta
-      then [nvidia_x11_beta]
-      else [nvidia_x11];
-
-    kernelParams = ["nvidia-drm.fbdev=1"];
     initrd.kernelModules = ["nvidia"];
   };
 
