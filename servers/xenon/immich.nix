@@ -13,7 +13,7 @@ in {
   virtualisation.oci-containers.containers."immich-server" = {
     image = "ghcr.io/immich-app/immich-server:${immich-version}";
     environment = {
-      TZ = "Europe/London";
+      TZ = "Europe/Berlin";
     };
     environmentFiles = [
       config.age.secrets.immich.path
