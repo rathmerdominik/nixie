@@ -40,7 +40,7 @@ in {
   };
 
   virtualisation.oci-containers.containers."immich-machine-learning" = {
-    image = "ghcr.io/immich-app/immich-machine-learning:${immich-version}";
+    image = "ghcr.io/immich-app/immich-machine-learning:${immich-version}-cuda";
     environment = {
       TZ = "Europe/Berlin";
     };
