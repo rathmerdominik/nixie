@@ -1,6 +1,7 @@
 {
   inputs,
   config,
+  pkgs,
   ...
 }: {
   imports =
@@ -42,4 +43,9 @@
     };
     nvidia-container-toolkit.enable = true;
   };
+
+  environment.systemPackages = with pkgs; [
+    nvitop
+    docker-nvidia-smi # test nvidia in docker container
+  ];
 }
