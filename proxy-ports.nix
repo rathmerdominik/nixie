@@ -9,6 +9,7 @@ mylib.restructure {
     jellyfin = 8096;
     wings = 9595;
     prowlarr = 9696;
+    immich = 2283;
   };
 
   neon = {

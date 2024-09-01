@@ -4,6 +4,7 @@ with import ../pubkeys.nix; {
   "microbin.age".publicKeys = (builtins.attrValues users) ++ [hosts.xenon];
   "paperless-ngx.age".publicKeys = (builtins.attrValues users) ++ [hosts.xenon];
   "cloudflare-token.age".publicKeys = (builtins.attrValues users) ++ [hosts.xenon];
+  "immich.age".publicKeys = (builtins.attrValues users) ++ [hosts.xenon];
 
   "mullvad.age".publicKeys = (builtins.attrValues users) ++ [hosts.neon];
 
