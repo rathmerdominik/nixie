@@ -38,14 +38,12 @@
 
       open = false;
 
-      package = with config.boot.kernelPackages;
-        nvidiaPackages.latest;
+      package = config.boot.kernelPackages.nvidiaPackages.latest;
     };
     nvidia-container-toolkit.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
     nvitop
-    docker-nvidia-smi # test nvidia in docker container
   ];
 }
