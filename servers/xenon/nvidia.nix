@@ -18,8 +18,6 @@
     open = false;
 
     nvidiaSettings = false;
-
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
   hardware.nvidia-container-toolkit.enable = true;
