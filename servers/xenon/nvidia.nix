@@ -1,7 +1,7 @@
 {config, ...}: {
   nixpkgs.config.allowUnfree = true;
 
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
   };
 
