@@ -91,6 +91,15 @@ in {
           '';
         };
       };
+      "sonarr.${domain}" = {
+        enableACME = true;
+        forceSSL = true;
+        quic = true;
+
+        locations."/" = {
+          proxyPass = mylib.formatMappingHttp proxy-ports.sonarr;
+        };
+      };
       "auth.${domain}" = {
         enableACME = true;
         forceSSL = true;

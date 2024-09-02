@@ -5,7 +5,6 @@ mylib.restructure {
     jellyseerr = 5055;
     homarr = 7575;
     radarr = 7878;
-    sonarr = 8989;
     jellyfin = 8096;
     wings = 9595;
     prowlarr = 9696;
@@ -20,6 +19,7 @@ mylib.restructure {
     vaultwarden = 8000;
     pterodactyl = 9393;
     authentik = 9000;
+    sonarr = 9000;
   };
 
   argon = {
