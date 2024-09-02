@@ -18,7 +18,10 @@ in {
       disable_startup_analytics = true;
       avatars = "gravatar,initials";
     };
+    environment = {
+      AUTHENTIK_LISTEN__HTTP = "0.0.0.0:9070";
+    };
   };
 
-  networking.firewall.allowedTCPPorts = [9000];
+  networking.firewall.allowedTCPPorts = [9070];
 }
