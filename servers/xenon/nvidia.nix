@@ -4,9 +4,6 @@
     enable = true;
   };
 
-  #For nixos-unstable, they renamed it
-  #hardware.graphics.enable = true;
-
   services.xserver.enable = true;
   services.xserver.videoDrivers = ["nvidia"];
 
@@ -21,4 +18,6 @@
 
     package = config.boot.kernelPackages.nvidiaPackages.latest;
   };
+
+  hardware.nvidia-container-toolkit.enable = true;
 }
