@@ -21,7 +21,7 @@
 
     package = config.boot.kernelPackages.nvidiaPackages.latest;
   };
-  environment.systemPackages = pkgs.nvidia-container-toolkit;
+  environment.systemPackages = [pkgs.nvidia-container-toolkit];
 
   hardware.nvidia-container-toolkit.enable = true;
 }
