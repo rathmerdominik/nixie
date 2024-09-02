@@ -1,5 +1,8 @@
-{config, ...}: {
-  #NixOS Stable - 24.05 still calls the graphical togable option as "OpenGL"
+{
+  config,
+  pkgs,
+  ...
+}: {
   hardware.graphics = {
     enable = true;
   };
@@ -18,6 +21,7 @@
 
     package = config.boot.kernelPackages.nvidiaPackages.latest;
   };
+  environment.systemPackages = pkgs.nvidia-container-toolkit;
 
   hardware.nvidia-container-toolkit.enable = true;
 }
