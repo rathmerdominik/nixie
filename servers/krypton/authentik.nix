@@ -1,11 +1,11 @@
 {config, ...}: let
   inherit (config.networking) domain;
 in {
-  age.secrets.mail-hammerclock.file = ../../secrets/mail-hammerclock.age;
+  age.secrets.authentik.file = ../../secrets/authentik.age;
 
   services.authentik = {
     enable = true;
-    environmentFile = config.age.secrets.mail-hammerclock.path;
+    environmentFile = config.age.secrets.authentik.path;
     settings = {
       email = {
         host = "mail.${domain}";
