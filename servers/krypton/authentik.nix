@@ -19,4 +19,6 @@ in {
       avatars = "gravatar,initials";
     };
   };
+
+  networking.firewall.allowedTCPPorts = [9000];
 }
