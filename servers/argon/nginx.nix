@@ -92,9 +92,9 @@ in {
         };
       };
       "auth.${domain}" = {
-        enable = true;
         enableACME = true;
         forceSSL = true;
+
         locations."/" = {
           proxyWebsockets = true;
           proxyPass = mylib.formatMappingHttp proxy-ports.authentik;
