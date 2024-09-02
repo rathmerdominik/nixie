@@ -11,8 +11,8 @@ with import ../pubkeys.nix; {
   "mail-rathmer.age".publicKeys = (builtins.attrValues users) ++ [hosts.krypton];
   "pterodactyl-env.age".publicKeys = (builtins.attrValues users) ++ [hosts.krypton];
   "vaultwarden-env.age".publicKeys = (builtins.attrValues users) ++ [hosts.krypton];
+  "authentik.age".publicKeys = (builtins.attrValues users) ++ [hosts.krypton];
 
   "mail-hammerclock.age".publicKeys = (builtins.attrValues users) ++ [hosts.argon];
   "keycloak-database.age".publicKeys = (builtins.attrValues users) ++ [hosts.argon];
-  "authentik.age".publicKeys = (builtins.attrValues users) ++ [hosts.argon];
 }
