@@ -100,6 +100,33 @@ in {
           proxyPass = mylib.formatMappingHttp proxy-ports.sonarr;
         };
       };
+      "radarr.${domain}" = {
+        enableACME = true;
+        forceSSL = true;
+
+        locations."/" = {
+          proxyWebsockets = true;
+          proxyPass = mylib.formatMappingHttp proxy-ports.radarr;
+        };
+      };
+      "prowlarr.${domain}" = {
+        enableACME = true;
+        forceSSL = true;
+
+        locations."/" = {
+          proxyWebsockets = true;
+          proxyPass = mylib.formatMappingHttp proxy-ports.prowlarr;
+        };
+      };
+      "homarr.${domain}" = {
+        enableACME = true;
+        forceSSL = true;
+
+        locations."/" = {
+          proxyWebsockets = true;
+          proxyPass = mylib.formatMappingHttp proxy-ports.homarr;
+        };
+      };
       "auth.${domain}" = {
         enableACME = true;
         forceSSL = true;

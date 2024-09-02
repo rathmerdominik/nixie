@@ -1,4 +1,6 @@
-{
+{config, ...}: {
+  age.secrets.homarr.file = ../../secrets/homarr.age;
+
   virtualisation.oci-containers.containers.homarr = {
     image = "ghcr.io/ajnart/homarr:latest";
     ports = [
@@ -10,6 +12,9 @@
       "/var/lib/homarr/icons:/app/public/icons"
       "/var/lib/homarr/data:/data"
     ];
+    extraOptions = ["--pull=newer"];
+    environmentFiles = [
+      config.age.secrets.homarr.path
+    ];
   };
-  networking.firewall.allowedTCPPorts = [7575];
 }

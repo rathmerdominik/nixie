@@ -5,6 +5,7 @@ with import ../pubkeys.nix; {
   "paperless-ngx.age".publicKeys = (builtins.attrValues users) ++ [hosts.xenon];
   "cloudflare-token.age".publicKeys = (builtins.attrValues users) ++ [hosts.xenon];
   "immich.age".publicKeys = (builtins.attrValues users) ++ [hosts.xenon];
+  "homarr.age".publicKeys = (builtins.attrValues users) ++ [hosts.xenon];
 
   "mullvad.age".publicKeys = (builtins.attrValues users) ++ [hosts.neon];
 
