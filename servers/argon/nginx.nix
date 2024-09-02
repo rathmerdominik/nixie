@@ -121,6 +121,7 @@ in {
       "homarr.${domain}" = {
         enableACME = true;
         forceSSL = true;
+        quic = true;
 
         locations."/" = {
           proxyWebsockets = true;
