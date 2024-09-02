@@ -12,7 +12,7 @@
       "/var/lib/homarr/icons:/app/public/icons"
       "/var/lib/homarr/data:/data"
     ];
-    extraOptions = ["--pull=newer"];
+    extraOptions = ["--pull=always"];
     environmentFiles = [
       config.age.secrets.homarr.path
     ];
