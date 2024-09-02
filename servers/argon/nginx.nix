@@ -109,6 +109,15 @@ in {
           proxyPass = mylib.formatMappingHttp proxy-ports.radarr;
         };
       };
+      "jellyfin.${domain}" = {
+        enableACME = true;
+        forceSSL = true;
+
+        locations."/" = {
+          proxyWebsockets = true;
+          proxyPass = mylib.formatMappingHttp proxy-ports.jellyfin;
+        };
+      };
       "prowlarr.${domain}" = {
         enableACME = true;
         forceSSL = true;
