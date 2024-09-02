@@ -15,13 +15,12 @@
     powerManagement.enable = false;
     powerManagement.finegrained = false;
 
-    open = true;
+    open = false;
 
     nvidiaSettings = false;
 
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
-  environment.systemPackages = [pkgs.nvidia-container-toolkit];
 
   hardware.nvidia-container-toolkit.enable = true;
 }
