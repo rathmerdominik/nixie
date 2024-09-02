@@ -18,10 +18,5 @@ in {
       disable_startup_analytics = true;
       avatars = "gravatar,initials";
     };
-    nginx = {
-      enable = true;
-      enableACME = true;
-      host = "auth.${domain}";
-    };
   };
 }

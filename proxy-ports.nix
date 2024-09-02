@@ -19,6 +19,7 @@ mylib.restructure {
   krypton = {
     vaultwarden = 8000;
     pterodactyl = 9393;
+    authentik = 9443;
   };
 
   argon = {
