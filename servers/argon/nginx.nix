@@ -94,9 +94,9 @@ in {
       "sonarr.${domain}" = {
         enableACME = true;
         forceSSL = true;
-        quic = true;
 
         locations."/" = {
+          proxyWebsockets = true;
           proxyPass = mylib.formatMappingHttp proxy-ports.sonarr;
         };
       };
