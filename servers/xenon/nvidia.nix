@@ -1,31 +1,24 @@
 {config, ...}: {
-  nixpkgs.config.allowUnfree = true;
-
+  #NixOS Stable - 24.05 still calls the graphical togable option as "OpenGL"
   hardware.graphics = {
     enable = true;
   };
 
-  services.xserver = {
-    enable = true;
-    videoDrivers = ["nvidia"];
-  };
+  #For nixos-unstable, they renamed it
+  #hardware.graphics.enable = true;
 
-  hardware = {
-    nvidia-container-toolkit.enable = true;
+  services.xserver.enable = true;
+  services.xserver.videoDrivers = ["nvidia"];
 
-    nvidia = {
-      modesetting.enable = true;
+  hardware.nvidia = {
+    modesetting.enable = true;
+    powerManagement.enable = false;
+    powerManagement.finegrained = false;
 
-      powerManagement = {
-        enable = false;
-        finegrained = false;
-      };
+    open = true;
 
-      open = false;
+    nvidiaSettings = false;
 
-      nvidiaSettings = true;
-
-      package = config.boot.kernelPackages.nvidiaPackages.beta;
-    };
+    package = config.boot.kernelPackages.nvidiaPackages.latest;
   };
 }
