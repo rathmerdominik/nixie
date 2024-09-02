@@ -1,4 +1,8 @@
-{inputs, ...}: {
+{
+  inputs,
+  pkgs,
+  ...
+}: {
   imports =
     (map (n: ./${n}) (builtins.filter (name: name != "default.nix") (builtins.attrNames (builtins.readDir ./.))))
     ++ [
@@ -13,6 +17,8 @@
   powerManagement.cpuFreqGovernor = "performance";
 
   virtualisation.oci-containers.backend = "docker";
+
+  virtualisation.docker.package = pkgs.docker_25;
 
   networking = {
     firewall.enable = false;
