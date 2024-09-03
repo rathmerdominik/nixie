@@ -10,16 +10,17 @@ mylib.restructure {
   };
 
   neon = {
-    qbittorrent = 8080;
   };
 
   krypton = {
     vaultwarden = 8000;
     pterodactyl = 9393;
-    authentik = 9000;
-    sonarr = 9000;
-    radarr = 9000;
-    prowlarr = 9000;
+    authentik = 9070;
+    # All of these go through the auth provider
+    sonarr = 9070;
+    radarr = 9070;
+    prowlarr = 9070;
+    qbittorrent = 9070;
   };
 
   argon = {

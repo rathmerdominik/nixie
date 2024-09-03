@@ -36,7 +36,7 @@
   services.nginx.virtualHosts = let
     inherit (config.networking) domain;
   in {
-    "hartzkino.${domain}" = {
+    "watch.${domain}" = {
       enableACME = true;
       forceSSL = true;
       quic = true;

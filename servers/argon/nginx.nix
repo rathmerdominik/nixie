@@ -109,7 +109,7 @@ in {
           proxyPass = mylib.formatMappingHttp proxy-ports.radarr;
         };
       };
-      "jellyfin.${domain}" = {
+      "watch.${domain}" = {
         enableACME = true;
         forceSSL = true;
 
