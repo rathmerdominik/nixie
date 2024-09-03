@@ -4,29 +4,7 @@
   ...
 }: {
   imports =
-    [
-      ./firefly-iii.nix
-      ./fs.nix
-      ./grafana.nix
-      ./homarr.nix
-      ./immich.nix
-      ./jellyfin.nix
-      ./jellyseerr.nix
-      ./mealie.nix
-      ./microbin.nix
-      ./netdata.nix
-      ./ntfy.nix
-      ./nvidia.nix
-      ./postgres.nix
-      ./prowlarr.nix
-      ./paperless-ngx.nix
-      ./radarr.nix
-      ./romm.nix
-      ./sonarr.nix
-      ./sunshine.nix
-      ./syncthing.nix
-      ./wings.nix
-    ]
+    lib.pipe (builtins.readDir ./.) [(lib.mapAttrsToList (name: type: {inherit name type;})) (builtins.filter (file: file.type != "directory")) (builtins.filter (file: file.name != "default.nix")) (map (file: ./${file.name}))]
     ++ [
       inputs.hardware.nixosModules.common-cpu-amd
       inputs.hardware.nixosModules.common-gpu-nvidia-nonprime
