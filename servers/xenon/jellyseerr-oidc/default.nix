@@ -15,9 +15,9 @@ mkYarnPackage rec {
   version = "0.1.0";
 
   src = fetchFromGitHub {
-    owner = "michaelhthomas";
+    owner = "Fallenbagel";
     repo = "jellyseerr";
-    rev = "oidc-login";
+    rev = "preview-OIDC";
     sha256 = "sha256-u+vKKKpCgia66vfXHl3oLixu76vugdpmH2maFTircF8=";
   };
 
