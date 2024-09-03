@@ -1,6 +1,6 @@
 {inputs, ...}: {
   imports =
-    (map (n: ./${n}) (builtins.filter (name: name != "default.nix") (builtins.attrNames (builtins.filter (type: type != "directory") (builtins.readDir ./.)))))
+    (map (n: ./${n}) (builtins.filter (name: name != "default.nix" && builtins.isFile name) (builtins.attrNames (builtins.readDir ./.))))
     ++ [
       inputs.hardware.nixosModules.common-cpu-amd
       inputs.hardware.nixosModules.common-gpu-nvidia-nonprime
