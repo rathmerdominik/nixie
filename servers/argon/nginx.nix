@@ -146,6 +146,15 @@ in {
           proxyPass = mylib.formatMappingHttp proxy-ports.authentik;
         };
       };
+      "request.${domain}" = {
+        enableACME = true;
+        forceSSL = true;
+
+        locations."/" = {
+          proxyWebsockets = true;
+          proxyPass = mylib.formatMappingHttp proxy-ports.jellyseerr;
+        };
+      };
     };
     appendConfig = ''
       stream {
