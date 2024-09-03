@@ -8,6 +8,7 @@
   nodejs,
   python3,
   sqlite,
+  ...
 }:
 mkYarnPackage rec {
   pname = "jellyseerr";
