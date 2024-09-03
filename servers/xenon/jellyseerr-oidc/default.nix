@@ -12,7 +12,7 @@
 }:
 mkYarnPackage rec {
   pname = "jellyseerr";
-  version = "0.1.0";
+  version = "1.9.2";
 
   src = fetchFromGitHub {
     owner = "Fallenbagel";
