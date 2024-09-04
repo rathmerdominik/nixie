@@ -20,7 +20,7 @@ mylib.restructure {
     sonarr = 9070;
     radarr = 9070;
     prowlarr = 9070;
-    qbittorrent = 9070;
+    qbit = 9070;
   };
 
   argon = {

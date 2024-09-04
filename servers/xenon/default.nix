@@ -1,10 +1,10 @@
 {
-  lib,
   inputs,
+  lib,
   ...
 }: {
   imports =
-    lib.pipe (builtins.readDir ./.) [(lib.mapAttrsToList (name: type: {inherit name type;})) (builtins.filter (file: file.type != "directory" && file.name != "default.nix")) (map (file: ./${file.name}))]
+    lib.fileset.toList (lib.fileset.difference ./. ./default.nix)
     ++ [
       inputs.hardware.nixosModules.common-cpu-amd
       inputs.hardware.nixosModules.common-gpu-nvidia-nonprime

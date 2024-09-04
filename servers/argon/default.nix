@@ -1,6 +1,10 @@
-{modulesPath, ...}: {
+{
+  modulesPath,
+  lib,
+  ...
+}: {
   imports =
-    (map (n: ./${n}) (builtins.filter (name: name != "default.nix") (builtins.attrNames (builtins.readDir ./.))))
+    lib.fileset.toList (lib.fileset.difference ./. ./default.nix)
     ++ [
       "${modulesPath}/profiles/qemu-guest.nix"
     ];

@@ -155,6 +155,15 @@ in {
           proxyPass = mylib.formatMappingHttp proxy-ports.jellyseerr;
         };
       };
+      "torrent.${domain}" = {
+        enableACME = true;
+        forceSSL = true;
+
+        locations."/" = {
+          proxyWebsockets = true;
+          proxyPass = mylib.formatMappingHttp proxy-ports.qbit;
+        };
+      };
     };
     appendConfig = ''
       stream {
