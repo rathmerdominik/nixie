@@ -4,7 +4,7 @@
   ...
 }: {
   imports =
-    lib.fileset.toList (lib.fileset.difference ./. ./default.nix)
+    lib.fileset.toList (lib.fileset.difference ./. lib.fileset.unions [./default.nix ./jellyseerr-oidc])
     ++ [
       inputs.hardware.nixosModules.common-cpu-amd
       inputs.hardware.nixosModules.common-gpu-nvidia-nonprime
