@@ -13,6 +13,7 @@ with import ../pubkeys.nix; {
   "pterodactyl-env.age".publicKeys = (builtins.attrValues users) ++ [hosts.krypton];
   "vaultwarden-env.age".publicKeys = (builtins.attrValues users) ++ [hosts.krypton];
   "authentik.age".publicKeys = (builtins.attrValues users) ++ [hosts.krypton];
+  "discord-to-authentik.age".publicKeys = (builtins.attrValues users) ++ [hosts.krypton];
 
   "mail-hammerclock.age".publicKeys = (builtins.attrValues users) ++ [hosts.argon];
   "keycloak-database.age".publicKeys = (builtins.attrValues users) ++ [hosts.argon];

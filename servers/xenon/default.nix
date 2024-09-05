@@ -3,7 +3,6 @@
   lib,
   ...
 }: let
-  # A set of Nix-related files
   ignoredFiles = lib.fileset.unions [./default.nix ./jellyseerr-oidc];
 in {
   imports =

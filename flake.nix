@@ -19,6 +19,7 @@
       url = "github:nix-community/authentik-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    discord-to-authentik.url = "github:rathmerdominik/discord-to-authentik";
   };
 
   outputs = {nixpkgs, ...} @ inputs: let
