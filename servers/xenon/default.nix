@@ -2,9 +2,12 @@
   inputs,
   lib,
   ...
-}: {
+}: let
+  # A set of Nix-related files
+  ignoredFiles = lib.fileset.unions [./default.nix ./jellyseerr-oidc];
+in {
   imports =
-    lib.fileset.toList (lib.fileset.difference ./. lib.fileset.unions [./default.nix ./jellyseerr-oidc])
+    lib.fileset.toList (lib.fileset.difference ./. ignoredFiles)
     ++ [
       inputs.hardware.nixosModules.common-cpu-amd
       inputs.hardware.nixosModules.common-gpu-nvidia-nonprime
