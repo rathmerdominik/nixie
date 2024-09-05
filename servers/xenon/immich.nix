@@ -6,7 +6,7 @@
   ...
 }: let
   immich-path = "/var/lib/immich";
-  immich-version = "v1.113.0";
+  immich-version = "v1.113.1";
 in {
   age.secrets.immich.file = ../../secrets/immich.age;
 
@@ -36,6 +36,7 @@ in {
       "--network=immich"
       "--network-alias=immich-server"
       "--device=/dev/dri:/dev/dri"
+      "--pull=always"
     ];
   };
 
@@ -55,6 +56,7 @@ in {
       "--network=immich"
       "--network-alias=immich-machine-learning"
       "--device=nvidia.com/gpu=all"
+      "--pull=always"
     ];
   };
 
@@ -77,6 +79,7 @@ in {
       "--health-start-period=5m0s"
       "--network-alias=database"
       "--network=immich"
+      "--pull=always"
     ];
   };
 
@@ -87,6 +90,7 @@ in {
       "--health-cmd=redis-cli ping || exit 1"
       "--network-alias=redis"
       "--network=immich"
+      "--pull=always"
     ];
   };
 
