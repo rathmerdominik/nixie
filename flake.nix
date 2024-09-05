@@ -43,6 +43,7 @@
             inputs.agenix.nixosModules.default
             inputs.mailserver.nixosModule
             inputs.authentik-nix.nixosModules.default
+            inputs.discord-to-authentik.nixosModule.default
 
             ./common
             ./servers/${name}
