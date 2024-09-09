@@ -164,6 +164,24 @@ in {
           proxyPass = mylib.formatMappingHttp proxy-ports.qbit;
         };
       };
+      "meals.${domain}" = {
+        enableACME = true;
+        forceSSL = true;
+
+        locations."/" = {
+          proxyWebsockets = true;
+          proxyPass = mylib.formatMappingHttp proxy-ports.mealie;
+        };
+      };
+      "paste.${domain}" = {
+        enableACME = true;
+        forceSSL = true;
+
+        locations."/" = {
+          proxyWebsockets = true;
+          proxyPass = mylib.formatMappingHttp proxy-ports.microbin;
+        };
+      };
     };
     appendConfig = ''
       stream {
