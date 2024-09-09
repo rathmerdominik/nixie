@@ -109,11 +109,11 @@
         "poetry2nix": "poetry2nix_2"
       },
       "locked": {
-        "lastModified": 1725889080,
-        "narHash": "sha256-CFK6BnXKFVXm84S7ZATusvOKJMQpZUe8FORDdB4DTvQ=",
+        "lastModified": 1725903907,
+        "narHash": "sha256-O/CuqKTu9Lw2/UdffYMz26dqszXpGAc+j732ryFexxY=",
         "owner": "rathmerdominik",
         "repo": "discord-to-authentik",
-        "rev": "39b83e4987ae7b1510c5c3115614d36db0b5da05",
+        "rev": "a79cfb8e75f787d7ffb2aed8275b8935908de2fa",
         "type": "github"
       },
       "original": {
