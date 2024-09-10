@@ -8,7 +8,6 @@ mylib.restructure {
     wings = 9595;
     immich = 2283;
     mealie = 9000;
-    microbin = 9020;
   };
 
   neon = {
@@ -23,6 +22,7 @@ mylib.restructure {
     radarr = 9070;
     prowlarr = 9070;
     qbit = 9070;
+    microbin = 9070;
   };
 
   argon = {
