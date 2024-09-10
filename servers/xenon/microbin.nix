@@ -1,6 +1,4 @@
-{config, ...}: let
-  microbin-data-dir = "/srv/mergerfs/storage/microbin";
-in {
+{config, ...}: {
   age.secrets.microbin.file = ../../secrets/microbin.age;
 
   services.microbin = {
@@ -22,16 +20,6 @@ in {
       MICROBIN_DISABLE_UPDATE_CHECKING = false;
       MICROBIN_DISABLE_TELEMETRY = true;
       MICROBIN_LIST_SERVER = false;
-
-      MICROBIN_DATA_DIR = microbin-data-dir;
-    };
-  };
-
-  systemd.tmpfiles.settings."10-microbin" = {
-    "${microbin-data-dir}".d = {
-      group = "root";
-      mode = "0755";
-      user = "root";
     };
   };
 }
