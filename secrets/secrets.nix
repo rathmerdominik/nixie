@@ -3,11 +3,9 @@ with import ../pubkeys.nix; {
 
   "microbin.age".publicKeys = (builtins.attrValues users) ++ [hosts.xenon];
   "paperless-ngx.age".publicKeys = (builtins.attrValues users) ++ [hosts.xenon];
-  "cloudflare-token.age".publicKeys = (builtins.attrValues users) ++ [hosts.xenon];
   "immich.age".publicKeys = (builtins.attrValues users) ++ [hosts.xenon];
   "homarr.age".publicKeys = (builtins.attrValues users) ++ [hosts.xenon];
   "mealie.age".publicKeys = (builtins.attrValues users) ++ [hosts.xenon];
-  "postgres-sql.age".publicKeys = (builtins.attrValues users) ++ [hosts.xenon];
 
   "mullvad.age".publicKeys = (builtins.attrValues users) ++ [hosts.neon];
 
@@ -18,5 +16,4 @@ with import ../pubkeys.nix; {
   "discord-to-authentik.age".publicKeys = (builtins.attrValues users) ++ [hosts.krypton];
 
   "mail-hammerclock.age".publicKeys = (builtins.attrValues users) ++ [hosts.argon];
-  "keycloak-database.age".publicKeys = (builtins.attrValues users) ++ [hosts.argon];
 }
