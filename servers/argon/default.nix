@@ -50,9 +50,15 @@
 
   networking.firewall.enable = false;
 
+  networking.nat = {
+    enable = true;
+    internalInterfaces = ["ens3" "ztnfaavftl"];
+    externalInterface = "ztnfaavftl";
+  };
+
   networking.nat.forwardPorts = let
     common = {
-      destination = "10.147.18.10:25560-25570";
+      destination = "xenon:25560-25570";
       sourcePort = "25560:25570";
       loopbackIPs = ["198.251.88.245"];
     };
