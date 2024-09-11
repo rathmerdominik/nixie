@@ -50,23 +50,14 @@
 
   networking.firewall.enable = false;
 
-  networking.nat = {
-    enable = true;
-    internalInterfaces = ["ens3" "ztnfaavftl"];
-    externalInterface = "ztnfaavftl";
-    forwardPorts = [
-      {
-        destination = "10.147.18.10:25565";
-        sourcePort = 25565;
-        proto = "tcp";
-        # loopbackIPs = ["198.251.88.245"];
-      }
-      {
-        destination = "10.147.18.10:25566";
-        sourcePort = 25566;
-        proto = "tcp";
-        # loopbackIPs = ["198.251.88.245"];
-      }
-    ];
-  };
+  networking.nat.forwardPorts = let
+    common = {
+      destination = "xenon:25560-25570";
+      sourcePort = "25560:25570";
+      loopbackIPs = ["198.251.88.245"];
+    };
+  in [
+    (common // {proto = "tcp";})
+    (common // {proto = "udp";})
+  ];
 }
