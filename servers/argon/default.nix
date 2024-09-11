@@ -50,16 +50,19 @@
 
   networking.firewall.enable = false;
 
-  networking.nat.forwardPorts = [
-    {
-      destination = "xenon:25565";
-      sourcePort = 25565;
-      proto = "tcp";
-    }
-    {
-      destination = "xenon:25566";
-      sourcePort = 25566;
-      proto = "tcp";
-    }
-  ];
+  networking.nat = {
+    enable = true;
+    forwardPorts = [
+      {
+        destination = "10.147.18.10:25565";
+        sourcePort = 25565;
+        proto = "tcp";
+      }
+      {
+        destination = "10.147.18.10:25566";
+        sourcePort = 25566;
+        proto = "tcp";
+      }
+    ];
+  };
 }
