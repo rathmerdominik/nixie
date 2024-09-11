@@ -6,7 +6,7 @@
         inherit (config.users.users.qbittorrent) uid;
         inherit (config.users.groups.qbittorrent) gid;
       in ''
-        /srv/torrents 192.168.178.0/24(no_subtree_check,rw,all_squash,anonuid=${builtins.toString uid},anongid=${builtins.toString gid})
+        /srv/torrents 10.147.18.0/24(no_subtree_check,rw,all_squash,anonuid=${builtins.toString uid},anongid=${builtins.toString gid})
       '';
     };
     settings.nfsd = {
