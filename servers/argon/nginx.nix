@@ -54,7 +54,7 @@ in {
           '';
         };
       };
-      "bitwarden.${domain}" = {
+      "vault.${domain}" = {
         enableACME = true;
         forceSSL = true;
         quic = true;
@@ -91,7 +91,7 @@ in {
           '';
         };
       };
-      "sonarr.${domain}" = {
+      "series.${domain}" = {
         enableACME = true;
         forceSSL = true;
 
@@ -103,7 +103,7 @@ in {
           '';
         };
       };
-      "radarr.${domain}" = {
+      "movies.${domain}" = {
         enableACME = true;
         forceSSL = true;
 
@@ -124,7 +124,7 @@ in {
           proxyPass = mylib.formatMappingHttp proxy-ports.jellyfin;
         };
       };
-      "prowlarr.${domain}" = {
+      "index.${domain}" = {
         enableACME = true;
         forceSSL = true;
 
@@ -136,7 +136,7 @@ in {
           '';
         };
       };
-      "homarr.${domain}" = {
+      "manage.${domain}" = {
         enableACME = true;
         forceSSL = true;
         quic = true;
