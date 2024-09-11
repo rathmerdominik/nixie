@@ -52,7 +52,7 @@
 
   networking.nat.forwardPorts = let
     common = {
-      destination = "xenon:25560-25570";
+      destination = "10.147.18.10:25560-25570";
       sourcePort = "25560:25570";
       loopbackIPs = ["198.251.88.245"];
     };
