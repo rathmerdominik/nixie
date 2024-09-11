@@ -183,21 +183,5 @@ in {
         };
       };
     };
-    appendConfig = ''
-      stream {
-        server {
-          listen 25566;
-          proxy_pass xenon:25566;
-        }
-        server {
-          listen 25565;
-          proxy_pass xenon:25565;
-        }
-        server {
-          listen 2022;
-          proxy_pass ${mylib.formatMapping proxy-ports.wings-sftp};
-        }
-      }
-    '';
   };
 }
