@@ -7,5 +7,8 @@
       "HOST" = "0.0.0.0";
       "PORT" = "8191";
     };
+    extraOptions = [
+      "--pull=always"
+    ];
   };
 }
