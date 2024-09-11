@@ -59,13 +59,13 @@
         destination = "10.147.18.10:25565";
         sourcePort = 25565;
         proto = "tcp";
-        loopbackIPs = ["198.251.88.245"];
+        # loopbackIPs = ["198.251.88.245"];
       }
       {
         destination = "10.147.18.10:25566";
         sourcePort = 25566;
         proto = "tcp";
-        loopbackIPs = ["198.251.88.245"];
+        # loopbackIPs = ["198.251.88.245"];
       }
     ];
   };
