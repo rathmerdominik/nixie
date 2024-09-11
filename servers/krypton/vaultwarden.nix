@@ -6,7 +6,7 @@
     environmentFile = config.age.secrets.vaultwarden-env.path;
     config = {
       DATA_FOLDER = "/var/lib/vaultwarden";
-      DOMAIN = "https://bitwarden.hammerclock.net";
+      DOMAIN = "https://vault.hammerclock.net";
       SIGNUPS_ALLOWED = false;
       ROCKET_ADDRESS = "0.0.0.0";
     };
