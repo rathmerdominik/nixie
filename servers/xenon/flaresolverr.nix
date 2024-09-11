@@ -4,7 +4,7 @@
     ports = ["8191:8191"];
     environment = {
       "TZ" = "Europe/Berlin";
-      "HOST" = "10.147.18.10";
+      "HOST" = "0.0.0.0";
       "PORT" = "8191";
     };
   };
