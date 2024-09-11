@@ -98,6 +98,9 @@ in {
         locations."/" = {
           proxyWebsockets = true;
           proxyPass = mylib.formatMappingHttp proxy-ports.sonarr;
+          extraConfig = ''
+            client_max_body_size 100M;
+          '';
         };
       };
       "radarr.${domain}" = {
@@ -107,6 +110,9 @@ in {
         locations."/" = {
           proxyWebsockets = true;
           proxyPass = mylib.formatMappingHttp proxy-ports.radarr;
+          extraConfig = ''
+            client_max_body_size 100M;
+          '';
         };
       };
       "watch.${domain}" = {
