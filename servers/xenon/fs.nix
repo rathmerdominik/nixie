@@ -3,6 +3,12 @@
     pkgs.mergerfs
   ];
 
+  systemd.tmpfiles.settings."10-torrents"."/srv/torrents".d = {
+    mode = "777";
+    user = "root";
+    group = "root";
+  };
+
   fileSystems = let
     mkMergerfs = device: {
       inherit device;
@@ -31,5 +37,10 @@
     "/srv/mergerfs/storage" = mkMergerfs "/srv/disks/big-storage:/srv/disks/medium-storage";
     "/srv/mergerfs/backup" = mkMergerfs "/srv/disks/big-backup:/srv/disks/medium-backup";
     "/srv/mergerfs/roms" = mkMergerfs "/srv/disks/small-roms-1:/srv/disks/small-roms-2";
+
+    "/srv/torrents" = {
+      device = "neon:/srv/torrents";
+      fsType = "nfs";
+    };
   };
 }
