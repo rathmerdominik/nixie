@@ -52,6 +52,7 @@
 
   networking.nat = {
     enable = true;
+    internalInterfaces = ["ens3" "ztnfaavftl"];
     externalInterface = "ztnfaavftl";
     forwardPorts = [
       {
