@@ -1,0 +1,5 @@
+{
+  services.flareSolverr = {
+    enable = true;
+  };
+}
