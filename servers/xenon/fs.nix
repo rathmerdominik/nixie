@@ -41,6 +41,7 @@
     "/srv/torrents" = {
       device = "neon:/srv/torrents";
       fsType = "nfs";
+      options = ["nfsvers=4.2"];
     };
   };
 }
