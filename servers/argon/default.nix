@@ -52,6 +52,7 @@
 
   networking.nat = {
     enable = true;
+    externalInterface = "ztnfaavftl";
     forwardPorts = [
       {
         destination = "10.147.18.10:25565";
