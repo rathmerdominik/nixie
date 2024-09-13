@@ -81,7 +81,7 @@ in {
               provider_id = "authentik";
               name = "Authentik";
               client_id = "ugzaxafTovEbtdRQA5BsBrZomYeFDbPxuuip48nm";
-              cient_secret = builtins.readFile config.age.secrets.paperless-ngx-oidc.path; # i know this is an anti-pattern. But in this instance it would be in the service file anyways
+              cient_secret = "${pkgs.cat config.age.secrets.paperless-ngx-oidc.path}";
               settings.server_url = "https://auth.${config.networking.domain}/application/o/${client_id}/.well-known/openid-configuration";
             }
           ];
