@@ -38,8 +38,8 @@ in {
         continue_on_soft_render_error = true;
       };
 
-      # PAPERLESS_TIKA_ENABLED = true;
-      # PAPERLESS_TIKA_ENDPOINT = "http://localhost:9998";
+      PAPERLESS_TIKA_ENABLED = true;
+      PAPERLESS_TIKA_ENDPOINT = "http://localhost:9998";
 
       PAPERLESS_CONSUMER_ENABLE_BARCODES = true;
       PAPERLESS_CONSUMER_ENABLE_ASN_BARCODE = true;
@@ -92,14 +92,19 @@ in {
     };
   };
 
-  # services.tika = {
-  #   enable = true;
-  #   enableOcr = true;
-  #   listenAddress = "0.0.0.0";
-  # };
+  services.tika = {
+    enable = true;
+    enableOcr = true;
+    listenAddress = "0.0.0.0";
+  };
 
   # # This here core dumps...
   # services.gotenberg = {
   #   enable = true;
   # };
+
+  virtualisation.oci-containers.containers.gotenberg = {
+    image = "gotenberg/gotenberg:8";
+    ports = ["3000:3000"];
+  };
 }
