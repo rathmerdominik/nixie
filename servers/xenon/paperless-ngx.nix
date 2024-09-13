@@ -8,6 +8,7 @@
   paperless-domain = "papers.${config.networking.domain}";
   consumption-dir = "${paperless-root}/consumption";
   media-dir = "${paperless-root}/media";
+  trash-dir = "${paperless-root}/trash";
 in {
   age.secrets.paperless-ngx.file = ../../secrets/paperless-ngx.age;
   age.secrets.paperless-ngx-oidc.file = ../../secrets/paperless-ngx-oidc.age;
@@ -107,5 +108,13 @@ in {
   virtualisation.oci-containers.containers.gotenberg = {
     image = "gotenberg/gotenberg:8";
     ports = ["3000:3000"];
+  };
+
+  systemd.tmpfiles.settings."10-paperless-trash" = {
+    "${trash-dir}".d = {
+      group = "paperless";
+      mode = "0755";
+      user = "paperless";
+    };
   };
 }
