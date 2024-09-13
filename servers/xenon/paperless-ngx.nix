@@ -8,7 +8,7 @@
   paperless-domain = "papers.${config.networking.domain}";
   consumption-dir = "${paperless-root}/consumption";
   media-dir = "${paperless-root}/media";
-  trash-dir = "${paperless-root}/trash";
+  trash-dir = "${config.services.paperless.dataDir}/trash";
 in {
   age.secrets.paperless-ngx.file = ../../secrets/paperless-ngx.age;
   age.secrets.paperless-ngx-oidc.file = ../../secrets/paperless-ngx-oidc.age;
