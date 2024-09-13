@@ -11,8 +11,16 @@
   trash-dir = "${config.services.paperless.dataDir}/trash";
 in {
   age.secrets.paperless-ngx.file = ../../secrets/paperless-ngx.age;
-  age.secrets.paperless-ngx-oidc.file = ../../secrets/paperless-ngx-oidc.age;
-  age.secrets.paperless-ngx-mail.file = ../../secrets/paperless-ngx-mail.age;
+  age.secrets.paperless-ngx-oidc = {
+    file = ../../secrets/paperless-ngx-oidc.age;
+    owner = "paperless";
+    group = "paperless";
+  };
+  age.secrets.paperless-ngx-mail = {
+    file = ../../secrets/paperless-ngx-mail.age;
+    owner = "paperless";
+    group = "paperless";
+  };
 
   environment.systemPackages = [
     pkgs.zxing
