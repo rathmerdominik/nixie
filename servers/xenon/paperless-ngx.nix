@@ -12,12 +12,7 @@
 in {
   age.secrets.paperless-ngx.file = ../../secrets/paperless-ngx.age;
   age.secrets.paperless-ngx-oidc = {
-    file = ../../secrets/paperless-ngx-oidc.age;
-    owner = "paperless";
-    group = "paperless";
-  };
-  age.secrets.paperless-ngx-mail = {
-    file = ../../secrets/paperless-ngx-mail.age;
+    file = ../../secrets/paperless-ngx-oidc-mail.age;
     owner = "paperless";
     group = "paperless";
   };
@@ -73,26 +68,12 @@ in {
       PAPERLESS_REDIRECT_LOGIN_TO_SSO = true;
       PAPERLESS_DISABLE_REGULAR_LOGIN = true;
       PAPERLESS_ACCOUNT_SESSION_REMEMBER = true;
-      PAPERLESS_SOCIALACCOUNT_PROVIDERS = builtins.toJSON {
-        openid_connect = {
-          OAUTH_PKCE_ENABLED = "True";
-          APPS = [
-            rec {
-              provider_id = "authentik";
-              name = "Authentik";
-              client_id = "ugzaxafTovEbtdRQA5BsBrZomYeFDbPxuuip48nm";
-              cient_secret = "${builtins.readFile config.age.secrets.paperless-ngx-oidc.path}";
-              settings.server_url = "https://auth.${config.networking.domain}/application/o/${client_id}/.well-known/openid-configuration";
-            }
-          ];
-        };
-      };
     };
   };
 
   systemd.services.paperless-web = {
     serviceConfig = {
-      EnvironmentFile = config.age.secrets.paperless-ngx-mail.path;
+      EnvironmentFile = config.age.secrets.paperless-ngx-oidc-mail.path;
     };
   };
 
