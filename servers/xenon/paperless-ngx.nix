@@ -70,8 +70,8 @@ in {
 
       PAPERLESS_APPS = "allauth.socialaccount.providers.openid_connect";
       PAPERLESS_SOCIAL_AUTO_SIGNUP = true;
-      # PAPERLESS_REDIRECT_LOGIN_TO_SSO = true;
-      # PAPERLESS_DISABLE_REGULAR_LOGIN = true;
+      PAPERLESS_REDIRECT_LOGIN_TO_SSO = true;
+      PAPERLESS_DISABLE_REGULAR_LOGIN = true;
       PAPERLESS_ACCOUNT_SESSION_REMEMBER = true;
       PAPERLESS_SOCIALACCOUNT_PROVIDERS = builtins.toJSON {
         openid_connect = {
@@ -81,6 +81,7 @@ in {
               provider_id = "authentik";
               name = "Authentik";
               client_id = "ugzaxafTovEbtdRQA5BsBrZomYeFDbPxuuip48nm";
+              cient_secret = builtins.readFile config.age.secrets.paperless-ngx-oidc.path; # i know this is an anti-pattern. But in this instance it would be in the service file anyways
               settings.server_url = "https://auth.${config.networking.domain}/application/o/${client_id}/.well-known/openid-configuration";
             }
           ];
@@ -90,14 +91,6 @@ in {
   };
 
   systemd.services.paperless-web = {
-    script = lib.mkBefore ''
-      oidcSecret=$(< ${config.age.secrets.paperless-ngx-oidc.path})
-      export PAPERLESS_SOCIALACCOUNT_PROVIDERS=$(
-        ${pkgs.jq}/bin/jq <<< "$PAPERLESS_SOCIALACCOUNT_PROVIDERS" \
-          --compact-output \
-          --arg oidcSecret "$oidcSecret" '.openid_connect.APPS.[0].secret = $oidcSecret'
-      )
-    '';
     serviceConfig = {
       EnvironmentFile = config.age.secrets.paperless-ngx-mail.path;
     };
