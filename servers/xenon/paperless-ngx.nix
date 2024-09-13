@@ -11,7 +11,7 @@
   trash-dir = "${config.services.paperless.dataDir}/trash";
 in {
   age.secrets.paperless-ngx.file = ../../secrets/paperless-ngx.age;
-  age.secrets.paperless-ngx-oidc = {
+  age.secrets.paperless-ngx-oidc-mail = {
     file = ../../secrets/paperless-ngx-oidc-mail.age;
     owner = "paperless";
     group = "paperless";
