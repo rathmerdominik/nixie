@@ -55,7 +55,7 @@ in {
       PAPERLESS_WEBSERVER_WORKERS = 4;
       PAPERLESS_NUMBER_OF_SUGGESTED_DATES = 8;
 
-      PAPERLESS_EMPTY_TRASH_DIR = "${paperless-root}/trash";
+      PAPERLESS_EMPTY_TRASH_DIR = "${trash-dir}";
 
       PAPERLESS_FILENAME_FORMAT = "{owner_username}/{created_year}-{created_month}-{created_day}_{asn}_{title}";
 
