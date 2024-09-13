@@ -8,7 +8,7 @@ mylib.restructure {
     wings = 9595;
     immich = 2283;
     mealie = 9000;
-    paperless-ngx = 8000;
+    paperless-ngx = 28981;
   };
 
   neon = {
