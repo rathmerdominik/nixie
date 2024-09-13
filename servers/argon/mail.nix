@@ -40,6 +40,9 @@ in {
       "meals@${domain}" = {
         hashedPasswordFile = config.age.secrets.mail-hammerclock.path;
       };
+      "papers@${domain}" = {
+        hashedPasswordFile = config.age.secrets.mail-hammerclock.path;
+      };
     };
 
     certificateScheme = "acme-nginx";

@@ -195,6 +195,18 @@ in {
           '';
         };
       };
+      "papers.${domain}" = {
+        enableACME = true;
+        forceSSL = true;
+
+        locations."/" = {
+          proxyWebsockets = true;
+          proxyPass = mylib.formatMappingHttp proxy-ports.paperless-ngx;
+          extraConfig = ''
+            client_max_body_size 50000M;
+          '';
+        };
+      };
     };
   };
 }
