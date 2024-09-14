@@ -3,7 +3,8 @@ with import ../pubkeys.nix; {
 
   "microbin.age".publicKeys = (builtins.attrValues users) ++ [hosts.xenon];
   "paperless-ngx.age".publicKeys = (builtins.attrValues users) ++ [hosts.xenon];
-  "paperless-ngx-oidc-mail.age".publicKeys = (builtins.attrValues users) ++ [hosts.xenon];
+  "paperless-ngx-mail.age".publicKeys = (builtins.attrValues users) ++ [hosts.xenon];
+  "paperless-ngx-oidc.age".publicKeys = (builtins.attrValues users) ++ [hosts.xenon];
   "immich.age".publicKeys = (builtins.attrValues users) ++ [hosts.xenon];
   "homarr.age".publicKeys = (builtins.attrValues users) ++ [hosts.xenon];
   "mealie.age".publicKeys = (builtins.attrValues users) ++ [hosts.xenon];
