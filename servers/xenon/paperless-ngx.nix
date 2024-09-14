@@ -87,6 +87,10 @@ in {
   };
 
   systemd.services.paperless-web = {
+    script = lib.mkBefore ''
+      paperlessClientSecret=$(< ${config.age.secrets.paperless-ngx-oidc.path})
+      export PAPERLESS_SOCIALACCOUNT_PROVIDERS="$( <<< $PAPERLESS_SOCIALACCOUNT_PROVIDERS ${pkgs.jq}/bin/jq -c --arg paperlessClientSecret "$paperlessClientSecret" '.openid_connect.APPS.[0].secret = $paperlessClientSecret')"
+    '';
     serviceConfig = {
       EnvironmentFile = config.age.secrets.paperless-ngx-mail.path;
     };
@@ -115,9 +119,4 @@ in {
       user = "paperless";
     };
   };
-
-  systemd.services.paperless-web.script = lib.mkBefore ''
-    paperlessClientSecret=$(< ${config.age.secrets.paperless-ngx-oidc.path})
-    export PAPERLESS_SOCIALACCOUNT_PROVIDERS="$( <<< $PAPERLESS_SOCIALACCOUNT_PROVIDERS ${pkgs.jq}/bin/jq -c --arg paperlessClientSecret "$paperlessClientSecret" '.openid_connect.APPS.[0].secret = $paperlessClientSecret')"
-  '';
 }
