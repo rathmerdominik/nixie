@@ -8,6 +8,7 @@ with import ../pubkeys.nix; {
   "immich.age".publicKeys = (builtins.attrValues users) ++ [hosts.xenon];
   "homarr.age".publicKeys = (builtins.attrValues users) ++ [hosts.xenon];
   "mealie.age".publicKeys = (builtins.attrValues users) ++ [hosts.xenon];
+  "romm.age".publicKeys = (builtins.attrValues users) ++ [hosts.xenon];
 
   "mullvad.age".publicKeys = (builtins.attrValues users) ++ [hosts.neon];
 
