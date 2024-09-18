@@ -8,6 +8,7 @@
   pkg-config,
   rustPlatform,
   stdenv,
+  ...
 }:
 rustPlatform.buildRustPackage rec {
   pname = "microbin";
