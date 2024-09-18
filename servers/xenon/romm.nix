@@ -34,7 +34,7 @@ in {
   };
 
   virtualisation.oci-containers.containers.romm-db = {
-    image = "ghcr.io/mariadb:latest";
+    image = "ghcr.io/linuxserver:latest";
 
     volumes = [
       "mysql_data:/var/lib/mysql"
