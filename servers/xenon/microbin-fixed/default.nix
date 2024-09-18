@@ -66,7 +66,7 @@ rustPlatform.buildRustPackage rec {
     (fetchpatch {
       name = "0005-fix-eternal-pasta-having-no-effect.patch";
       url = "https://github.com/szabodanika/microbin/compare/b8a0c5490d681550d982ad02d67a1aaa0897f503..92c0b544ff9af1a3c3284f7a9089edf2146f6533.patch";
-      hash = "sha256-R47ozwu/FD1kCu5nx4Gf1cOFeLVFdS67K8RNDygwoZM=";
+      hash = "sha256-GDewVrRQ8u5gp7Bccr9XbW2MSxsV2bCwvjDtVNE92HI=";
     })
   ];
 
