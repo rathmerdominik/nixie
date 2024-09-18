@@ -24,6 +24,7 @@ in {
   };
 
   services.nginx = {
+    logErr = "/var/log/nginx/error.log debug";
     virtualHosts = {
       "~.*" = {
         default = true;
