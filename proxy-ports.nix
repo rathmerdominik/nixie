@@ -24,6 +24,7 @@ mylib.restructure {
     prowlarr = 9070;
     qbit = 9070;
     microbin = 9070;
+    romm = 9070;
   };
 
   argon = {

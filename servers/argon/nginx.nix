@@ -207,6 +207,18 @@ in {
           '';
         };
       };
+      "roms.${domain}" = {
+        enableACME = true;
+        forceSSL = true;
+
+        locations."/" = {
+          proxyWebsockets = true;
+          proxyPass = mylib.formatMappingHttp proxy-ports.romm;
+          extraConfig = ''
+            client_max_body_size 50000M;
+          '';
+        };
+      };
     };
   };
 }
