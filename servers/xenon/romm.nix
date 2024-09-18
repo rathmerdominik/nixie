@@ -36,6 +36,9 @@ in {
   virtualisation.oci-containers.containers.romm-db = {
     image = "ghcr.io/mariadb:latest";
 
+    volumes = [
+      "mysql_data:/var/lib/mysql"
+    ];
     environment = {
       MYSQL_DATABASE = "romm";
       MYSQL_USER = "romm-user";
