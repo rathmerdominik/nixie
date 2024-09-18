@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  ignoredFiles = lib.fileset.unions [./default.nix ./jellyseerr-oidc];
+  ignoredFiles = lib.fileset.unions [./default.nix ./jellyseerr-oidc ./microbin-fixed];
 in {
   imports =
     lib.fileset.toList (lib.fileset.difference ./. ignoredFiles)
