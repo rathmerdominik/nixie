@@ -1,9 +1,14 @@
-{config, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   age.secrets.microbin.file = ../../secrets/microbin.age;
 
   services.microbin = {
     enable = true;
     passwordFile = config.age.secrets.microbin.path;
+    package = pkgs.callPackage ./microbin-fixed {};
     settings = {
       MICROBIN_PUBLIC_PATH = "https://paste.${config.networking.domain}";
       MICROBIN_QR = true;
