@@ -1,4 +1,9 @@
-{config, ...}: let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   romm-version = "3.5.1";
   romm-data = "/var/lib/romm";
   rom-directory = "/srv/mergerfs/roms";
@@ -27,6 +32,8 @@ in {
     ];
     extraOptions = [
       "--pull=always"
+      "--network-alias=romm"
+      "--network=romm"
     ];
     dependsOn = [
       "romm-db"
@@ -46,6 +53,28 @@ in {
     environmentFiles = [
       config.age.secrets.romm.path
     ];
+    extraOptions = [
+      "--network-alias=romm-db"
+      "--network=romm"
+    ];
+  };
+
+  systemd.services.init-romm-network = {
+    description = "Create the network bridge for romm.";
+    after = ["network.target"];
+    wantedBy = ["multi-user.target"];
+    serviceConfig.Type = "oneshot";
+    script = ''
+      check=$(${lib.getExe pkgs.docker} network ls | grep romm || true)
+      if [ -z "$check" ]; then
+        ${lib.getExe pkgs.docker} network create \
+          --driver bridge \
+          --opt com.docker.network.bridge.name=romm \
+          romm
+      else
+        echo "romm already exists in docker"
+      fi
+    '';
   };
 
   systemd.tmpfiles.settings."10-romm" = {
