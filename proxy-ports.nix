@@ -9,6 +9,7 @@ mylib.restructure {
     immich = 2283;
     mealie = 9000;
     paperless-ngx = 28981;
+    romm = 9141;
   };
 
   neon = {
@@ -24,7 +25,6 @@ mylib.restructure {
     prowlarr = 9070;
     qbit = 9070;
     microbin = 9070;
-    romm = 9070;
   };
 
   argon = {

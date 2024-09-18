@@ -155,9 +155,6 @@ in {
           proxyWebsockets = true;
           proxyPass = mylib.formatMappingHttp proxy-ports.authentik;
         };
-        extraConfig = ''
-          large_client_header_buffers 4 32k;
-        '';
       };
       "request.${domain}" = {
         enableACME = true;
@@ -221,9 +218,6 @@ in {
             client_max_body_size 50000M;
           '';
         };
-        extraConfig = ''
-          large_client_header_buffers 4 32k;
-        '';
       };
     };
   };
