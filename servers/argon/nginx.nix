@@ -155,8 +155,8 @@ in {
           proxyWebsockets = true;
           proxyPass = mylib.formatMappingHttp proxy-ports.authentik;
           extraConfig = ''
-              large_client_header_buffers 4 32k;
-          ''
+            large_client_header_buffers 4 32k;
+          '';
         };
       };
       "request.${domain}" = {
