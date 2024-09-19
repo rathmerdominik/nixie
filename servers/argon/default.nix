@@ -2,7 +2,19 @@
   modulesPath,
   lib,
   ...
-}: {
+}: let
+  nat-common = forward: let
+    common =
+      forward
+      // {
+        loopbackIPs = ["198.251.88.245"];
+      };
+  in
+    forwardPort: [
+      (common // forwardPort // {proto = "tcp";})
+      (common // forwardPort // {proto = "udp";})
+    ];
+in {
   imports =
     lib.fileset.toList (lib.fileset.difference ./. ./default.nix)
     ++ [
@@ -56,14 +68,22 @@
     externalInterface = "ztnfaavftl";
   };
 
-  networking.nat.forwardPorts = let
-    common = {
-      destination = "10.147.18.10:25560-25570";
-      sourcePort = "25560:25570";
-      loopbackIPs = ["198.251.88.245"];
-    };
-  in [
-    (common // {proto = "tcp";})
-    (common // {proto = "udp";})
-  ];
+  networking.nat.forwardPorts =
+    builtins.concatMap (nat-common {
+      destination = "10.147.18.10:25565";
+      sourcePort = 25565;
+    }) [
+      {
+        destination = "10.147.18.10:25565";
+        sourcePort = 25565;
+      }
+      {
+        destination = "10.147.18.10:25566";
+        sourcePort = 25566;
+      }
+      {
+        destination = "10.147.18.10:2022";
+        sourcePort = 2022;
+      }
+    ];
 }
