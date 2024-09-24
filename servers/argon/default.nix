@@ -39,13 +39,6 @@ in {
     acceptTerms = true;
   };
 
-  swapDevices = [
-    {
-      device = "/swapfile";
-      size = 6 * 1024;
-    }
-  ];
-
   networking = {
     firewall.enable = false;
     hosts = {
