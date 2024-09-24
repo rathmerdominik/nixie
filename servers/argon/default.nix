@@ -22,24 +22,9 @@ in {
       "${modulesPath}/profiles/qemu-guest.nix"
     ];
 
-  boot = {
-    initrd.availableKernelModules = ["ata_piix" "uhci_hcd" "virtio_pci" "virtio_scsi" "sr_mod" "virtio_blk"];
-    kernelModules = ["kvm-amd"];
-    loader = {
-      efi = {
-        canTouchEfiVariables = false;
-      };
-      systemd-boot = {
-        enable = false;
-      };
-      grub = {
-        enable = true;
-        device = "/dev/vda";
-      };
-    };
-  };
+  boot.initrd.availableKernelModules = ["xhci_pci" "virtio_pci" "virtio_scsi" "usbhid" "sr_mod"];
 
-  nixpkgs.hostPlatform = "x86_64-linux";
+  nixpkgs.hostPlatform = "aarch64-linux";
 
   system.stateVersion = "24.11";
 
