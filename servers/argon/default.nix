@@ -1,6 +1,7 @@
 {
   modulesPath,
   lib,
+  config,
   ...
 }: let
   nat-common = forward: let
@@ -41,9 +42,6 @@ in {
 
   networking = {
     firewall.enable = false;
-    hosts = {
-      "10.0.0.20" = ["krypton"];
-    };
     nat = {
       enable = true;
       internalInterfaces = ["ens3" "ztnfaavftl"];
