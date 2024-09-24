@@ -31,16 +31,26 @@ in {
 
   powerManagement.cpuFreqGovernor = "performance";
 
-  networking = {
-    domain = "hammerclock.net";
-  };
-
   security.acme = {
     defaults.email = "security@hammerclock.net";
     acceptTerms = true;
   };
 
-  networking = {
+  networking = let
+    interface = "enp1s0";
+  in {
+    domain = "hammerclock.net";
+
+    interfaces.${interface}.ipv6.addresses = [
+      {
+        address = "2a01:4f8:1c1e:83e5::2";
+        prefixLength = 64;
+      }
+    ];
+    defaultGateway6 = {
+      address = "fe80::1";
+      inherit interface;
+    };
     firewall.enable = false;
     nat = {
       enable = true;
