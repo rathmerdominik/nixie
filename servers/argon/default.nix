@@ -54,7 +54,7 @@ in {
     firewall.enable = false;
     nat = {
       enable = true;
-      internalInterfaces = ["ens3" "ztnfaavftl"];
+      internalInterfaces = ["enp1s0" "ztnfaavftl"];
       externalInterface = "ztnfaavftl";
       forwardPorts =
         builtins.concatMap (nat-common {
