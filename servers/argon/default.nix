@@ -7,13 +7,14 @@
     common =
       forward
       // {
-        loopbackIPs = ["198.251.88.245"];
+        loopbackIPs = ["49.12.237.227"];
       };
   in
     forwardPort: [
       (common // forwardPort // {proto = "tcp";})
       (common // forwardPort // {proto = "udp";})
     ];
+  xenon-internal = "10.147.18.10";
 in {
   imports =
     lib.fileset.toList (lib.fileset.difference ./. ./default.nix)
@@ -60,30 +61,33 @@ in {
     }
   ];
 
-  networking.firewall.enable = false;
-
-  networking.nat = {
-    enable = true;
-    internalInterfaces = ["ens3" "ztnfaavftl"];
-    externalInterface = "ztnfaavftl";
+  networking = {
+    firewall.enable = false;
+    hosts = {
+      "10.0.0.20" = ["krypton"];
+    };
+    nat = {
+      enable = true;
+      internalInterfaces = ["ens3" "ztnfaavftl"];
+      externalInterface = "ztnfaavftl";
+      forwardPorts =
+        builtins.concatMap (nat-common {
+          destination = "${xenon-internal}:25565";
+          sourcePort = 25565;
+        }) [
+          {
+            destination = "${xenon-internal}:25565";
+            sourcePort = 25565;
+          }
+          {
+            destination = "${xenon-internal}:25566";
+            sourcePort = 25566;
+          }
+          {
+            destination = "${xenon-internal}:2022";
+            sourcePort = 2022;
+          }
+        ];
+    };
   };
-
-  networking.nat.forwardPorts =
-    builtins.concatMap (nat-common {
-      destination = "10.147.18.10:25565";
-      sourcePort = 25565;
-    }) [
-      {
-        destination = "10.147.18.10:25565";
-        sourcePort = 25565;
-      }
-      {
-        destination = "10.147.18.10:25566";
-        sourcePort = 25566;
-      }
-      {
-        destination = "10.147.18.10:2022";
-        sourcePort = 2022;
-      }
-    ];
 }
