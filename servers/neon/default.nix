@@ -15,5 +15,8 @@
 
   system.stateVersion = "24.11";
 
+  networking.firewall.checkReversePath = "loose";
+  networking.wireguard.enable = true;
+
   powerManagement.cpuFreqGovernor = "performance";
 }
