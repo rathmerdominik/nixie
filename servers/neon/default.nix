@@ -17,6 +17,7 @@
 
   networking.firewall.checkReversePath = "loose";
   networking.wireguard.enable = true;
+  networking.firewall.enable = false;
 
   powerManagement.cpuFreqGovernor = "performance";
 }
