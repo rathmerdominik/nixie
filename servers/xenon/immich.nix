@@ -6,7 +6,7 @@
   ...
 }: let
   immich-path = "/var/lib/immich";
-  immich-version = "v1.117.0";
+  immich-version = "v1.118.0";
 in {
   age.secrets.immich.file = ../../secrets/immich.age;
 
@@ -25,7 +25,7 @@ in {
       "${immich-path}/photos:/usr/src/app/upload/library"
     ];
     ports = [
-      "${builtins.toString proxy-ports.immich.port}:3001"
+      "${builtins.toString proxy-ports.immich.port}:2283"
     ];
     dependsOn = [
       "immich-postgres"
