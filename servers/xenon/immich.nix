@@ -6,7 +6,7 @@
   ...
 }: let
   immich-path = "/var/lib/immich";
-  immich-version = "v1.118.0";
+  immich-version = "v1.118.2";
 in {
   age.secrets.immich.file = ../../secrets/immich.age;
 
