@@ -1,6 +1,6 @@
 {
   users = {
-    "dominik@linpc" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA98imQ9xSPWkqghH5ZNgETJ0sBwi5xSQbPgKUxVPrwa";
+    "dominik@linpc" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHQYVEW/e57DWFdGqhoz4MUYZ9cXQnVF0YjkaLTt5DeO";
     "dominik@AGAN-NB059" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB67nwX6gfNFhzAQYASfxBMYhws7N9lK3j0eGlbSvDxv";
   };
   hosts = {
