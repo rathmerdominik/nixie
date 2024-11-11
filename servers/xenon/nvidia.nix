@@ -1,12 +1,16 @@
-{config, ...}: {
+{
+  config,
+  lib,
+  ...
+}: {
   hardware.graphics = {
     enable = true;
   };
 
   services.xserver.enable = true;
   services.xserver.videoDrivers = ["nvidia"];
-  services.xserver.displayManager.lightdm.enable = false;
-  services.displayManager.enable = false;
+  services.xserver.displayManager.lightdm.enable = lib.mkForce false;
+  services.displayManager.enable = lib.mkForce false;
 
   hardware.nvidia = {
     modesetting.enable = true;
