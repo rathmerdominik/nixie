@@ -5,6 +5,8 @@
 
   services.xserver.enable = true;
   services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.displayManager.lightdm.enable = false;
+  services.displayManager.enable = false;
 
   hardware.nvidia = {
     modesetting.enable = true;
