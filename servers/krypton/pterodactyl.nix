@@ -38,6 +38,7 @@
       config.age.secrets.pterodactyl-env.path
     ];
     extraOptions = [
+      "--pull=always"
       "--network=panel0"
     ];
   };
