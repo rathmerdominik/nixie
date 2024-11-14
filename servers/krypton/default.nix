@@ -1,7 +1,6 @@
 {
   modulesPath,
   lib,
-  pkgs,
   ...
 }: {
   imports =
@@ -11,7 +10,6 @@
     ];
 
   boot.initrd.availableKernelModules = ["xhci_pci" "virtio_pci" "virtio_scsi" "usbhid" "sr_mod"];
-  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   nixpkgs.hostPlatform = "aarch64-linux";
 
