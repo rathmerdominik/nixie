@@ -8,6 +8,7 @@
   immich-path = "/var/lib/immich";
   immich-version = "v1.123.0";
 in {
+  # TODO Wohoo they made a module. Will have to transition at some point. Will be painful because of postgres.
   age.secrets.immich.file = ../../secrets/immich.age;
 
   virtualisation.oci-containers.containers."immich-server" = {

@@ -1,35 +1,32 @@
-{pkgs, ...}: {
-  environment.systemPackages = [
-    pkgs.mergerfs
-  ];
-
+{}: {
   fileSystems = let
-    mkMergerfs = device: {
-      inherit device;
-      fsType = "fuse.mergerfs";
-      options = ["allow_other" "moveonenospc=true" "dropcacheonclose=true" "posix_acl=true" "category.create=mfs"];
-    };
     mkDisk = label: {
       inherit label;
       fsType = "ext4";
       options = ["rw" "relatime"];
     };
   in {
-    "/srv/disks/big-storage" = mkDisk "big_storage";
-    "/srv/disks/big-backup" = mkDisk "big_backup";
-    "/srv/disks/medium-storage" = mkDisk "medium_storage";
-    "/srv/disks/medium-backup" = mkDisk "medium_backup";
-    "/srv/disks/small-roms-1" = mkDisk "small_roms_1";
-    "/srv/disks/small-roms-2" = mkDisk "small_roms_2";
+    systemd.tmpfiles.settings."10-pterodactyl" = {
+      "/srv/pterodactyl".d = {
+        group = "root";
+        mode = "0755";
+        user = "root";
+      };
+      "/srv/pterodactyl/backups".d = {
+        group = "root";
+        mode = "0755";
+        user = "root";
+      };
+    };
+
+    "/srv/disks/eight-one" = mkDisk "small_roms_1";
+    "/srv/disks/eight-two" = mkDisk "small_roms_2";
+
     "/var/lib/pterodactyl" = mkDisk "wings_drive";
 
-    "/srv/mergerfs/backup/pterodactyl" = {
+    "/srv/pterodactyl/backups" = {
       device = "/srv/disks/wings-drive/pterodactyl/backups";
       options = ["bind"];
     };
-
-    "/srv/mergerfs/storage" = mkMergerfs "/srv/disks/big-storage:/srv/disks/medium-storage";
-    "/srv/mergerfs/backup" = mkMergerfs "/srv/disks/big-backup:/srv/disks/medium-backup";
-    "/srv/mergerfs/roms" = mkMergerfs "/srv/disks/small-roms-1:/srv/disks/small-roms-2";
   };
 }

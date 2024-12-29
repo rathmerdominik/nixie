@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: let
-  paperless-root = "/srv/mergerfs/storage/paperless";
+  paperless-root = "/srv/paperless";
   paperless-domain = "papers.${config.networking.domain}";
   consumption-dir = "${paperless-root}/consumption";
   media-dir = "${paperless-root}/media";
