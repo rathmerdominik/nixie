@@ -1,4 +1,4 @@
-{}: {
+{...}: {
   fileSystems = let
     mkDisk = label: {
       inherit label;
