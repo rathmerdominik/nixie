@@ -1,6 +1,5 @@
 {
   config,
-  lib,
   pkgs,
   ...
 }: let
@@ -13,11 +12,6 @@ in {
   age.secrets.paperless-ngx.file = ../../secrets/paperless-ngx.age;
   age.secrets.paperless-ngx-mail = {
     file = ../../secrets/paperless-ngx-mail.age;
-    owner = "paperless";
-    group = "paperless";
-  };
-  age.secrets.paperless-ngx-oidc = {
-    file = ../../secrets/paperless-ngx-oidc.age;
     owner = "paperless";
     group = "paperless";
   };
@@ -68,32 +62,11 @@ in {
 
       PAPERLESS_FILENAME_FORMAT = "{owner_username}/{created_year}-{created_month}-{created_day}_{asn}_{title}";
 
-      PAPERLESS_APPS = "allauth.socialaccount.providers.openid_connect";
-      PAPERLESS_SOCIAL_AUTO_SIGNUP = true;
-      PAPERLESS_REDIRECT_LOGIN_TO_SSO = true;
       PAPERLESS_ACCOUNT_SESSION_REMEMBER = true;
-      PAPERLESS_DISABLE_REGULAR_LOGIN = true;
-      PAPERLESS_SOCIALACCOUNT_PROVIDERS = builtins.toJSON {
-        openid_connect = {
-          OAUTH_PKCE_ENABLED = "True";
-          APPS = [
-            rec {
-              provider_id = "authentik";
-              name = "Authentik";
-              client_id = "paperless";
-              settings.server_url = "https://auth.${config.networking.domain}/application/o/${client_id}-ngx/.well-known/openid-configuration";
-            }
-          ];
-        };
-      };
     };
   };
 
   systemd.services.paperless-web = {
-    script = lib.mkBefore ''
-      paperlessClientSecret=$(< ${config.age.secrets.paperless-ngx-oidc.path})
-      export PAPERLESS_SOCIALACCOUNT_PROVIDERS="$( <<< $PAPERLESS_SOCIALACCOUNT_PROVIDERS ${pkgs.jq}/bin/jq -c --arg paperlessClientSecret "$paperlessClientSecret" '.openid_connect.APPS.[0].secret = $paperlessClientSecret')"
-    '';
     serviceConfig = {
       EnvironmentFile = config.age.secrets.paperless-ngx-mail.path;
     };
@@ -105,14 +78,8 @@ in {
     listenAddress = "0.0.0.0";
   };
 
-  # # This here core dumps...
-  # services.gotenberg = {
-  #   enable = true;
-  # };
-
-  virtualisation.oci-containers.containers.gotenberg = {
-    image = "gotenberg/gotenberg:8";
-    ports = ["3000:3000"];
+  services.gotenberg = {
+    enable = true;
   };
 
   systemd.tmpfiles.settings."10-paperless-trash" = {

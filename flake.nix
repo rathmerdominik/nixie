@@ -1,25 +1,10 @@
 {
-  description = "My NixOS server configurations";
-
-  nixConfig = {
-    extra-substituters = [
-      "https://nix-community.cachix.org"
-    ];
-    extra-trusted-public-keys = [
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-    ];
-  };
+  description = "Nixie's server configurations";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     agenix.url = "github:ryantm/agenix";
     hardware.url = "github:NixOS/nixos-hardware";
-    mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
-    authentik-nix = {
-      url = "github:nix-community/authentik-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    discord-to-authentik.url = "github:rathmerdominik/discord-to-authentik";
   };
 
   outputs = {nixpkgs, ...} @ inputs: let
@@ -41,9 +26,6 @@
         nixpkgs.lib.nixosSystem {
           modules = [
             inputs.agenix.nixosModules.default
-            inputs.mailserver.nixosModule
-            inputs.authentik-nix.nixosModules.default
-            inputs.discord-to-authentik.nixosModules.default
 
             ./common
             ./servers/${name}
@@ -59,9 +41,7 @@
         };
     in {
       xenon = mkSystem "xenon";
-      neon = mkSystem "neon";
       krypton = mkSystem "krypton";
-      argon = mkSystem "argon";
     };
 
     packages = forAllSupportedSystems (pkgs: {

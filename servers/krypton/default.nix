@@ -1,10 +1,25 @@
 {
   modulesPath,
   lib,
+  proxy-ports,
   ...
-}: {
+}: let
+  nat-common = forward: let
+    common =
+      forward
+      // {
+        loopbackIPs = ["157.90.126.175"];
+      };
+  in
+    forwardPort: [
+      (common // forwardPort // {proto = "tcp";})
+      (common // forwardPort // {proto = "udp";})
+    ];
+  xenon-internal = "10.147.18.10";
+  ignoredFiles = lib.fileset.unions [./default.nix];
+in {
   imports =
-    lib.fileset.toList (lib.fileset.difference ./. ./default.nix)
+    lib.fileset.toList (lib.fileset.difference ./. ignoredFiles)
     ++ [
       "${modulesPath}/profiles/qemu-guest.nix"
     ];
@@ -37,6 +52,18 @@
       address = "fe80::1";
       inherit interface;
     };
-    domain = "rathmer.me";
+    domain = "hammerclock.net";
+    nat = {
+      enable = true;
+      internalInterfaces = ["enp1s0" "ztnfaavftl"];
+      externalInterface = "ztnfaavftl";
+      forwardPorts =
+        builtins.concatMap (nat-common {
+          destination = "${xenon-internal}:${proxy-ports.wings-sftp}";
+          sourcePort = proxy-ports.wings-sftp;
+        }) [
+          # More entries if needed
+        ];
+    };
   };
 }

@@ -1,8 +1,12 @@
 {
   config,
   pkgs,
+  proxy-ports,
+  mylib,
   ...
-}: {
+}: let
+  inherit (config.networking) domain;
+in {
   services.nginx = {
     enable = true;
     package = pkgs.nginxQuic;
@@ -17,23 +21,95 @@
       error_log stderr;
       access_log /var/log/nginx/access.log;
     '';
+  };
 
-    virtualHosts = let
-      inherit (config.networking) domain;
-    in {
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
+
+  services.nginx = {
+    virtualHosts = {
       "~.*" = {
         default = true;
         rejectSSL = true;
 
         globalRedirect = domain;
       };
+      "wings.${domain}" = {
+        enableACME = true;
+        forceSSL = true;
+        quic = true;
+
+        locations."~ ^\/api\/servers\/(?<serverid>.*)?\/ws$" = {
+          proxyWebsockets = true;
+          proxyPass = "${mylib.formatMappingHttp proxy-ports.wings}/api/servers/$serverid/ws";
+          extraConfig = ''
+            proxy_buffering off;
+            proxy_request_buffering off;
+          '';
+        };
+
+        locations."/" = {
+          proxyWebsockets = true;
+          proxyPass = mylib.formatMappingHttp proxy-ports.wings;
+          extraConfig = ''
+            proxy_buffering off;
+            proxy_request_buffering off;
+            client_max_body_size 1024M;
+          '';
+        };
+      };
+      "vault.${domain}" = {
+        enableACME = true;
+        forceSSL = true;
+        quic = true;
+
+        locations."/" = {
+          proxyWebsockets = true;
+          proxyPass = mylib.formatMappingHttp proxy-ports.vaultwarden;
+        };
+      };
+      "photos.${domain}" = {
+        enableACME = true;
+        forceSSL = true;
+        quic = true;
+
+        locations."/" = {
+          proxyWebsockets = true;
+          proxyPass = mylib.formatMappingHttp proxy-ports.immich;
+          extraConfig = ''
+            client_max_body_size 50000M;
+          '';
+        };
+      };
+      "panel.${domain}" = {
+        enableACME = true;
+        forceSSL = true;
+        quic = true;
+
+        locations."/" = {
+          proxyWebsockets = true;
+          proxyPass = mylib.formatMappingHttp proxy-ports.pterodactyl;
+          extraConfig = ''
+            proxy_buffering off;
+            proxy_request_buffering off;
+            client_max_body_size 50000M;
+          '';
+        };
+      };
+      "papers.${domain}" = {
+        enableACME = true;
+        forceSSL = true;
+
+        locations."/" = {
+          proxyWebsockets = true;
+          proxyPass = mylib.formatMappingHttp proxy-ports.paperless-ngx;
+          extraConfig = ''
+            client_max_body_size 50000M;
+          '';
+        };
+      };
     };
   };
-
-  security.acme = {
-    defaults.email = "security@rathmer.me";
-    acceptTerms = true;
-  };
-
-  networking.firewall.allowedTCPPorts = [80 443];
 }
