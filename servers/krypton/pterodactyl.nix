@@ -100,4 +100,6 @@
       user = "root";
     };
   };
+
+  networking.firewall.allowedTCPPorts = [2022];
 }
