@@ -1,4 +1,17 @@
 {...}: {
+  systemd.tmpfiles.settings."10-pterodactyl" = {
+    "/srv/pterodactyl".d = {
+      group = "root";
+      mode = "0755";
+      user = "root";
+    };
+    "/srv/pterodactyl/backups".d = {
+      group = "root";
+      mode = "0755";
+      user = "root";
+    };
+  };
+
   fileSystems = let
     mkDisk = label: {
       inherit label;
@@ -6,19 +19,6 @@
       options = ["rw" "relatime"];
     };
   in {
-    systemd.tmpfiles.settings."10-pterodactyl" = {
-      "/srv/pterodactyl".d = {
-        group = "root";
-        mode = "0755";
-        user = "root";
-      };
-      "/srv/pterodactyl/backups".d = {
-        group = "root";
-        mode = "0755";
-        user = "root";
-      };
-    };
-
     "/srv/disks/eight-one" = mkDisk "small_roms_1";
     "/srv/disks/eight-two" = mkDisk "small_roms_2";
 
