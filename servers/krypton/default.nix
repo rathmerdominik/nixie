@@ -39,6 +39,11 @@ in {
     fixed-cidr-v6 = "2001:db8:1::/64";
   };
 
+  security.acme = {
+    defaults.email = "postmaster@hammerclock.net";
+    acceptTerms = true;
+  };
+
   networking = let
     interface = "enp1s0";
   in {
