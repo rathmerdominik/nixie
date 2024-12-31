@@ -36,11 +36,13 @@ in {
         };
       };
       folders = {
-        "${storagePath}/Documents" = {
+        Documents = {
+          path = "${storagePath}/Documents";
           id = "Documents";
           devices = ["linpc" "phone"];
         };
-        "${storagePath}/Projects" = {
+        Projects = {
+          path = "${storagePath}/Projects";
           id = "Projects";
           devices = ["linpc"];
         };
