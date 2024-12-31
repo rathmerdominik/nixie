@@ -1,11 +1,11 @@
 {...}: {
   systemd.tmpfiles.settings."10-pterodactyl" = {
-    "/srv/pterodactyl".d = {
+    "/srv/disks/mass-storage/Pterodactyl".d = {
       group = "root";
       mode = "0755";
       user = "root";
     };
-    "/srv/pterodactyl/backups".d = {
+    "/srv/disks/mass-storage/Pterodactyl/backups".d = {
       group = "root";
       mode = "0755";
       user = "root";
@@ -19,12 +19,12 @@
       options = ["rw" "relatime"];
     };
   in {
-    "/srv/disks/eight-one" = mkDisk "small_roms_1";
-    "/srv/disks/eight-two" = mkDisk "small_roms_2";
+    "/srv/disks/mass-storage" = mkDisk "mass-storage";
+    "/srv/disks/mass-backup" = mkDisk "mass-backup";
 
     "/var/lib/pterodactyl" = mkDisk "wings_drive";
 
-    "/srv/pterodactyl/backups" = {
+    "/srv/disks/mass-storage/Pterodactyl/backups" = {
       device = "/srv/disks/wings-drive/pterodactyl/backups";
       options = ["bind"];
     };
