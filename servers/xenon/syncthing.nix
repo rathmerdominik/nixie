@@ -34,17 +34,20 @@ in {
         phone = {
           id = "V4DRUMH-QIPRPSR-J2RVQXQ-36EIU6L-E375YOX-CVJ6RSC-G7WN7T7-RC7GKAI";
         };
+        laptop = {
+          id = "YMZJLAW-A2MAMSI-O5EI6EO-LFAHGTO-WD6B2VC-R4WIBJ6-RDXJZSR-554Y4AP";
+        };
       };
       folders = {
         Documents = {
           path = "${storagePath}/Documents";
           id = "Documents";
-          devices = ["linpc" "phone"];
+          devices = ["linpc" "phone" "laptop"];
         };
         Projects = {
           path = "${storagePath}/Projects";
           id = "Projects";
-          devices = ["linpc"];
+          devices = ["linpc" "laptop"];
         };
       };
       options = {
