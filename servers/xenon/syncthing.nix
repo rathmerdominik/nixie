@@ -2,7 +2,6 @@
   storagePath = "/srv/disks/mass-storage/Syncthing";
 in {
   systemd.tmpfiles.settings."10-syncthing" = {
-    #
     storagePath.d = {
       user = "syncthing";
       group = "syncthing";
@@ -25,7 +24,6 @@ in {
     relay.enable = true;
     openDefaultPorts = true;
     dataDir = storagePath;
-    guiAddress = "0.0.0.0:8384";
     settings = {
       devices = {
         linpc = {
