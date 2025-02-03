@@ -6,7 +6,7 @@
   ...
 }: let
   immich-path = "/var/lib/immich";
-  immich-version = "v1.124.2";
+  immich-version = "v1.125.7";
 in {
   # TODO Wohoo they made a module. Will have to transition at some point. Will be painful because of postgres.
   age.secrets.immich.file = ../../secrets/immich.age;
