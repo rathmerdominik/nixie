@@ -4,17 +4,14 @@
   lib,
   storageBoxUser,
   ...
-}: let
-  immichPhotoPath = "/var/lib/immich/photos";
-in {
+}: {
   age.secrets = lib.mkSecrets {"restic-${attrName}" = {};};
 
   services.restic.backups.${attrName} = {
     repository = "sftp:${storageBoxUser}@${storageBoxUser}.your-storagebox.de:/${attrName}";
     initialize = true;
     paths = [
-      config.services.syncthing.dataDir
-      immichPhotoPath
+      config.services.vaultwarden.backupDir
     ];
     passwordFile = config.age.secrets."restic-${attrName}".path;
     pruneOpts = ["--keep-daily 7" "--keep-weekly 5" "--keep-monthly 12"];

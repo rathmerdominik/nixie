@@ -37,6 +37,8 @@
             inherit inputs;
             inherit mylib;
             inherit proxy-ports;
+            attrName = name;
+            storageBoxUser = "u385962";
           };
         };
     in {
