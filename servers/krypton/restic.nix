@@ -1,11 +1,10 @@
 {
   attrName,
   config,
-  lib,
   storageBoxUser,
   ...
 }: {
-  age.secrets = lib.mkSecrets {"restic-${attrName}" = {};};
+  age.secrets."restic-${attrName}".file = ../../secrets/restic-${attrName}.age;
 
   services.restic.backups.${attrName} = {
     repository = "sftp:${storageBoxUser}@${storageBoxUser}.your-storagebox.de:/${attrName}";
