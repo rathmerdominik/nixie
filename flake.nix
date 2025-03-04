@@ -28,7 +28,7 @@
             inputs.agenix.nixosModules.default
 
             ./common
-            ./servers/${name}
+            ./tubes/${name}
 
             ({lib, ...}: {networking.hostName = lib.mkDefault name;})
           ];
