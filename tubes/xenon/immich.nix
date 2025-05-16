@@ -13,5 +13,6 @@
     };
     port = proxy-ports.immich.port;
     secretsFile = config.age.secrets.immich.path;
+    host = "0.0.0.0";
   };
 }
