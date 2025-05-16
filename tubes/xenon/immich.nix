@@ -10,7 +10,7 @@
     openFirewall = true;
     settings = {
       server.externalDomain = "https://photos.${config.networking.domain}";
-      newVersionCheck = true;
+      newVersionCheck = {enabled = true;}; # what the fuck
     };
     port = proxy-ports.immich.port;
     secretsFile = config.age.secrets.immich.path;
