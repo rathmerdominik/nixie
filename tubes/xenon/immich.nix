@@ -4,9 +4,8 @@
   ...
 }: {
   age.secrets.immich.file = ../../secrets/immich.age;
-  /*
   services.immich = {
-    enable = false;
+    enable = true;
     openFirewall = true;
     settings = {
       server.externalDomain = "https://photos.${config.networking.domain}";
@@ -15,5 +14,4 @@
     port = proxy-ports.immich.port;
     secretsFile = config.age.secrets.immich.path;
   };
-  */
 }
