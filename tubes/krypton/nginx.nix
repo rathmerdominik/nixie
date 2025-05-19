@@ -56,7 +56,6 @@ in {
           extraConfig = ''
             proxy_buffering off;
             proxy_request_buffering off;
-            client_max_body_size 1024M;
           '';
         };
       };
@@ -78,9 +77,6 @@ in {
         locations."/" = {
           proxyWebsockets = true;
           proxyPass = mylib.formatMappingHttp proxy-ports.immich;
-          extraConfig = ''
-            client_max_body_size 50000M;
-          '';
         };
       };
       "filebrowser.${domain}" = {
@@ -91,9 +87,6 @@ in {
         locations."/" = {
           proxyWebsockets = true;
           proxyPass = mylib.formatMappingHttp proxy-ports.filebrowser;
-          extraConfig = ''
-            client_max_body_size 1000000M;
-          '';
         };
       };
       "panel.${domain}" = {
@@ -107,7 +100,6 @@ in {
           extraConfig = ''
             proxy_buffering off;
             proxy_request_buffering off;
-            client_max_body_size 50000M;
           '';
         };
       };
@@ -118,9 +110,6 @@ in {
         locations."/" = {
           proxyWebsockets = true;
           proxyPass = mylib.formatMappingHttp proxy-ports.paperless-ngx;
-          extraConfig = ''
-            client_max_body_size 50000M;
-          '';
         };
       };
     };
