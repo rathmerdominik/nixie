@@ -5,9 +5,14 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     agenix.url = "github:ryantm/agenix";
     hardware.url = "github:NixOS/nixos-hardware";
+    unstable.url = "github:nixos/nixpkgs/nixos-unstable";
   };
 
-  outputs = {nixpkgs, ...} @ inputs: let
+  outputs = {
+    nixpkgs,
+    unstable,
+    ...
+  } @ inputs: let
     supportedSystems = ["x86_64-linux" "aarch64-linux"];
 
     forAllSupportedSystems = function:
@@ -37,6 +42,7 @@
             inherit inputs;
             inherit mylib;
             inherit proxy-ports;
+            inherit unstable;
             attrName = name;
             storageBoxUser = "u322470";
           };

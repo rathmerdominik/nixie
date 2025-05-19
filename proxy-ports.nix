@@ -5,6 +5,7 @@ mylib.restructure {
     wings = 9595;
     immich = 2283;
     paperless-ngx = 28981;
+    filebrowser = 8080;
   };
 
   krypton = {
