@@ -83,6 +83,19 @@ in {
           '';
         };
       };
+      "filebrowser.${domain}" = {
+        enableACME = true;
+        forceSSL = true;
+        quic = true;
+
+        locations."/" = {
+          proxyWebsockets = true;
+          proxyPass = mylib.formatMappingHttp proxy-ports.filebrowser;
+          extraConfig = ''
+            client_max_body_size 1000000M;
+          '';
+        };
+      };
       "panel.${domain}" = {
         enableACME = true;
         forceSSL = true;
