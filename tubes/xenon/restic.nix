@@ -3,9 +3,7 @@
   config,
   storageBoxUser,
   ...
-}: let
-  immichPhotoPath = "/var/lib/immich/photos";
-in {
+}: {
   age.secrets."restic-${attrName}".file = ../../secrets/restic-${attrName}.age;
 
   services.restic.backups.${attrName} = {
@@ -13,7 +11,7 @@ in {
     initialize = true;
     paths = [
       config.services.syncthing.dataDir
-      immichPhotoPath
+      config.services.immich.mediaLocation
     ];
     passwordFile = config.age.secrets."restic-${attrName}".path;
     pruneOpts = ["--keep-daily 7" "--keep-weekly 5" "--keep-monthly 12"];

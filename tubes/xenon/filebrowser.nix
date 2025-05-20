@@ -10,7 +10,7 @@ in {
   };
 
   systemd.tmpfiles.settings."10-filebrowser" = {
-    "/srv/disks/mass-storage/filebrowser".d = {
+    filebrowserPath.d = {
       group = "filebrowser";
       mode = "0755";
       user = "filebrowser";
