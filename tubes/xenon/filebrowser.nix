@@ -1,19 +1,19 @@
 {proxy-ports, ...}: let
-  filebrowser-path = "/srv/disks/mass-storage/filebrowser";
+  filebrowserPath = "/srv/disks/mass-storage/filebrowser";
 in {
+  services.filebrowser = {
+    enable = true;
+    stateDir = filebrowserPath;
+    settings = {
+      port = proxy-ports.filebrowser.port;
+    };
+  };
+
   systemd.tmpfiles.settings."10-filebrowser" = {
     "/srv/disks/mass-storage/filebrowser".d = {
       group = "filebrowser";
       mode = "0755";
       user = "filebrowser";
-    };
-  };
-
-  services.filebrowser = {
-    enable = true;
-    stateDir = "${filebrowser-path}";
-    settings = {
-      port = proxy-ports.filebrowser.port;
     };
   };
 }
