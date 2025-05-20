@@ -1,5 +1,4 @@
 {
-  pkgs,
   config,
   proxy-ports,
   unstable,

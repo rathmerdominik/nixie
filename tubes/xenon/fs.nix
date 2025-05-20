@@ -1,25 +1,4 @@
 {...}: {
-  systemd.tmpfiles.settings."10-pterodactyl" = {
-    "/srv/disks/mass-storage/Pterodactyl".d = {
-      group = "root";
-      mode = "0755";
-      user = "root";
-    };
-    "/srv/disks/mass-storage/Pterodactyl/backups".d = {
-      group = "root";
-      mode = "0755";
-      user = "root";
-    };
-  };
-
-  systemd.tmpfiles.settings."10-filebrowser" = {
-    "/srv/disks/mass-storage/filebrowser".d = {
-      group = "filebrowser";
-      mode = "0755";
-      user = "filebrowser";
-    };
-  };
-
   fileSystems = let
     mkDisk = label: {
       inherit label;
