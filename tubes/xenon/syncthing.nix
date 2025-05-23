@@ -24,6 +24,7 @@ in {
     relay.enable = true;
     openDefaultPorts = true;
     dataDir = storagePath;
+    guiAddress = "0.0.0.0:8384";
     settings = {
       devices = {
         linpc = {
