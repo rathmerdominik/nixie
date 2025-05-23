@@ -88,6 +88,9 @@ in {
         locations."/" = {
           proxyWebsockets = true;
           proxyPass = mylib.formatMappingHttp proxy-ports.filebrowser;
+          extraConfig = ''
+            client_max_body_size 512m;
+          '';
         };
       };
       "panel.${domain}" = {
