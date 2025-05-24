@@ -26,28 +26,8 @@
       TRUSTED_PROXIES = "10.147.18.11/24";
     };
     extraOptions = [
-      "--network=wings0"
       "-t"
     ];
-  };
-
-  systemd.services.init-wings0-network = {
-    description = "Create the network bridge for wings.";
-    after = ["network.target"];
-    wantedBy = ["multi-user.target"];
-    serviceConfig.Type = "oneshot";
-    script = ''
-      check=$(${lib.getExe pkgs.docker} network ls | grep wings0 || true)
-      if [ -z "$check" ]; then
-        ${lib.getExe pkgs.docker} network create \
-          --subnet 172.21.0.0/16 \
-          --driver bridge \
-          --opt com.docker.network.bridge.name=wings0 \
-          wings0
-      else
-        echo "wings0 already exists in docker"
-      fi
-    '';
   };
 
   networking.firewall.allowedTCPPorts = [2022 25565 25566 34197];

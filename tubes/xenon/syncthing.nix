@@ -36,6 +36,9 @@ in {
         laptop = {
           id = "YMZJLAW-A2MAMSI-O5EI6EO-LFAHGTO-WD6B2VC-R4WIBJ6-RDXJZSR-554Y4AP";
         };
+        muos = {
+          id = "3N4HTXQ-P26EJOW-O3WZ23D-X4MABYB-OFXVCIW-LUAKQSX-3DFKU7K-EWBKEAX";
+        };
       };
       folders = {
         Documents = {
@@ -47,6 +50,11 @@ in {
           path = "${storagePath}/Projects";
           id = "Projects";
           devices = ["linpc" "laptop"];
+        };
+        MuOS = {
+          path = "${storagePath}/MuOS";
+          id = "MuOS";
+          devices = ["muos"];
         };
       };
       options = {
