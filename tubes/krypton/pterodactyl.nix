@@ -55,6 +55,7 @@
           --subnet 172.21.0.0/16 \
           --driver bridge \
           --opt com.docker.network.bridge.name=panel0 \
+          --ipv6=false \
           panel0
       else
         echo "panel0 already exists in docker"
