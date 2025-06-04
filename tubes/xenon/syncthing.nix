@@ -28,7 +28,7 @@ in {
     settings = {
       devices = {
         linpc = {
-          id = "W66ACIQ-6D2WDZD-42A32Q7-3ZYUF5C-LTGPS2L-W2RDKVC-OOEBEHA-KNDJ4QF";
+          id = "NL422EN-2HW56RJ-FOJOOJX-UACMSZM-J5FNAJP-75UMA2R-SPGIKS3-F5VOBQ6";
         };
         phone = {
           id = "V4DRUMH-QIPRPSR-J2RVQXQ-36EIU6L-E375YOX-CVJ6RSC-G7WN7T7-RC7GKAI";
