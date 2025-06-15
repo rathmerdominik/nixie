@@ -5,6 +5,7 @@ in {
     enable = true;
     settings = {
       root = filebrowserPath;
+      address = "0.0.0.0";
       port = proxy-ports.cloud.port;
     };
   };
