@@ -36,6 +36,9 @@
             ./tubes/${name}
 
             ({lib, ...}: {networking.hostName = lib.mkDefault name;})
+            {
+              imports = [(unstable + "/nixos/modules/services/web-apps/filebrowser.nix")];
+            }
           ];
 
           specialArgs = {

@@ -5,7 +5,7 @@
 }: let
   filebrowserPath = "/srv/disks/mass-storage/filebrowser";
 in {
-  unstable.services.filebrowser = {
+  services.filebrowser = {
     enable = true;
     package = unstable.legacyPackages.x86_64-linux.filebrowser;
     stateDir = filebrowserPath;
