@@ -1,13 +1,8 @@
-{
-  proxy-ports,
-  unstable,
-  ...
-}: let
+{proxy-ports, ...}: let
   filebrowserPath = "/srv/disks/mass-storage/filebrowser";
 in {
   services.filebrowser = {
     enable = true;
-    package = unstable.legacyPackages.x86_64-linux.filebrowser;
     settings = {
       root = filebrowserPath;
       port = proxy-ports.cloud.port;
