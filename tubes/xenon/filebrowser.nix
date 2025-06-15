@@ -8,8 +8,8 @@ in {
   services.filebrowser = {
     enable = true;
     package = unstable.legacyPackages.x86_64-linux.filebrowser;
-    stateDir = filebrowserPath;
     settings = {
+      root = filebrowserPath;
       port = proxy-ports.cloud.port;
     };
   };
