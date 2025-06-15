@@ -4,7 +4,7 @@ in {
   services.filebrowser = {
     enable = true;
     settings = {
-      root = filebrowserPath;
+      root = "${filebrowserPath}/data";
       address = "0.0.0.0";
       port = proxy-ports.cloud.port;
     };
