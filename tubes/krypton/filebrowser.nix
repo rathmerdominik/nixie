@@ -1,11 +1,11 @@
 {proxy-ports, ...}: let
-  filebrowserPath = "/srv/disks/mass-storage/filebrowser";
+  filebrowserPath = "/srv";
 in {
   services.filebrowser = {
     enable = true;
     stateDir = filebrowserPath;
     settings = {
-      port = proxy-ports.cloud.port;
+      port = proxy-ports.files.port;
     };
   };
 

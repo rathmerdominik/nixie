@@ -5,11 +5,12 @@ mylib.restructure {
     wings = 9595;
     immich = 2283;
     paperless-ngx = 28981;
-    filebrowser = 8080;
+    cloud = 8080;
   };
 
   krypton = {
     vaultwarden = 8000;
     pterodactyl = 9393;
+    files = 8080;
   };
 }

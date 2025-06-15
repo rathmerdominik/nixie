@@ -6,6 +6,7 @@
   ...
 }: let
   inherit (config.networking) domain;
+  secondDomain = "rathmer.me";
 in {
   services.nginx = {
     enable = true;
@@ -80,14 +81,13 @@ in {
           proxyPass = mylib.formatMappingHttp proxy-ports.immich;
         };
       };
-      "filebrowser.${domain}" = {
+      "cloud.${domain}" = {
         enableACME = true;
         forceSSL = true;
         quic = true;
 
         locations."/" = {
-          proxyWebsockets = true;
-          proxyPass = mylib.formatMappingHttp proxy-ports.filebrowser;
+          proxyPass = mylib.formatMappingHttp proxy-ports.cloud;
           extraConfig = ''
             client_max_body_size 512m;
           '';
@@ -115,6 +115,18 @@ in {
         locations."/" = {
           proxyWebsockets = true;
           proxyPass = mylib.formatMappingHttp proxy-ports.paperless-ngx;
+        };
+      };
+      "files.${secondDomain}" = {
+        enableACME = true;
+        forceSSL = true;
+        quic = true;
+
+        locations."/" = {
+          proxyPass = mylib.formatMappingHttp proxy-ports.files;
+          extraConfig = ''
+            client_max_body_size 512m;
+          '';
         };
       };
     };
