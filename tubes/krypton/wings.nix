@@ -19,7 +19,6 @@
       WINGS_UID = "988";
       WINGS_GID = "988";
       WINGS_USERNAME = "pterodactyl";
-      TRUSTED_PROXIES = "10.147.18.11/24";
     };
     extraOptions = [
       "-t"

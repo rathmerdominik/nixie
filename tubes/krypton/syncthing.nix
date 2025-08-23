@@ -1,5 +1,5 @@
 {...}: let
-  storagePath = "/srv/disks/mass-storage/Syncthing";
+  storagePath = "/srv/big-storage/syncthing";
 in {
   systemd.tmpfiles.settings."10-syncthing" = {
     storagePath.d = {
