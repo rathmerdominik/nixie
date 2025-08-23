@@ -4,6 +4,10 @@
   services.openssh = {
     enable = true;
     openFirewall = true;
+
+    ports = [
+      20022
+    ];
     hostKeys = [
       {
         path = "/etc/ssh/ssh_host_ed25519_key";
