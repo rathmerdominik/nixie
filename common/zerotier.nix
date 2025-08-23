@@ -6,6 +6,5 @@
 
   networking.hosts = {
     "10.147.18.11" = ["krypton"];
-    "10.147.18.10" = ["xenon"];
   };
 }

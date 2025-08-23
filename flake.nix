@@ -51,7 +51,6 @@
           };
         };
     in {
-      xenon = mkSystem "xenon";
       krypton = mkSystem "krypton";
     };
 
