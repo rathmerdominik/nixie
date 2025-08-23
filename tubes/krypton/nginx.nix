@@ -81,18 +81,6 @@ in {
           proxyPass = mylib.formatMappingHttp proxy-ports.immich;
         };
       };
-      "cloud.${domain}" = {
-        enableACME = true;
-        forceSSL = true;
-        quic = true;
-
-        locations."/" = {
-          proxyPass = mylib.formatMappingHttp proxy-ports.cloud;
-          extraConfig = ''
-            client_max_body_size 512m;
-          '';
-        };
-      };
       "panel.${domain}" = {
         enableACME = true;
         forceSSL = true;

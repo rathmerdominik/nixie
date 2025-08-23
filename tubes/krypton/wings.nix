@@ -1,8 +1,4 @@
-{
-  lib,
-  pkgs,
-  ...
-}: {
+{...}: {
   virtualisation.oci-containers.containers.wings = {
     image = "ghcr.io/pterodactyl/wings:latest";
     ports = [
@@ -30,19 +26,9 @@
     ];
   };
 
-  networking.firewall.allowedTCPPorts = [2022 25565 25566 34197];
+  networking.firewall.allowedTCPPorts = [2022 25565];
 
   systemd.tmpfiles.settings."10-pterodactyl" = {
-    "/srv/disks/mass-storage/Pterodactyl".d = {
-      group = "root";
-      mode = "0755";
-      user = "root";
-    };
-    "/srv/disks/mass-storage/Pterodactyl/backups".d = {
-      group = "root";
-      mode = "0755";
-      user = "root";
-    };
     "/var/log/pterodactyl".d = {
       group = "root";
       mode = "0755";

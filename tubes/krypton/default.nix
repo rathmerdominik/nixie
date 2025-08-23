@@ -1,21 +1,8 @@
 {
   modulesPath,
   lib,
-  proxy-ports,
   ...
 }: let
-  nat-common = forward: let
-    common =
-      forward
-      // {
-        loopbackIPs = ["157.90.126.175"];
-      };
-  in
-    forwardPort: [
-      (common // forwardPort // {proto = "tcp";})
-      (common // forwardPort // {proto = "udp";})
-    ];
-  xenon-internal = "10.147.18.10";
   ignoredFiles = lib.fileset.unions [./default.nix];
 in {
   imports =
@@ -58,16 +45,5 @@ in {
       inherit interface;
     };
     domain = "hammerclock.net";
-    nat = {
-      enable = true;
-      internalInterfaces = ["enp1s0" "ztnfaavftl"];
-      externalInterface = "ztnfaavftl";
-      forwardPorts =
-        builtins.concatMap (nat-common {
-          destination = "${xenon-internal}:${proxy-ports.wings-sftp}";
-          sourcePort = proxy-ports.wings-sftp;
-        }) [
-        ];
-    };
   };
 }

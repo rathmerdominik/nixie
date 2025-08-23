@@ -4,7 +4,7 @@
   unstable,
   ...
 }: let
-  immichMediaPath = "/srv/disks/mass-storage/immich";
+  immichMediaPath = "/srv/big-storage/immich";
 in {
   age.secrets.immich.file = ../../secrets/immich.age;
   services.immich = {
