@@ -67,7 +67,6 @@ in {
           destination = "${xenon-internal}:${proxy-ports.wings-sftp}";
           sourcePort = proxy-ports.wings-sftp;
         }) [
-          # More entries if needed
         ];
     };
   };
