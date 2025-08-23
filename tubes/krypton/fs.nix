@@ -4,13 +4,14 @@
   ...
 }: {
   fileSystems."/srv/big-storage" = {
-    device = "${storageBoxUser}@${storageBoxUser}.your-storagebox.de:/${attrName}";
+    device = "${storageBoxUser}@${storageBoxUser}.your-storagebox.de:/home/storage/${attrName}";
     fsType = "sshfs";
     options = [
       "nodev"
       "noatime"
       "allow_other"
       "IdentityFile=/etc/ssh/ssh_host_ed25519_key"
+      "Port=23"
     ];
   };
 
