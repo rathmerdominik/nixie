@@ -10,7 +10,7 @@ in {
   services.immich = {
     enable = true;
     openFirewall = true;
-    package = unstable.legacyPackages.x86_64-linux.immich;
+    package = unstable.legacyPackages.aarch64-linux.immich;
     settings = {
       server.externalDomain = "https://photos.${config.networking.domain}";
       newVersionCheck = {enabled = true;}; # what the fuck

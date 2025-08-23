@@ -20,7 +20,6 @@
         function (import nixpkgs {
           inherit system;
           config.allowUnfree = true;
-          config.nvidia.acceptLicense = true;
         }));
 
     mylib = import ./lib/mylib.nix {inherit (nixpkgs) lib;};
