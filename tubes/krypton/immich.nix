@@ -8,7 +8,7 @@
 in {
   age.secrets.immich.file = ../../secrets/immich.age;
   services.immich = {
-    enable = false;
+    enable = true;
     openFirewall = true;
     package = unstable.legacyPackages.x86_64-linux.immich;
     settings = {
