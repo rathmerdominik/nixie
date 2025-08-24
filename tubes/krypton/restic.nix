@@ -13,6 +13,8 @@
       config.services.vaultwarden.backupDir
       config.services.syncthing.dataDir
       config.services.immich.mediaLocation
+      config.services.paperless.dataDir
+      config.services.filebrowser.settings.root
     ];
     passwordFile = config.age.secrets."restic-${attrName}".path;
     pruneOpts = ["--keep-daily 7" "--keep-weekly 5" "--keep-monthly 12"];
