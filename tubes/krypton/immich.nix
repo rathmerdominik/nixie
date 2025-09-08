@@ -32,7 +32,7 @@ in {
 
   # https://github.com/NixOS/nixpkgs/issues/418799#issuecomment-3000580361
   users.users.immich = {
-    home = "/var/lib/immich";
+    home = immichMediaPath;
     createHome = true;
   };
 }
