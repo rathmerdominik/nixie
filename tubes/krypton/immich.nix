@@ -19,9 +19,6 @@ in {
     secretsFile = config.age.secrets.immich.path;
     host = "0.0.0.0";
     mediaLocation = immichMediaPath;
-    machine-learning.environment = {
-      MACHINE_LEARNING_CACHE_FOLDER = "${immichMediaPath}/ml-cache";
-    };
     accelerationDevices = ["/dev/dri/renderD128"];
   };
 
@@ -31,5 +28,11 @@ in {
       mode = "0755";
       user = "immich";
     };
+  };
+
+  # https://github.com/NixOS/nixpkgs/issues/418799#issuecomment-3000580361
+  users.users.immich = {
+    home = "/var/lib/immich";
+    createHome = true;
   };
 }
