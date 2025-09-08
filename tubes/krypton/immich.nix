@@ -19,6 +19,9 @@ in {
     secretsFile = config.age.secrets.immich.path;
     host = "0.0.0.0";
     mediaLocation = immichMediaPath;
+    machine-learning.environment = {
+      MACHINE_LEARNING_CACHE_FOLDER = "${immichMediaPath}/ml-cache";
+    };
     accelerationDevices = ["/dev/dri/renderD128"];
   };
 
