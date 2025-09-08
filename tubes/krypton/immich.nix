@@ -19,6 +19,7 @@ in {
     secretsFile = config.age.secrets.immich.path;
     host = "0.0.0.0";
     mediaLocation = immichMediaPath;
+    accelerationDevices = ["/dev/dri/renderD128"];
   };
 
   systemd.tmpfiles.settings."10-immich" = {
