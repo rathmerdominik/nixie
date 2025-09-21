@@ -1,7 +1,6 @@
 {
   config,
   proxy-ports,
-  unstable,
   ...
 }: let
   immichMediaPath = "/srv/big-storage/immich";
@@ -10,7 +9,6 @@ in {
   services.immich = {
     enable = true;
     openFirewall = true;
-    package = unstable.legacyPackages.aarch64-linux.immich;
     settings = {
       server.externalDomain = "https://photos.${config.networking.domain}";
       newVersionCheck = {enabled = true;}; # what the fuck
