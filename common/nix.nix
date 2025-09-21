@@ -13,6 +13,7 @@
       trusted-users = ["@wheel"];
       experimental-features = "nix-command flakes";
       auto-optimise-store = true;
+      download-buffer-size = 104857600; # 100MB
     };
   };
 
