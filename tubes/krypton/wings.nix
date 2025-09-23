@@ -9,7 +9,7 @@
       "/var/run/docker.sock:/var/run/docker.sock"
       "/var/lib/docker/containers/:/var/lib/docker/containers/"
       "/etc/pterodactyl/:/etc/pterodactyl/"
-      "/srv/big-storage/pterodactyl/backup/:/var/lib/pterodactyl/backup/"
+      "/srv/big-storage/pterodactyl/backups/:/var/lib/pterodactyl/backups/"
       "/var/lib/pterodactyl/:/var/lib/pterodactyl/"
       "/var/log/pterodactyl/:/var/log/pterodactyl/"
       "/tmp/pterodactyl/:/tmp/pterodactyl/"
@@ -44,7 +44,7 @@
       mode = "0755";
       user = "root";
     };
-    "/srv/big-storage/pterodactyl/backup/".d = {
+    "/srv/big-storage/pterodactyl/backups/".d = {
       group = "root";
       mode = "0755";
       user = "root";
