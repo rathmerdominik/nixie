@@ -2,12 +2,17 @@
   description = "Nixie's server configurations";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     agenix.url = "github:ryantm/agenix";
     hardware.url = "github:NixOS/nixos-hardware";
+    unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
 
-  outputs = {nixpkgs, ...} @ inputs: let
+  outputs = {
+    nixpkgs,
+    unstable,
+    ...
+  } @ inputs: let
     supportedSystems = ["aarch64-linux"];
 
     forAllSupportedSystems = function:
@@ -29,6 +34,9 @@
             ./common
             ./tubes/${name}
 
+            {
+              imports = [(unstable + "/nixos/modules/services/web-apps/filebrowser.nix")];
+            }
             ({lib, ...}: {networking.hostName = lib.mkDefault name;})
           ];
 
@@ -36,6 +44,7 @@
             inherit inputs;
             inherit mylib;
             inherit proxy-ports;
+            inherit unstable;
             attrName = name;
             storageBoxUser = "u322470";
           };
