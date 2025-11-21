@@ -13,7 +13,7 @@ in {
     package = unstable.legacyPackages.aarch64-linux.immich;
     settings = {
       server.externalDomain = "https://photos.${config.networking.domain}";
-      newVersionCheck = {enabled = true;}; # what the fuck
+      newVersionCheck.enabled = true;
     };
     port = proxy-ports.immich.port;
     secretsFile = config.age.secrets.immich.path;
