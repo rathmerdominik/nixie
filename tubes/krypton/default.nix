@@ -21,6 +21,10 @@ in {
 
   virtualisation.oci-containers.backend = "docker";
 
+  boot.binfmt.emulatedSystems = [
+    "x86_64-linux"
+  ];
+
   virtualisation.docker.daemon.settings = {
     ipv6 = true;
     fixed-cidr-v6 = "2001:db8:1::/64";
