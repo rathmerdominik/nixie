@@ -10,7 +10,7 @@
 in {
   services.nginx = {
     enable = true;
-    package = pkgs.nginxQuic;
+    package = pkgs.nginx;
 
     recommendedBrotliSettings = true;
     recommendedGzipSettings = true;

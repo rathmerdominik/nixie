@@ -34,9 +34,6 @@
             ./common
             ./tubes/${name}
 
-            {
-              imports = [(unstable + "/nixos/modules/services/web-apps/filebrowser.nix")];
-            }
             ({lib, ...}: {networking.hostName = lib.mkDefault name;})
           ];
 
