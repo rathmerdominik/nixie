@@ -13,6 +13,8 @@ in {
 
   boot.initrd.availableKernelModules = ["xhci_pci" "virtio_pci" "virtio_scsi" "usbhid" "sr_mod"];
 
+  nixpkgs.hostPlatform = "x86_64-linux";
+
   system.stateVersion = "25.11";
 
   powerManagement.cpuFreqGovernor = "performance";
