@@ -90,8 +90,11 @@ in {
     };
   };
 
-  users.users.paperless = {
-    group = "paperless";
-    isSystemUser = true;
+  users = {
+    groups.paperless = {};
+    users.paperless = {
+      group = "paperless";
+      isSystemUser = true;
+    };
   };
 }
