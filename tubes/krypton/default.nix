@@ -13,17 +13,11 @@ in {
 
   boot.initrd.availableKernelModules = ["xhci_pci" "virtio_pci" "virtio_scsi" "usbhid" "sr_mod"];
 
-  nixpkgs.hostPlatform = "aarch64-linux";
-
-  system.stateVersion = "24.11";
+  system.stateVersion = "25.11";
 
   powerManagement.cpuFreqGovernor = "performance";
 
   virtualisation.oci-containers.backend = "docker";
-
-  boot.binfmt.emulatedSystems = [
-    "x86_64-linux"
-  ];
 
   virtualisation.docker.daemon.settings = {
     ipv6 = true;
@@ -40,7 +34,7 @@ in {
   in {
     interfaces.${interface}.ipv6.addresses = [
       {
-        address = "2a01:4f8:1c1c:26c9::2";
+        address = "2a01:4f8:c014:e570::2";
         prefixLength = 64;
       }
     ];
