@@ -13,7 +13,7 @@
     unstable,
     ...
   } @ inputs: let
-    supportedSystems = ["aarch64-linux" "x86_64-linux"];
+    supportedSystems = ["x86_64-linux"];
 
     forAllSupportedSystems = function:
       nixpkgs.lib.genAttrs supportedSystems (system:
