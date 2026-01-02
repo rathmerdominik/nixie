@@ -3,6 +3,7 @@
   storageBoxUser,
   ...
 }: {
+  /*
   fileSystems."/srv/big-storage" = {
     device = "${storageBoxUser}@${storageBoxUser}.your-storagebox.de:/home/storage/${attrName}";
     fsType = "sshfs";
@@ -22,4 +23,5 @@
       user = "root";
     };
   };
+  */
 }
