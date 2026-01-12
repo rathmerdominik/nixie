@@ -29,11 +29,6 @@
   networking.firewall.allowedTCPPorts = [2022 25565];
 
   systemd.tmpfiles.settings."10-pelican" = {
-    "/var/log/pelican".d = {
-      group = "root";
-      mode = "0755";
-      user = "root";
-    };
     "/etc/pelican".d = {
       group = "root";
       mode = "0755";
