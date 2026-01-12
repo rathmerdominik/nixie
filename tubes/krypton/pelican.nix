@@ -93,7 +93,12 @@
       mode = "0755";
       user = "root";
     };
-    "/var/lib/pelican/var".d = {
+    "/var/log/supervisord".d = {
+      group = "root";
+      mode = "0755";
+      user = "root";
+    };
+    "/var/lib/pelican".d = {
       group = "root";
       mode = "0755";
       user = "root";
