@@ -12,7 +12,7 @@
       "9393:80"
     ];
     volumes = [
-      "/var/lib/pelican/var/:/pelican-data"
+      "/var/lib/pelican:/pelican-data"
       "/var/log/pelican:/var/www/html/storage/logs"
     ];
     environment = {
