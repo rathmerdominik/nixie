@@ -5,7 +5,7 @@
 	}
 }
 
-:9393 {
+:80 {
 	root * /var/www/html/public
 	encode gzip
 
