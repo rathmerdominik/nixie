@@ -87,7 +87,7 @@
     ];
   };
 
-  # The cool people at Pelin thought that it would be funny to have www-data write everywhere
+  # The cool people at Pelican thought that it would be funny to have www-data write everywhere
   # So yeah... i just create a mock user so that the uid and guid are locked
   users.users."www-data" = {
     isSystemUser = true;
