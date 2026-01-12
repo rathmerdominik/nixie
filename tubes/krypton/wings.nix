@@ -15,6 +15,12 @@
       "/tmp/pelican/:/tmp/pelican/"
       "/etc/ssl/certs:/etc/ssl/certs:ro"
     ];
+    environment = {
+      TZ = "UTC";
+      WINGS_UID = "988";
+      WINGS_GID = "988";
+      WINGS_USERNAME = "pelican";
+    };
     extraOptions = [
       "-t"
     ];
