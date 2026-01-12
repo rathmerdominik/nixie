@@ -14,7 +14,7 @@
     volumes = [
       "/var/lib/pelican/var/:/app/var/"
       "/var/log/pelican:/app/storage/logs"
-      "${pkgs.writeText "Caddyfile" (builtins.readFile ./Caddyfile)}:/etc/caddy/Caddyfile"
+      "./Caddyfile:/etc/caddy/Caddyfile"
     ];
     environment = {
       APP_TIMEZONE = "Europe/Berlin";
