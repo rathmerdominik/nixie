@@ -12,8 +12,8 @@
       "9393:80"
     ];
     volumes = [
-      "/var/lib/pelican/var/:/app/var/"
-      "/var/log/pelican:/app/storage/logs"
+      "/var/lib/pelican/var/:/pelican-data"
+      "/var/log/pelican:/var/www/html/storage/logs"
       "${pkgs.writeText "Caddyfile" (builtins.readFile ./pelican/Caddyfile)}:/etc/caddy/Caddyfile"
     ];
     environment = {
@@ -22,12 +22,15 @@
       APP_SERVICE_AUTHOR = "der@hammerclock.net";
       APP_ENV = "production";
       APP_ENVIRONMENT_ONLY = "false";
+      XDG_DATA_HOME = "/pelican-data";
+      SKIP_CADDY = true;
 
-      CACHE_DRIVER = "redis";
+      CACHE_STORE = "redis";
       SESSION_DRIVER = "redis";
-      QUEUE_DRIVER = "redis";
+      QUEUE_CONNECTION = "redis";
       REDIS_HOST = "cache";
 
+      DB_CONNECTION = "mariadb";
       DB_HOST = "database";
       DB_DATABASE = "panel";
       DB_USERNAME = "pelican";

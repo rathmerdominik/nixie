@@ -13,7 +13,7 @@
       "/var/lib/pelican/:/var/lib/pelican/"
       "/var/log/pelican/:/var/log/pelican/"
       "/tmp/pelican/:/tmp/pelican/"
-      "/etc/ssl/certs/ca-certificates.crt:/etc/pki/ca-trust/extracted/openssl/ca-bundle.trust.crt:ro"
+      "/etc/ssl/certs:/etc/ssl/certs:ro"
     ];
     environment = {
       TZ = "GMT";
