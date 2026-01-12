@@ -1,7 +1,7 @@
 {
 	admin off
 	servers {
-		trusted_proxies static 0.0.0.0
+		trusted_proxies static 10.147.18.11
 	}
 }
 
