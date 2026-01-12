@@ -28,6 +28,19 @@
 
   networking.firewall.allowedTCPPorts = [2022 25565];
 
+  # The cool people at Pelican thought that it would be funny to have a user called "pelican" write everywhere
+  # So yeah... i just create a mock user so that the uid and guid are locked
+  users = {
+    groups."pelican" = {
+      gid = 988;
+    };
+    users."pelican" = {
+      isSystemUser = true;
+      group = "pelican";
+      uid = 988;
+    };
+  };
+
   systemd.tmpfiles.settings."10-pelican" = {
     "/etc/pelican".d = {
       group = "root";
