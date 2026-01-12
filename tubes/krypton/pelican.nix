@@ -4,16 +4,16 @@
   lib,
   ...
 }: {
-  age.secrets.pterodactyl-env.file = ../../secrets/pterodactyl-env.age;
+  age.secrets.pelican-env.file = ../../secrets/pelican-env.age;
 
-  virtualisation.oci-containers.containers.pterodactyl = {
-    image = "ghcr.io/pterodactyl/panel:latest";
+  virtualisation.oci-containers.containers.pelican = {
+    image = "ghcr.io/pelican-dev/panel:latest";
     ports = [
       "9393:80"
     ];
     volumes = [
-      "/var/lib/pterodactyl/var/:/app/var/"
-      "/var/log/pterodactyl/:/app/storage/logs"
+      "/var/lib/pelican/var/:/app/var/"
+      "/var/log/pelican:/app/storage/logs"
     ];
     environment = {
       APP_TIMEZONE = "Europe/Berlin";
@@ -29,13 +29,13 @@
 
       DB_HOST = "database";
       DB_DATABASE = "panel";
-      DB_USERNAME = "pterodactyl";
+      DB_USERNAME = "pelican";
       DB_PORT = "3306";
 
       TRUSTED_PROXIES = "10.147.18.13/24";
     };
     environmentFiles = [
-      config.age.secrets.pterodactyl-env.path
+      config.age.secrets.pelican-env.path
     ];
     extraOptions = [
       "--pull=always"
@@ -44,7 +44,7 @@
   };
 
   systemd.services.init-panel0-network = {
-    description = "Create the network bridge for pterodactyl.";
+    description = "Create the network bridge for pelican.";
     after = ["network.target"];
     wantedBy = ["multi-user.target"];
     serviceConfig.Type = "oneshot";
@@ -67,7 +67,7 @@
     image = "docker.io/mariadb:10.5";
     cmd = ["--default-authentication-plugin=mysql_native_password"];
     volumes = [
-      "/var/lib/pterodactyl/database:/var/lib/mysql"
+      "/var/lib/pelican/database:/var/lib/mysql"
     ];
     environmentFiles = [
       config.age.secrets.pterodactyl-env.path
@@ -85,17 +85,17 @@
   };
 
   systemd.tmpfiles.settings."10-pterodactyl" = {
-    "/var/log/pterodactyl".d = {
+    "/var/log/pelican".d = {
       group = "root";
       mode = "0755";
       user = "root";
     };
-    "/var/lib/pterodactyl/var".d = {
+    "/var/lib/pelican/var".d = {
       group = "root";
       mode = "0755";
       user = "root";
     };
-    "/var/lib/pterodactyl/database".d = {
+    "/var/lib/pelican/database".d = {
       group = "root";
       mode = "0755";
       user = "root";
