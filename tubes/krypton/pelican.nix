@@ -23,7 +23,7 @@
       APP_ENV = "production";
       APP_ENVIRONMENT_ONLY = "false";
       XDG_DATA_HOME = "/pelican-data";
-      SKIP_CADDY = true;
+      SKIP_CADDY = "true";
 
       CACHE_STORE = "redis";
       SESSION_DRIVER = "redis";
