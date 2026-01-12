@@ -70,7 +70,7 @@
       "/var/lib/pelican/database:/var/lib/mysql"
     ];
     environmentFiles = [
-      config.age.secrets.pterodactyl-env.path
+      config.age.secrets.pelican-env.path
     ];
     extraOptions = [
       "--network=panel0"
@@ -84,7 +84,7 @@
     ];
   };
 
-  systemd.tmpfiles.settings."10-pterodactyl" = {
+  systemd.tmpfiles.settings."10-pelican" = {
     "/var/log/pelican".d = {
       group = "root";
       mode = "0755";

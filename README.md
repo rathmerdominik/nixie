@@ -5,7 +5,7 @@ Here a short description of what each tube entails:
 
 ### Krypton
 - nginx
-- pterodactyl
+- pelican
 - vaultwarden
 - restic
 - filebrowser
@@ -13,7 +13,7 @@ Here a short description of what each tube entails:
 - nvidia
 - paperless
 - syncthing
-- pterodactyl wings
+- pelican wings
 
 ### Xenon
 

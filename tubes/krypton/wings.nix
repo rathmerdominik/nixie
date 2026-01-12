@@ -1,6 +1,6 @@
 {...}: {
   virtualisation.oci-containers.containers.wings = {
-    image = "ghcr.io/pterodactyl/wings:latest";
+    image = "ghcr.io/pelican/wings:latest";
     ports = [
       "9595:443"
       "2022:2022"
@@ -8,18 +8,18 @@
     volumes = [
       "/var/run/docker.sock:/var/run/docker.sock"
       "/var/lib/docker/containers/:/var/lib/docker/containers/"
-      "/etc/pterodactyl/:/etc/pterodactyl/"
-      "/srv/big-storage/pterodactyl/backups/:/var/lib/pterodactyl/backups/"
-      "/var/lib/pterodactyl/:/var/lib/pterodactyl/"
-      "/var/log/pterodactyl/:/var/log/pterodactyl/"
-      "/tmp/pterodactyl/:/tmp/pterodactyl/"
+      "/etc/pelican/:/etc/pelican/"
+      "/srv/big-storage/pelican/backups/:/var/lib/pelican/backups/"
+      "/var/lib/pelican/:/var/lib/pelican/"
+      "/var/log/pelican/:/var/log/pelican/"
+      "/tmp/pelican/:/tmp/pelican/"
       "/etc/ssl/certs/ca-certificates.crt:/etc/pki/ca-trust/extracted/openssl/ca-bundle.trust.crt:ro"
     ];
     environment = {
       TZ = "GMT";
       WINGS_UID = "988";
       WINGS_GID = "988";
-      WINGS_USERNAME = "pterodactyl";
+      WINGS_USERNAME = "pelican";
     };
     extraOptions = [
       "-t"
@@ -28,23 +28,23 @@
 
   networking.firewall.allowedTCPPorts = [2022 25565];
 
-  systemd.tmpfiles.settings."10-pterodactyl" = {
-    "/var/log/pterodactyl".d = {
+  systemd.tmpfiles.settings."10-pelican" = {
+    "/var/log/pelican".d = {
       group = "root";
       mode = "0755";
       user = "root";
     };
-    "/etc/pterodactyl".d = {
+    "/etc/pelican".d = {
       group = "root";
       mode = "0755";
       user = "root";
     };
-    "/tmp/pterodactyl".d = {
+    "/tmp/pelican".d = {
       group = "root";
       mode = "0755";
       user = "root";
     };
-    "/srv/big-storage/pterodactyl/backups/".d = {
+    "/srv/big-storage/pelican/backups/".d = {
       group = "root";
       mode = "0755";
       user = "root";

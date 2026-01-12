@@ -87,7 +87,7 @@ in {
 
         locations."/" = {
           proxyWebsockets = true;
-          proxyPass = mylib.formatMappingHttp proxy-ports.pterodactyl;
+          proxyPass = mylib.formatMappingHttp proxy-ports.pelican;
           extraConfig = ''
             proxy_buffering off;
             proxy_request_buffering off;

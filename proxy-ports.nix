@@ -2,7 +2,7 @@
 mylib.restructure {
   krypton = {
     vaultwarden = 8000;
-    pterodactyl = 9393;
+    pelican = 9393;
     wings = 9595;
     wings-sftp = 2022;
     immich = 2283;
