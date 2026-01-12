@@ -22,7 +22,7 @@
       APP_ENV = "production";
       APP_ENVIRONMENT_ONLY = "false";
       XDG_DATA_HOME = "/pelican-data";
-      SKIP_CADDY = "true";
+      BEHIND_PROXY = "true";
 
       CACHE_STORE = "redis";
       SESSION_DRIVER = "redis";
@@ -87,26 +87,34 @@
     ];
   };
 
+  # The cool people at Pelin thought that it would be funny to have www-data write everywhere
+  # So yeah... i just create a mock user so that the uid and guid are locked
+  users.users."www-data" = {
+    isSystemUser = true;
+    uid = 82;
+    gid = 82;
+  };
+
   systemd.tmpfiles.settings."10-pelican" = {
     "/var/log/pelican".d = {
-      group = "root";
+      group = "www-data";
       mode = "0755";
-      user = "root";
+      user = "www-data";
     };
     "/var/log/pelican/supervisord".d = {
-      group = "root";
+      group = "www-data";
       mode = "0755";
-      user = "root";
+      user = "www-data";
     };
     "/var/lib/pelican".d = {
-      group = "root";
+      group = "www-data";
       mode = "0755";
-      user = "root";
+      user = "www-data";
     };
     "/var/lib/pelican/database".d = {
-      group = "root";
+      group = "www-data";
       mode = "0755";
-      user = "root";
+      user = "www-data";
     };
   };
 
