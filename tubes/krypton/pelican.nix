@@ -89,10 +89,14 @@
 
   # The cool people at Pelican thought that it would be funny to have www-data write everywhere
   # So yeah... i just create a mock user so that the uid and guid are locked
-  users.users."www-data" = {
-    isSystemUser = true;
-    uid = 82;
-    gid = 82;
+  users = {
+    groups."www-data" = {
+      gid = 82;
+    };
+    users."www-data" = {
+      isSystemUser = true;
+      uid = 82;
+    };
   };
 
   systemd.tmpfiles.settings."10-pelican" = {
