@@ -14,6 +14,7 @@
     volumes = [
       "/var/lib/pelican:/pelican-data"
       "/var/log/pelican:/var/www/html/storage/logs"
+      "var/lib/acme:/etc/letsencrypt"
     ];
     environment = {
       APP_TIMEZONE = "Europe/Berlin";
