@@ -14,7 +14,7 @@
       "/var/log/pelican/:/var/log/pelican/"
       "/tmp/pelican/:/tmp/pelican/"
       "/etc/ssl/certs:/etc/ssl/certs:ro"
-      "/var/lib/acme:/etc/letsencrypt"
+      "/var/lib/acme:/etc/letsencrypt/live"
     ];
     extraOptions = [
       "-t"
