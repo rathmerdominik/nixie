@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  ignoredFiles = lib.fileset.unions [./default.nix];
+  ignoredFiles = lib.fileset.unions [./default.nix ./pelican];
 in {
   imports =
     lib.fileset.toList (lib.fileset.difference ./. ignoredFiles)
