@@ -95,6 +95,7 @@
     };
     users."www-data" = {
       isSystemUser = true;
+      group = "www-data";
       uid = 82;
     };
   };
