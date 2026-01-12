@@ -2,7 +2,7 @@
   virtualisation.oci-containers.containers.wings = {
     image = "ghcr.io/pelican-dev/wings:latest";
     ports = [
-      "9595:443"
+      "9595:8080"
       "2022:2022"
     ];
     volumes = [
@@ -14,7 +14,6 @@
       "/var/log/pelican/:/var/log/pelican/"
       "/tmp/pelican/:/tmp/pelican/"
       "/etc/ssl/certs:/etc/ssl/certs:ro"
-      "/var/lib/acme:/etc/letsencrypt/live"
     ];
     extraOptions = [
       "-t"
