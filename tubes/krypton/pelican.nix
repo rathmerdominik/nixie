@@ -122,6 +122,4 @@
       user = "www-data";
     };
   };
-
-  networking.firewall.allowedTCPPorts = [2022];
 }

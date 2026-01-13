@@ -25,7 +25,7 @@
     ];
   };
 
-  networking.firewall.allowedTCPPorts = [2022 25565];
+  networking.firewall.allowedTCPPorts = [2022 25565 27960];
 
   systemd.tmpfiles.settings."10-pelican" = {
     "/etc/pelican".d = {
