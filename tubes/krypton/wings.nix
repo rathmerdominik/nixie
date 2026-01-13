@@ -2,7 +2,7 @@
   virtualisation.oci-containers.containers.wings = {
     image = "ghcr.io/pelican-dev/wings:latest";
     ports = [
-      "9595:443"
+      "9595:8080"
       "2022:2022"
     ];
     volumes = [
