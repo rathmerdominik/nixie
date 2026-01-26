@@ -1,5 +1,7 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  stremio-enhanced = pkgs.callPackage ./packages/stremio-enhanced.nix {};
+in {
   environment.systemPackages = [
-    pkgs.stremio
+    stremio-enhanced
   ];
 }
