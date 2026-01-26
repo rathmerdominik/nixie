@@ -7,9 +7,6 @@
       desktopSession = "plasma";
       updater.splash = "jovian";
     };
-    steamos = {
-      enableBluetoothConfig = true;
-    };
   };
 
   programs.steam.fontPackages = with pkgs; [
