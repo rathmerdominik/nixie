@@ -8,6 +8,7 @@ in {
   imports = lib.fileset.toList (lib.fileset.difference ./. ignoredFiles);
 
   boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod"];
+  boot.loader.timeout = 0;
   hardware.cpu.amd.updateMicrocode = true;
 
   nixpkgs.hostPlatform = "x86_64-linux";
