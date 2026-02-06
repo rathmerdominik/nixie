@@ -13,6 +13,7 @@
     ];
     volumes = [
       "/var/lib/pelican:/pelican-data"
+      "/var/lib/pelican/plugins:/pelican-data/plugins"
       "/var/log/pelican:/var/www/html/storage/logs"
     ];
     environment = {
@@ -112,6 +113,11 @@
       user = "www-data";
     };
     "/var/lib/pelican".d = {
+      group = "www-data";
+      mode = "0755";
+      user = "www-data";
+    };
+    "/var/lib/pelican/plugins".d = {
       group = "www-data";
       mode = "0755";
       user = "www-data";
