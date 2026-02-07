@@ -133,6 +133,18 @@ in {
           '';
         };
       };
+      "git.${domain}" = {
+        enableACME = true;
+        forceSSL = true;
+        quic = true;
+
+        locations."/" = {
+          proxyPass = mylib.formatMappingHttp proxy-ports.git;
+          extraConfig = ''
+            client_max_body_size 512m;
+          '';
+        };
+      };
     };
   };
 }

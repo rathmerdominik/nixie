@@ -9,5 +9,6 @@ mylib.restructure {
     paperless-ngx = 28981;
     files = 8080;
     backrest = 9898;
+    git = 8020;
   };
 }
