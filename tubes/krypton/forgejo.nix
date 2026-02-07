@@ -23,6 +23,7 @@
         ROOT_URL = "https://git.${config.networking.domain}/";
         HTTP_ADDR = "krypton";
         HTTP_PORT = 8020;
+        SSH_PORT = 20022;
       };
 
       service = {
