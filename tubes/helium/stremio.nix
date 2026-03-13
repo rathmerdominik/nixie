@@ -1,7 +1,5 @@
-{pkgs, ...}: let
-  stremio-enhanced = pkgs.callPackage ./packages/stremio-enhanced.nix {};
-in {
+{pkgs, ...}: {
   environment.systemPackages = [
-    stremio-enhanced
+    pkgs.stremio-linux-shell # Let's use normal stremio for now
   ];
 }
