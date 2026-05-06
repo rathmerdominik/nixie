@@ -10,6 +10,7 @@
       "nodev"
       "noatime"
       "allow_other"
+      "nofail"
       "IdentityFile=/etc/ssh/ssh_host_ed25519_key"
       "Port=23"
     ];
@@ -22,6 +23,4 @@
       user = "root";
     };
   };
-
-  unitConfig.RequiresMountsFor = "/srv/big-storage";
 }
