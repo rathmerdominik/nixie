@@ -22,4 +22,6 @@
       user = "root";
     };
   };
+
+  unitConfig.RequiresMountsFor = "/srv/big-storage";
 }
