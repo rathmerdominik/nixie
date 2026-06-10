@@ -7,10 +7,12 @@
     device = "${storageBoxUser}@${storageBoxUser}.your-storagebox.de:/home/storage/${attrName}";
     fsType = "sshfs";
     options = [
+      "rw"
       "noatime"
-      "nofail"
-      "reconnect"
+      "allow_other"
       "_netdev"
+      "uid=0"
+      "gid=0"
       "x-systemd.automount"
       "IdentityFile=/etc/ssh/ssh_host_ed25519_key"
       "Port=23"
