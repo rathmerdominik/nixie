@@ -4,7 +4,7 @@
       enable = true;
       user = "dominik";
       autoStart = true;
-      desktopSession = "gnome";
+      desktopSession = "plasma";
       updater.splash = "jovian";
     };
   };
