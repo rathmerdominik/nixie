@@ -1,5 +1,8 @@
-{pkgs, ...}: {
-  environment.systemPackages = [
-    pkgs.stremio-linux-shell # Let's use normal stremio for now
+{...}: {
+  services.flatpak.packages = [
+    {
+      appId = "com.stremio.Stremio";
+      origin = "flathub";
+    }
   ];
 }

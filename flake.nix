@@ -7,6 +7,7 @@
     hardware.url = "github:NixOS/nixos-hardware";
     unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
     zap.url = "git+https://hack.moontide.ink/helvetica/zap.git";
   };
 
@@ -44,7 +45,10 @@
             ]
             ++ (
               if name == "helium"
-              then [inputs.jovian.nixosModules.default]
+              then [
+                inputs.jovian.nixosModules.default
+                inputs.nix-flatpak.nixosModules.nix-flatpak
+              ]
               else []
             );
         };
