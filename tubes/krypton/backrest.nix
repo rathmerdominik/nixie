@@ -1,4 +1,10 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  mylib,
+  primary-domain,
+  proxy-ports,
+  ...
+}: {
   systemd.services.backrest = {
     description = "Restic GUI";
     path = [
@@ -22,5 +28,20 @@
       RestartSec = "5";
     };
     wantedBy = ["multi-user.target"];
+  };
+
+  services.nginx.virtualHosts."backup.${primary-domain}" = {
+    enableACME = true;
+    forceSSL = true;
+
+    locations."/" = {
+      proxyPass = mylib.formatMappingHttp proxy-ports.backrest;
+      extraConfig = ''
+        proxy_connect_timeout 300;
+        proxy_send_timeout 300;
+        proxy_read_timeout 300;
+        proxy_buffering off;
+      '';
+    };
   };
 }

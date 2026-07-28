@@ -2,6 +2,8 @@
   config,
   proxy-ports,
   unstable,
+  primary-domain,
+  mylib,
   ...
 }: let
   immichMediaPath = "/srv/big-storage/immich";
@@ -34,5 +36,19 @@ in {
   users.users.immich = {
     home = immichMediaPath;
     createHome = true;
+  };
+
+  services.nginx.virtualHosts."photos.${primary-domain}" = {
+    enableACME = true;
+    forceSSL = true;
+    quic = true;
+
+    locations."/" = {
+      proxyWebsockets = true;
+      proxyPass = mylib.formatMappingHttp proxy-ports.immich;
+      extraConfig = ''
+        client_max_body_size 10G;
+      '';
+    };
   };
 }

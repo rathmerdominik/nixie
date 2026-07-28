@@ -1,6 +1,9 @@
 {
   config,
   pkgs,
+  mylib,
+  primary-domain,
+  proxy-ports,
   ...
 }: let
   paperless-root = "/srv/big-storage/paperless";
@@ -95,6 +98,16 @@ in {
     users.paperless = {
       group = "paperless";
       isSystemUser = true;
+    };
+  };
+
+  services.nginx.virtualHosts."papers.${primary-domain}" = {
+    enableACME = true;
+    forceSSL = true;
+
+    locations."/" = {
+      proxyWebsockets = true;
+      proxyPass = mylib.formatMappingHttp proxy-ports.paperless-ngx;
     };
   };
 }

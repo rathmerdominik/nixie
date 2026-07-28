@@ -9,4 +9,5 @@ with import ../pubkeys.nix; {
   "restic-krypton.age".publicKeys = (builtins.attrValues users) ++ [hosts.krypton];
   "forgejo.age".publicKeys = (builtins.attrValues users) ++ [hosts.krypton];
   "forgejo-admin.age".publicKeys = (builtins.attrValues users) ++ [hosts.krypton];
+  "aiostreams-env.age".publicKeys = (builtins.attrValues users) ++ [hosts.krypton];
 }

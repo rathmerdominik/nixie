@@ -2,6 +2,9 @@
   config,
   pkgs,
   lib,
+  primary-domain,
+  mylib,
+  proxy-ports,
   ...
 }: {
   age.secrets.pelican-env.file = ../../secrets/pelican-env.age;
@@ -126,6 +129,22 @@
       group = "www-data";
       mode = "0755";
       user = "www-data";
+    };
+  };
+
+  services.nginx.virtualHosts."panel.${primary-domain}" = {
+    enableACME = true;
+    forceSSL = true;
+    quic = true;
+
+    locations."/" = {
+      proxyWebsockets = true;
+      proxyPass = mylib.formatMappingHttp proxy-ports.pelican;
+      extraConfig = ''
+        proxy_buffering off;
+        proxy_request_buffering off;
+        client_max_body_size 1024M;
+      '';
     };
   };
 }

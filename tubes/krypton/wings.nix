@@ -1,4 +1,9 @@
-{...}: {
+{
+  mylib,
+  primary-domain,
+  proxy-ports,
+  ...
+}: {
   virtualisation.oci-containers.containers.wings = {
     image = "ghcr.io/pelican-dev/wings:latest";
     ports = [
@@ -42,6 +47,31 @@
       group = "root";
       mode = "0755";
       user = "root";
+    };
+  };
+
+  services.nginx.virtualHosts."wings.${primary-domain}" = {
+    enableACME = true;
+    forceSSL = true;
+    quic = true;
+
+    locations."~ ^\/api\/servers\/(?<serverid>.*)?\/ws$" = {
+      proxyWebsockets = true;
+      proxyPass = "${mylib.formatMappingHttp proxy-ports.wings}/api/servers/$serverid/ws";
+      extraConfig = ''
+        proxy_buffering off;
+        proxy_request_buffering off;
+      '';
+    };
+
+    locations."/" = {
+      proxyWebsockets = true;
+      proxyPass = mylib.formatMappingHttp proxy-ports.wings;
+      extraConfig = ''
+        proxy_buffering off;
+        proxy_request_buffering off;
+        client_max_body_size 1024m;
+      '';
     };
   };
 }

@@ -19,6 +19,8 @@
     mylib = import ./lib/mylib.nix {inherit (nixpkgs) lib;};
     proxy-ports = import ./proxy-ports.nix {inherit mylib;};
     storageBoxUser = "u322470";
+    primary-domain = "hammerclock.net";
+    secondary-domain = "rathmer.me";
   in {
     nixosConfigurations = let
       mkSystem = name: useUnstable: let
@@ -30,6 +32,8 @@
         pkgsSource.lib.nixosSystem {
           specialArgs = {
             inherit inputs;
+            inherit primary-domain;
+            inherit secondary-domain;
             inherit mylib;
             inherit proxy-ports;
             inherit storageBoxUser;

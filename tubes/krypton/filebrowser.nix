@@ -1,4 +1,9 @@
-{proxy-ports, ...}: let
+{
+  secondary-domain,
+  mylib,
+  proxy-ports,
+  ...
+}: let
   filebrowserPath = "/srv/big-storage/filebrowser";
 in {
   services.filebrowser = {
@@ -15,6 +20,19 @@ in {
       group = "filebrowser";
       mode = "0755";
       user = "filebrowser";
+    };
+  };
+
+  services.nginx.virtualHosts."files.${secondary-domain}" = {
+    enableACME = true;
+    forceSSL = true;
+    quic = true;
+
+    locations."/" = {
+      proxyPass = mylib.formatMappingHttp proxy-ports.files;
+      extraConfig = ''
+        client_max_body_size 512m;
+      '';
     };
   };
 }
