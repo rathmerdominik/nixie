@@ -16,7 +16,7 @@ in {
 
     environment = {
       BASE_URL = "http://172.22.0.3:3000";
-      PORT = "3000";
+      # PORT = "3000"; # This is really funny... AIOStreams offers a PORT env variable, but it does not pass it to apps requesting streams. Literally has to be merged to the baseurl...
       DATABASE_URI = "sqlite:///app/data/db.sqlite";
       NODE_OPTIONS = "--dns-result-order=ipv4first";
     };
