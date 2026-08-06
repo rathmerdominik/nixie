@@ -21,6 +21,8 @@ in {
   networking.interfaces.enp4s0.wakeOnLan.enable = true;
   networking.firewall.allowedUDPPorts = [9];
 
+  system.autoUpgrade.channel = "github:rathmerdominik/nixie#helium";
+
   fonts.packages = with pkgs; [
     noto-fonts
     noto-fonts-cjk-sans

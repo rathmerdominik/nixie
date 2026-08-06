@@ -8,7 +8,6 @@
     unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
-    zap.url = "git+https://hack.moontide.ink/helvetica/zap.git";
   };
 
   outputs = {
@@ -60,7 +59,5 @@
       krypton = mkSystem "krypton" false;
       helium = mkSystem "helium" true;
     };
-
-    packages.zap = inputs.zap.packages.default;
   };
 }

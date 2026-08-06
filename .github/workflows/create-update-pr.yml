@@ -1,0 +1,114 @@
+name: "Update Nix system"
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: 0 18 */1 * *
+
+jobs:
+  compare-packages:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.compare.outputs.changed }}
+      body: ${{ steps.compare.outputs.body }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Compare package lists
+        id: compare
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [ -f /etc/profile.d/nix.sh ]; then
+            source /etc/profile.d/nix.sh
+          elif [ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
+            source "$HOME/.nix-profile/etc/profile.d/nix.sh"
+          fi
+
+          export PATH="$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:$PATH"
+
+          if ! command -v nix >/dev/null 2>&1; then
+            echo "nix is not available in PATH" >&2
+            exit 1
+          fi
+
+          tubes=(krypton helium)
+
+          pkg_list() {
+            local tube="$1"
+            nix eval --raw ".#nixosConfigurations.${tube}.config.environment.systemPackages" \
+              --apply 'pkgs:
+                let
+                  names = map (p: if p ? pname then p.pname else p.name) pkgs;
+                  versions = map (p: if p ? version then p.version else (builtins.parseDrvName p.name).version) pkgs;
+                  pairs = builtins.genList (i: let
+                    name = builtins.elemAt names i;
+                    version = builtins.elemAt versions i;
+                  in "${name}/${version}") (builtins.length names);
+                  sorted = builtins.sort (x: y: x < y) pairs;
+                in builtins.concatStringsSep "\n" sorted'
+           }
+
+          before_dir=$(mktemp -d)
+          after_dir=$(mktemp -d)
+          combined_diff=""
+
+          for tube in "${tubes[@]}"; do
+            pkg_list "$tube" > "$before_dir/$tube.before"
+          done
+
+          nix flake update
+
+          for tube in "${tubes[@]}"; do
+            pkg_list "$tube" > "$after_dir/$tube.after"
+          done
+
+          for tube in "${tubes[@]}"; do
+            diff_output=$(diff -u "$before_dir/$tube.before" "$after_dir/$tube.after" || true)
+            if [ -n "$diff_output" ]; then
+              section="${tube}:\n\n"
+              section+="$diff_output"
+              section+="\n"
+            else
+              section="${tube}:\n\n- No package changes\n"
+            fi
+            combined_diff+="$section"
+          done
+
+          if git diff --quiet -- flake.lock; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+          {
+            echo "body<<EOF"
+            printf '%s\n' "$combined_diff"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+          echo "Combined diff:"
+          echo "$combined_diff"
+
+  create-pr:
+    needs: compare-packages
+    if: needs.compare-packages.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v8.1.1
+        with:
+          commit-message: "chore: update flake lock"
+          branch: "chore/update-nix-flake"
+          delete-branch: true
+          title: "chore: update Nix flake inputs"
+          body: ${{ needs.compare-packages.outputs.body }}
