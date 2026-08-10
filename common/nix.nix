@@ -7,7 +7,9 @@
   nix = {
     registry = lib.mkDefault (lib.mapAttrs (_: value: {flake = value;}) inputs);
 
-    nixPath = lib.mapAttrsToList (key: _: "${key}=flake:${key}") config.nix.registry;
+    nixPath = lib.mkDefault (
+      lib.mapAttrsToList (key: _: "${key}=flake:${key}") config.nix.registry
+    );
 
     settings = {
       trusted-users = ["@wheel"];

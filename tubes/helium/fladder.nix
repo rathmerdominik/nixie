@@ -1,5 +1,5 @@
 {pkgs, ...}: {
   environment.systemPackages = [
-    pkgs.stremio-linux-shell
+    pkgs.fladder
   ];
 }

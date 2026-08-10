@@ -32,8 +32,6 @@ in {
     acceptTerms = true;
   };
 
-  system.autoUpgrade.channel = "github:rathmerdominik/nixie#krypton";
-
   networking = let
     interface = "enp1s0";
   in {
