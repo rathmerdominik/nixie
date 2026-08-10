@@ -5,11 +5,11 @@ on:
     - cron: 0 18 */1 * *
 
 jobs:
-  compare-packages:
+  update-flake:
     runs-on: ubuntu-latest
-    outputs:
-      changed: ${{ steps.compare.outputs.changed }}
-      body: ${{ steps.compare.outputs.body }}
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v5
 
@@ -94,21 +94,15 @@ jobs:
           echo "Combined diff:"
           echo "$combined_diff"
 
-  create-pr:
-    needs: compare-packages
-    if: needs.compare-packages.outputs.changed == 'true'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-    steps:
-      - uses: actions/checkout@v5
-
       - name: Create pull request
+        if: steps.compare.outputs.changed == 'true'
         uses: peter-evans/create-pull-request@v8.1.1
         with:
-          commit-message: "chore: update flake lock"
+          commit-message: "chore: update flake inputs"
           branch: "chore/update-nix-flake"
+          branch-suffix: timestamp
+          add-paths: |
+            flake.lock
           delete-branch: true
           title: "chore: update Nix flake inputs"
-          body: ${{ needs.compare-packages.outputs.body }}
+          body: ${{ steps.compare.outputs.body }}
