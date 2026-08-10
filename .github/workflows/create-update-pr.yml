@@ -4,12 +4,20 @@ on:
   schedule:
     - cron: 0 18 */1 * *
 
+env:
+  TUBES_JSON: '["krypton", "helium"]'
+
 jobs:
-  update-flake:
+  capture-package-lists:
+    name: Capture package list for ${{ matrix.tube }}
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
+    strategy:
+      fail-fast: false
+      matrix:
+        tube:
+          - krypton
+          - helium
+
     steps:
       - uses: actions/checkout@v5
 
@@ -17,8 +25,7 @@ jobs:
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Compare package lists
-        id: compare
+      - name: Prepare Nix environment
         shell: bash
         run: |
           set -euo pipefail
@@ -29,17 +36,97 @@ jobs:
             source "$HOME/.nix-profile/etc/profile.d/nix.sh"
           fi
 
-          export PATH="$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:$PATH"
+          echo "$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin" >> "$GITHUB_PATH"
 
-          if ! command -v nix >/dev/null 2>&1; then
-            echo "nix is not available in PATH" >&2
-            exit 1
+      - name: Generate package list for ${{ matrix.tube }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          nix eval --raw ".#nixosConfigurations.${{ matrix.tube }}.config.environment.systemPackages" \
+            --apply 'pkgs:
+              let
+                names = map (p: if p ? pname then p.pname else p.name) pkgs;
+                versions = map (p: if p ? version then p.version else (builtins.parseDrvName p.name).version) pkgs;
+                pairs = builtins.genList (i: let
+                  name = builtins.elemAt names i;
+                  version = builtins.elemAt versions i;
+                in "${name}/${version}") (builtins.length names);
+                sorted = builtins.sort (x: y: x < y) pairs;
+              in builtins.concatStringsSep "\n" sorted' > "${{ matrix.tube }}.txt"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: package-list-${{ matrix.tube }}
+          path: ${{ matrix.tube }}.txt
+          if-no-files-found: error
+
+  update-flake:
+    name: Update flake and open PR
+    needs: capture-package-lists
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Prepare Nix environment
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [ -f /etc/profile.d/nix.sh ]; then
+            source /etc/profile.d/nix.sh
+          elif [ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
+            source "$HOME/.nix-profile/etc/profile.d/nix.sh"
           fi
 
-          tubes=(krypton helium)
+          echo "$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin" >> "$GITHUB_PATH"
 
-          pkg_list() {
-            local tube="$1"
+      - name: Download package snapshots
+        uses: actions/download-artifact@v5
+        with:
+          path: ./package-snapshots
+
+      - name: Create before snapshots
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mkdir -p before after
+
+          for tube in $(python - <<'PY'
+            import json
+            import os
+            print(" ".join(json.loads(os.environ["TUBES_JSON"])))
+          PY
+          ); do
+            cp "package-snapshots/package-list-$tube/$tube.txt" "before/$tube.before"
+          done
+
+      - name: Update flake inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          nix flake update
+
+      - name: Create after snapshots
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          for tube in $(python - <<'PY'
+            import json
+            import os
+            print(" ".join(json.loads(os.environ["TUBES_JSON"])))
+          PY
+          ); do
             nix eval --raw ".#nixosConfigurations.${tube}.config.environment.systemPackages" \
               --apply 'pkgs:
                 let
@@ -50,49 +137,71 @@ jobs:
                     version = builtins.elemAt versions i;
                   in "${name}/${version}") (builtins.length names);
                   sorted = builtins.sort (x: y: x < y) pairs;
-                in builtins.concatStringsSep "\n" sorted'
-           }
-
-          before_dir=$(mktemp -d)
-          after_dir=$(mktemp -d)
-          combined_diff=""
-
-          for tube in "${tubes[@]}"; do
-            pkg_list "$tube" > "$before_dir/$tube.before"
+                in builtins.concatStringsSep "\n" sorted' > "after/$tube.after"
           done
 
-          nix flake update
+      - name: Compare package snapshots
+        id: compare
+        shell: bash
+        run: |
+          set -euo pipefail
 
-          for tube in "${tubes[@]}"; do
-            pkg_list "$tube" > "$after_dir/$tube.after"
-          done
+          python - <<'PY'
+          import json
+          import os
+          import subprocess
+          from pathlib import Path
 
-          for tube in "${tubes[@]}"; do
-            diff_output=$(diff -u "$before_dir/$tube.before" "$after_dir/$tube.after" || true)
-            if [ -n "$diff_output" ]; then
-              section="${tube}:\n\n"
-              section+="$diff_output"
-              section+="\n"
-            else
-              section="${tube}:\n\n- No package changes\n"
-            fi
-            combined_diff+="$section"
-          done
+          tubes = json.loads(os.environ["TUBES_JSON"])
+          sections = []
+          packages_changed = False
 
-          if git diff --quiet -- flake.lock; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-          fi
+          for tube in tubes:
+              before_path = Path("before") / f"{tube}.before"
+              after_path = Path("after") / f"{tube}.after"
 
-          {
-            echo "body<<EOF"
-            printf '%s\n' "$combined_diff"
-            echo "EOF"
-          } >> "$GITHUB_OUTPUT"
+              diff_result = subprocess.run(
+                  ["diff", "-u", str(before_path), str(after_path)],
+                  capture_output=True,
+                  text=True,
+                  check=False,
+              )
 
-          echo "Combined diff:"
-          echo "$combined_diff"
+              lines = []
+              for line in diff_result.stdout.splitlines():
+                  if line.startswith("--- ") or line.startswith("+++ ") or line.startswith("@@ "):
+                      continue
+                  if line.startswith("+") and not line.startswith("+++"):
+                      lines.append(line)
+                  elif line.startswith("-") and not line.startswith("---"):
+                      lines.append(line)
+
+              if lines:
+                  packages_changed = True
+                  sections.append(f"### {tube}")
+                  sections.extend(lines)
+                  sections.append("")
+              else:
+                  sections.append(f"### {tube}")
+                  sections.append("- No package changes")
+                  sections.append("")
+
+          flake_changed = subprocess.run(
+              ["git", "diff", "--quiet", "--", "flake.lock"],
+              check=False,
+          ).returncode != 0
+
+          body = "\n".join(sections).rstrip()
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as fh:
+              changed = "true" if packages_changed or flake_changed else "false"
+              fh.write(f"changed={changed}\n")
+              fh.write("body<<EOF\n")
+              fh.write(body)
+              fh.write("\nEOF\n")
+
+          print("Combined diff:")
+          print(body)
+          PY
 
       - name: Create pull request
         if: steps.compare.outputs.changed == 'true'
