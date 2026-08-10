@@ -4,12 +4,20 @@ on:
   schedule:
     - cron: 0 18 */1 * *
 
+env:
+  TUBES_JSON: '["krypton", "helium"]'
+
 jobs:
-  update-flake:
+  capture-package-lists:
+    name: Capture package list for ${{ matrix.tube }}
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
+    strategy:
+      fail-fast: false
+      matrix:
+        tube:
+          - krypton
+          - helium
+
     steps:
       - uses: actions/checkout@v5
 
@@ -17,8 +25,7 @@ jobs:
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Compare package lists
-        id: compare
+      - name: Prepare Nix environment
         shell: bash
         run: |
           set -euo pipefail
@@ -29,17 +36,89 @@ jobs:
             source "$HOME/.nix-profile/etc/profile.d/nix.sh"
           fi
 
-          export PATH="$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:$PATH"
+          echo "$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin" >> "$GITHUB_PATH"
 
-          if ! command -v nix >/dev/null 2>&1; then
-            echo "nix is not available in PATH" >&2
-            exit 1
+      - name: Generate package list for ${{ matrix.tube }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          nix eval --raw ".#nixosConfigurations.${{ matrix.tube }}.config.environment.systemPackages" \
+            --apply 'pkgs:
+              let
+                names = map (p: if p ? pname then p.pname else p.name) pkgs;
+                versions = map (p: if p ? version then p.version else (builtins.parseDrvName p.name).version) pkgs;
+                pairs = builtins.genList (i: let
+                  name = builtins.elemAt names i;
+                  version = builtins.elemAt versions i;
+                in "${name}/${version}") (builtins.length names);
+                sorted = builtins.sort (x: y: x < y) pairs;
+              in builtins.concatStringsSep "\n" sorted' > "${{ matrix.tube }}.txt"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: package-list-${{ matrix.tube }}
+          path: ${{ matrix.tube }}.txt
+          if-no-files-found: error
+
+  update-flake:
+    name: Update flake and open PR
+    needs: capture-package-lists
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Prepare Nix environment
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [ -f /etc/profile.d/nix.sh ]; then
+            source /etc/profile.d/nix.sh
+          elif [ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
+            source "$HOME/.nix-profile/etc/profile.d/nix.sh"
           fi
 
-          tubes=(krypton helium)
+          echo "$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin" >> "$GITHUB_PATH"
 
-          pkg_list() {
-            local tube="$1"
+      - name: Download package snapshots
+        uses: actions/download-artifact@v5
+        with:
+          path: ./package-snapshots
+
+      - name: Create before snapshots
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mkdir -p before after
+
+          while IFS= read -r snapshot; do
+            tube=$(basename "$snapshot" .txt)
+            cp "$snapshot" "before/$tube.before"
+          done < <(find package-snapshots -type f -name '*.txt' | sort)
+
+      - name: Update flake inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          nix flake update
+
+      - name: Create after snapshots
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          while IFS= read -r snapshot; do
+            tube=$(basename "$snapshot" .before)
             nix eval --raw ".#nixosConfigurations.${tube}.config.environment.systemPackages" \
               --apply 'pkgs:
                 let
@@ -50,49 +129,71 @@ jobs:
                     version = builtins.elemAt versions i;
                   in "${name}/${version}") (builtins.length names);
                   sorted = builtins.sort (x: y: x < y) pairs;
-                in builtins.concatStringsSep "\n" sorted'
-           }
+                in builtins.concatStringsSep "\n" sorted' > "after/$tube.after"
+          done < <(find before -type f -name '*.before' | sort)
 
-          before_dir=$(mktemp -d)
-          after_dir=$(mktemp -d)
-          combined_diff=""
+      - name: Compare package snapshots
+        id: compare
+        shell: bash
+        run: |
+          set -euo pipefail
 
-          for tube in "${tubes[@]}"; do
-            pkg_list "$tube" > "$before_dir/$tube.before"
-          done
+          sections=()
+          packages_changed=false
 
-          nix flake update
+          while IFS= read -r before_file; do
+            tube=$(basename "$before_file" .before)
+            after_file="after/$tube.after"
 
-          for tube in "${tubes[@]}"; do
-            pkg_list "$tube" > "$after_dir/$tube.after"
-          done
-
-          for tube in "${tubes[@]}"; do
-            diff_output=$(diff -u "$before_dir/$tube.before" "$after_dir/$tube.after" || true)
-            if [ -n "$diff_output" ]; then
-              section="${tube}:\n\n"
-              section+="$diff_output"
-              section+="\n"
-            else
-              section="${tube}:\n\n- No package changes\n"
+            if [ ! -f "$after_file" ]; then
+              echo "Missing snapshot for $tube" >&2
+              exit 1
             fi
-            combined_diff+="$section"
-          done
+
+            if cmp -s "$before_file" "$after_file"; then
+              sections+=("### $tube")
+              sections+=("- No package changes")
+              sections+=("")
+            else
+              packages_changed=true
+              sections+=("### $tube")
+              while IFS= read -r line; do
+                case "$line" in
+                  ---*|+++*|@@*) continue ;;
+                  +*) sections+=("+${line#\+}") ;;
+                  -*) sections+=("${line}") ;;
+                esac
+              done < <(diff -u "$before_file" "$after_file" || true)
+              sections+=("")
+            fi
+          done < <(find before -type f -name '*.before' | sort)
 
           if git diff --quiet -- flake.lock; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"
+            flake_changed=false
           else
-            echo "changed=true" >> "$GITHUB_OUTPUT"
+            flake_changed=true
+          fi
+
+          body=""
+          for section in "${sections[@]}"; do
+            body+="$section"
+            body+=$'\n'
+          done
+
+          changed=false
+          if [ "$packages_changed" = true ] || [ "$flake_changed" = true ]; then
+            changed=true
           fi
 
           {
+            echo "changed=$changed"
             echo "body<<EOF"
-            printf '%s\n' "$combined_diff"
+            printf '%s\n' "$body"
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
 
           echo "Combined diff:"
-          echo "$combined_diff"
+          printf '%s\n' "$body"
 
       - name: Create pull request
         if: steps.compare.outputs.changed == 'true'
