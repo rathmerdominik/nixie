@@ -2,7 +2,7 @@ name: "Update Nix system"
 on:
   workflow_dispatch:
   schedule:
-    - cron: 0 18 */1 * *
+    - cron: 0 18 */7 * *
 
 env:
   TUBES_JSON: '["krypton", "helium"]'
