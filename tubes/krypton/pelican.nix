@@ -2,15 +2,18 @@
   config,
   pkgs,
   lib,
-  primary-domain,
   mylib,
   proxy-ports,
   ...
-}: {
-  age.secrets.pelican-env.file = ../../secrets/pelican-env.age;
+}: let
+  domain = "panel.${config.networking.domain}";
+  secretsPath = ../../secrets/pelican;
+  tag = "latest";
+in {
+  age.secrets.pelican-env.file = "${secretsPath}/env.age";
 
   virtualisation.oci-containers.containers.pelican = {
-    image = "ghcr.io/pelican-dev/panel:latest";
+    image = "ghcr.io/pelican-dev/panel:${tag}";
     ports = [
       "9393:80"
     ];
@@ -21,8 +24,8 @@
     ];
     environment = {
       APP_TIMEZONE = "Europe/Berlin";
-      APP_URL = "https://panel.hammerclock.net";
-      APP_SERVICE_AUTHOR = "der@hammerclock.net";
+      APP_URL = domain;
+      APP_SERVICE_AUTHOR = config.age.secrets.users-dominik-mail.path;
       APP_ENV = "production";
       APP_ENVIRONMENT_ONLY = "false";
       XDG_DATA_HOME = "/pelican-data";
@@ -92,7 +95,7 @@
   };
 
   # The cool people at Pelican thought that it would be funny to have www-data write everywhere
-  # So yeah... i just create a mock user so that the uid and guid are locked
+  # So yeah... I had to create a mock user so that the uid and guid are locked
   users = {
     groups."www-data" = {
       gid = 82;
@@ -132,7 +135,7 @@
     };
   };
 
-  services.nginx.virtualHosts."panel.${primary-domain}" = {
+  services.nginx.virtualHosts."${domain}" = {
     enableACME = true;
     forceSSL = true;
     quic = true;

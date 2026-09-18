@@ -1,14 +1,17 @@
 {
   mylib,
-  primary-domain,
   proxy-ports,
+  config,
   ...
-}: {
+}: let
+  domain = "wings.${config.networking.domain}";
+  tag = "latest";
+in {
   virtualisation.oci-containers.containers.wings = {
-    image = "ghcr.io/pelican-dev/wings:latest";
+    image = "ghcr.io/pelican-dev/wings:${tag}";
     ports = [
-      "9595:8080"
-      "2022:2022"
+      "${toString proxy-ports.wings.port}:8080"
+      "${toString proxy-ports.wings-sftp.port}:2022"
     ];
     volumes = [
       "/var/run/docker.sock:/var/run/docker.sock"
@@ -30,8 +33,6 @@
     ];
   };
 
-  networking.firewall.allowedTCPPorts = [2022 25565 27960];
-
   systemd.tmpfiles.settings."10-pelican" = {
     "/etc/pelican".d = {
       group = "root";
@@ -50,7 +51,7 @@
     };
   };
 
-  services.nginx.virtualHosts."wings.${primary-domain}" = {
+  services.nginx.virtualHosts.${domain} = {
     enableACME = true;
     forceSSL = true;
     quic = true;
@@ -74,4 +75,6 @@
       '';
     };
   };
+
+  networking.firewall.allowedTCPPorts = [2022 25565 27960];
 }

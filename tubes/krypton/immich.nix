@@ -6,39 +6,36 @@
   mylib,
   ...
 }: let
-  immichMediaPath = "/srv/big-storage/immich";
+  domain = "photos.${config.networking.domain}";
+  dataPath = "/srv/big-storage/immich";
+  secretsPath = ../../secrets/immich;
 in {
-  age.secrets.immich.file = ../../secrets/immich.age;
+  age.secrets.immich-env.file = "${secretsPath}/env.age";
+
   services.immich = {
     enable = true;
     openFirewall = true;
     package = unstable.legacyPackages.x86_64-linux.immich;
     settings = {
-      server.externalDomain = "https://photos.${config.networking.domain}";
+      server.externalDomain = domain;
       newVersionCheck.enabled = true;
     };
     port = proxy-ports.immich.port;
-    secretsFile = config.age.secrets.immich.path;
+    secretsFile = config.age.secrets.immich-env.path;
     host = "0.0.0.0";
-    mediaLocation = immichMediaPath;
+    mediaLocation = dataPath;
     accelerationDevices = ["/dev/dri/renderD128"];
   };
 
   systemd.tmpfiles.settings."10-immich" = {
-    "${immichMediaPath}".d = {
+    "${dataPath}".d = {
       group = "immich";
       mode = "0755";
       user = "immich";
     };
   };
 
-  # https://github.com/NixOS/nixpkgs/issues/418799#issuecomment-3000580361
-  users.users.immich = {
-    home = immichMediaPath;
-    createHome = true;
-  };
-
-  services.nginx.virtualHosts."photos.${primary-domain}" = {
+  services.nginx.virtualHosts.${domain} = {
     enableACME = true;
     forceSSL = true;
     quic = true;

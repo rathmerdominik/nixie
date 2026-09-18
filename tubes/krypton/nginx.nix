@@ -2,9 +2,7 @@
   config,
   pkgs,
   ...
-}: let
-  inherit (config.networking) domain;
-in {
+}: {
   services.nginx = {
     enable = true;
     package = pkgs.nginx;
@@ -20,19 +18,16 @@ in {
     '';
   };
 
-  networking.firewall.allowedTCPPorts = [
-    80
-    443
-  ];
-
   services.nginx = {
     virtualHosts = {
       "~.*" = {
         default = true;
         rejectSSL = true;
 
-        globalRedirect = domain;
+        globalRedirect = config.networking.domain;
       };
     };
   };
+
+  networking.firewall.allowedTCPPorts = [80 443];
 }

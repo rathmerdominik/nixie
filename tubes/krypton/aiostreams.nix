@@ -1,15 +1,17 @@
 {config, ...}: let
-  dataDir = "/var/lib/aiostreams";
+  secretsPath = ../../secrets/aiostreams;
+  dataPath = "/var/lib/aiostreams";
   port = 3002;
+  tag = "nightly"; # Officially recommended by the AIOStreams devs
 in {
-  age.secrets.aiostreams-env.file = ../../secrets/aiostreams-env.age;
+  age.secrets.aiostreams-env.file = "${secretsPath}/env.age";
 
   systemd.tmpfiles.rules = [
-    "d ${dataDir} 0755 root root -"
+    "d ${dataPath} 0755 root root -"
   ];
 
   virtualisation.oci-containers.containers.aiostreams = {
-    image = "ghcr.io/viren070/aiostreams:nightly";
+    image = "ghcr.io/viren070/aiostreams:${tag}";
     ports = ["${toString port}:3000"];
     pull = "always";
     networks = ["remux"];
@@ -23,7 +25,7 @@ in {
     environmentFiles = [
       config.age.secrets.aiostreams-env.path
     ];
-    volumes = ["${dataDir}:/app/data"];
+    volumes = ["${dataPath}:/app/data"];
     extraOptions = [
       "--dns=1.1.1.1"
       "--dns=8.8.8.8"
@@ -42,22 +44,13 @@ in {
       AUDIT_WRITE = true;
     };
 
-    volumes = [
-      "/var/lib/cloudflare-warp:/var/lib/cloudflare-warp"
-    ];
-
     extraOptions = [
       "--ip=172.22.0.1"
     ];
   };
 
   systemd.tmpfiles.settings."10-aiostreams" = {
-    "${dataDir}".d = {
-      group = "root";
-      mode = "0755";
-      user = "root";
-    };
-    "/var/lib/cloudflare-warp".d = {
+    "${dataPath}".d = {
       group = "root";
       mode = "0755";
       user = "root";

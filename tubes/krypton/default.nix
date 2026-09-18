@@ -1,35 +1,42 @@
 {
   modulesPath,
   lib,
+  config,
+  domain,
   ...
 }: let
   ignoredFiles = lib.fileset.unions [./default.nix];
+  acmeEmail = "postmaster@${config.networking.domain}";
+  secretsPath = ../../secrets;
+  secretsPathNetwork = "${secretsPath}/network";
+  secretsPathHetzner = "${secretsPath}/hetzner";
 in {
+  age.secrets.network-domain.file = "${secretsPathNetwork}/domain.age";
+  age.secrets."storage-user".file = "${secretsPathHetzner}/storage-user.age";
+
   imports =
     lib.fileset.toList (lib.fileset.difference ./. ignoredFiles)
     ++ [
       "${modulesPath}/profiles/qemu-guest.nix"
     ];
-
-  boot.initrd.availableKernelModules = ["ahci" "xhci_pci" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod"];
-  boot.supportedFilesystems = ["fuse"];
-
-  nixpkgs.hostPlatform = "x86_64-linux";
-
-  system.stateVersion = "25.11";
-
   powerManagement.cpuFreqGovernor = "performance";
 
-  virtualisation.oci-containers.backend = "docker";
-
-  virtualisation.docker.daemon.settings = {
-    ipv6 = true;
-    fixed-cidr-v6 = "2001:db8:1::/64";
+  virtualisation = {
+    oci-containers.backend = "docker";
+    docker.daemon.settings = {
+      ipv6 = true;
+      fixed-cidr-v6 = "2001:db8:1::/64";
+    };
   };
 
   security.acme = {
-    defaults.email = "postmaster@hammerclock.net";
+    defaults.email = acmeEmail;
     acceptTerms = true;
+  };
+
+  boot = {
+    initrd.availableKernelModules = ["ahci" "xhci_pci" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod"];
+    supportedFilesystems = ["fuse"];
   };
 
   networking = let
@@ -45,6 +52,10 @@ in {
       address = "fe80::1";
       inherit interface;
     };
-    domain = "hammerclock.net";
+    domain = domain;
   };
+
+  nixpkgs.hostPlatform = "x86_64-linux";
+
+  system.stateVersion = "25.11";
 }

@@ -1,13 +1,17 @@
 {
   attrName,
   config,
-  storageBoxUser,
+  pkgs,
   ...
-}: {
-  age.secrets."restic-${attrName}".file = ../../secrets/restic-${attrName}.age;
+}: let
+  secretsPath = ../../secrets/restic;
+in {
+  age.secrets."restic-${attrName}".file = "${secretsPath}/${attrName}.age";
 
   services.restic.backups.${attrName} = {
-    repository = "sftp:${storageBoxUser}@${storageBoxUser}.your-storagebox.de:/${attrName}";
+    repositoryFile = pkgs.writeText "restic-repository" ''
+      sftp:$(cat ${config.age.secrets."storage-user".path})@$(cat ${config.age.secrets."storage-user".path}).your-storagebox.de:/${attrName}
+    '';
     initialize = true;
     paths = [
       config.services.vaultwarden.backupDir

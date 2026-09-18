@@ -2,19 +2,19 @@
   config,
   pkgs,
   mylib,
-  primary-domain,
   proxy-ports,
   ...
 }: let
-  paperless-root = "/srv/big-storage/paperless";
-  paperless-domain = "papers.${config.networking.domain}";
-  consumption-dir = "${paperless-root}/consumption";
-  media-dir = "${paperless-root}/media";
-  trash-dir = "${config.services.paperless.dataDir}/trash";
+  domain = "papers.${config.networking.domain}";
+  rootPath = "/srv/big-storage/paperless";
+  consumptionPath = "${rootPath}/consumption";
+  mediaPath = "${rootPath}/media";
+  trashPath = "${rootPath}/trash";
+  secretsPath = ../../secrets/paperless-ngx;
 in {
-  age.secrets.paperless-ngx.file = ../../secrets/paperless-ngx.age;
+  age.secrets.paperless-ngx-password.file = "${secretsPath}/password.age";
   age.secrets.paperless-ngx-mail = {
-    file = ../../secrets/paperless-ngx-mail.age;
+    file = "${secretsPath}/mail.age";
     owner = "paperless";
     group = "paperless";
   };
@@ -26,15 +26,15 @@ in {
   services.paperless = {
     enable = false;
     address = "0.0.0.0";
-    passwordFile = config.age.secrets.paperless-ngx.path;
+    passwordFile = config.age.secrets.paperless-ngx-password.path;
     openMPThreadingWorkaround = true;
-    consumptionDir = consumption-dir;
+    consumptionDir = consumptionPath;
     consumptionDirIsPublic = true;
-    mediaDir = media-dir;
+    mediaDir = mediaPath;
     settings = {
-      PAPERLESS_URL = "https://${paperless-domain}";
-      PAPERLESS_ALLOWED_HOSTS = paperless-domain;
-      PAPERLESS_CORS_ALLOWED_HOSTS = "https://${paperless-domain}";
+      PAPERLESS_URL = "https://${domain}";
+      PAPERLESS_ALLOWED_HOSTS = domain;
+      PAPERLESS_CORS_ALLOWED_HOSTS = "https://${domain}";
 
       PAPERLESS_DBHOST = "/run/postgresql";
 
@@ -61,7 +61,7 @@ in {
       PAPERLESS_WEBSERVER_WORKERS = 4;
       PAPERLESS_NUMBER_OF_SUGGESTED_DATES = 8;
 
-      PAPERLESS_EMPTY_TRASH_DIR = "${trash-dir}";
+      PAPERLESS_EMPTY_TRASH_DIR = "${trashPath}";
 
       PAPERLESS_FILENAME_FORMAT = "{owner_username}/{created_year}-{created_month}-{created_day}_{asn}_{title}";
 
@@ -86,7 +86,7 @@ in {
   };
 
   systemd.tmpfiles.settings."10-paperless-trash" = {
-    "${trash-dir}".d = {
+    "${trashPath}".d = {
       group = "paperless";
       mode = "0755";
       user = "paperless";
@@ -101,7 +101,7 @@ in {
     };
   };
 
-  services.nginx.virtualHosts."papers.${primary-domain}" = {
+  services.nginx.virtualHosts.${domain} = {
     enableACME = true;
     forceSSL = true;
 

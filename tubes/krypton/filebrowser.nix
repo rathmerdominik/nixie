@@ -1,15 +1,17 @@
 {
-  secondary-domain,
   mylib,
   proxy-ports,
+  config,
   ...
 }: let
-  filebrowserPath = "/srv/big-storage/filebrowser";
+  domain = "files.${config.networking.domain}";
+  rootPath = "/srv/big-storage/filebrowser";
+  dataPath = "${rootPath}/data";
 in {
   services.filebrowser = {
     enable = true;
     settings = {
-      root = "${filebrowserPath}/data";
+      root = dataPath;
       address = "0.0.0.0";
       port = proxy-ports.files.port;
     };
@@ -23,7 +25,7 @@ in {
     };
   };
 
-  services.nginx.virtualHosts."files.${secondary-domain}" = {
+  services.nginx.virtualHosts.${domain} = {
     enableACME = true;
     forceSSL = true;
     quic = true;

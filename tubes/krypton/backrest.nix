@@ -1,10 +1,15 @@
 {
   pkgs,
   mylib,
-  primary-domain,
+  config,
   proxy-ports,
   ...
-}: {
+}: let
+  domain = "backup.${config.networking.domain}";
+  rootPath = "/var/lib/backrest";
+  configPath = "${rootPath}/config";
+  dataPath = "${rootPath}/data";
+in {
   systemd.services.backrest = {
     description = "Restic GUI";
     path = [
@@ -16,10 +21,10 @@
     ];
 
     environment = {
-      BACKREST_PORT = "0.0.0.0:9898";
+      BACKREST_PORT = "0.0.0.0:${toString proxy-ports.backrest.port}";
       BACKREST_RESTIC_COMMAND = "${pkgs.restic}/bin/restic";
-      BACKREST_CONFIG = "/var/lib/backrest/config";
-      BACKREST_DATA = "/var/lib/backrest/data";
+      BACKREST_CONFIG = configPath;
+      BACKREST_DATA = dataPath;
     };
 
     serviceConfig = {
@@ -30,7 +35,7 @@
     wantedBy = ["multi-user.target"];
   };
 
-  services.nginx.virtualHosts."backup.${primary-domain}" = {
+  services.nginx.virtualHosts.${domain} = {
     enableACME = true;
     forceSSL = true;
 

@@ -1,5 +1,9 @@
-{config, ...}: {
-  age.secrets.user-dominik.file = ../secrets/user-dominik.age;
+{config, ...}: let
+  secretsPath = ../secrets/users;
+  secretsDominikPath = "${secretsPath}/dominik";
+in {
+  age.secrets.users-dominik-password.file = "${secretsDominikPath}/password.age";
+  age.secrets.users-dominik-mail.file = "${secretsDominikPath}/mail.age";
 
   users = {
     mutableUsers = false;
@@ -10,7 +14,7 @@
       dominik = {
         uid = 1000;
         isNormalUser = true;
-        hashedPasswordFile = config.age.secrets.user-dominik.path;
+        hashedPasswordFile = config.age.secrets.users-dominik-password.path;
         openssh.authorizedKeys.keys = let
           pubkeys = import ../pubkeys.nix;
         in (

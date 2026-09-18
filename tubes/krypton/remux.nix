@@ -2,14 +2,17 @@
   lib,
   pkgs,
   mylib,
+  config,
   proxy-ports,
-  primary-domain,
   ...
-}: {
+}: let
+  tag = "latest";
+  domain = "movies.${config.networking.domain}";
+in {
   virtualisation.oci-containers.containers.remux = {
-    image = "ghcr.io/lostb1t/remux:latest";
+    image = "ghcr.io/lostb1t/remux:${tag}";
     pull = "always";
-    ports = ["6769:3000"];
+    ports = ["${toString proxy-ports.remux.port}:3000"];
     volumes = ["/var/lib/remux:/data"];
     networks = ["remux"];
     extraOptions = [
@@ -45,7 +48,7 @@
     '';
   };
 
-  services.nginx.virtualHosts."movies.${primary-domain}" = {
+  services.nginx.virtualHosts.${domain} = {
     enableACME = true;
     forceSSL = true;
     quic = true;

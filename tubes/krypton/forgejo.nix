@@ -2,13 +2,19 @@
   config,
   lib,
   pkgs,
-  primary-domain,
   mylib,
   proxy-ports,
   ...
-}: {
-  age.secrets.forgejo.file = ../../secrets/forgejo.age;
-  age.secrets.forgejo-admin.file = ../../secrets/forgejo-admin.age;
+}: let
+  domain = "git.${config.networking.domain}";
+  backupPath = "/var/backup/forgejo";
+  secretsPath = ../../secrets/forgejo;
+  mailerMail = "git@${config.networking.domain}";
+in {
+  age.secrets.forgejo-env.file = "${secretsPath}/env.age";
+  age.secrets.forgejo-admin.file = "${secretsPath}/admin.age";
+  age.secrets.forgejo-mail.file = "${secretsPath}/mail.age";
+  age.secrets.forgejo-user.file = "${secretsPath}/user.age";
 
   services.forgejo = {
     enable = true;
@@ -18,15 +24,15 @@
     dump = {
       enable = true;
       interval = "*-*-* 02:00:00";
-      backupDir = "/var/backup/forgejo";
+      backupDir = backupPath;
     };
     settings = {
       server = {
-        DOMAIN = "git.hammerclock.net";
-        ROOT_URL = "https://git.${config.networking.domain}/";
+        DOMAIN = domain;
+        ROOT_URL = "https://${domain}/";
         HTTP_ADDR = "krypton";
-        HTTP_PORT = 8020;
-        SSH_PORT = 20022;
+        HTTP_PORT = proxy-ports.git.port;
+        SSH_PORT = builtins.head config.services.openssh.ports;
       };
 
       service = {
@@ -37,8 +43,8 @@
       mailer = {
         ENABLED = true;
         SMTP_ADDR = "smtp.fastmail.com";
-        FROM = "git@hammerclock.net";
-        USER = "dominik@rathmer.me";
+        FROM = mailerMail;
+        USER = config.age.secrets.users-dominik-mail.path;
       };
 
       log.LEVEL = "Debug";
@@ -46,7 +52,7 @@
 
     secrets = {
       mailer = {
-        PASSWD = config.age.secrets.forgejo.path;
+        PASSWD = config.age.secrets.forgejo-env.path;
       };
     };
   };
@@ -57,22 +63,27 @@
       text = let
         forgejoExe = lib.getExe pkgs.forgejo;
         passwordFile = config.age.secrets.forgejo-admin.path;
+        mailFile = config.age.secrets.forgejo-mail.path;
+        usernameFile = config.age.secrets.forgejo-user.path;
       in ''
         admins=$(${forgejoExe} admin user list --admin | wc --lines)
         admins=$((admins - 1))
 
         if ((admins < 1)); then
+          mail="$(cat -- ${mailFile})"
+          username="$(cat -- ${usernameFile})"
+
           ${forgejoExe} admin user create \
             --admin \
-            --email dominik@rathmer.me \
-            --username hammerclock \
+            --email "$mail" \
+            --username "$username" \
             --password "$(cat -- ${passwordFile})"
         fi
       '';
     }
   );
 
-  services.nginx.virtualHosts."git.${primary-domain}" = {
+  services.nginx.virtualHosts.${domain} = {
     enableACME = true;
     forceSSL = true;
     quic = true;

@@ -1,10 +1,10 @@
 {
   pkgs,
   attrName,
-  storageBoxUser,
+  config,
   ...
 }: let
-  device = "${storageBoxUser}@${storageBoxUser}.your-storagebox.de:/home/storage/${attrName}";
+  storageUserFile = config.age.secrets."storage-user".path;
 
   mountBox = {
     path,
@@ -16,17 +16,21 @@
     after = ["network-online.target"];
     wants = ["network-online.target"];
     wantedBy = ["multi-user.target"];
+
     serviceConfig = {
       Type = "forking";
       ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p ${mountPoint}";
       ExecStart = pkgs.writeShellScript "mount-bigstorage-${path}" ''
         set -eu
+
         uid=$(${pkgs.coreutils}/bin/id -u ${user})
         gid=$(${pkgs.coreutils}/bin/id -g ${user})
+        storageUser=$(${pkgs.coreutils}/bin/tr -d '\n' < ${storageUserFile})
+
         exec ${pkgs.sshfs}/bin/sshfs \
-          ${device}/${path} \
-          ${mountPoint} \
-          -o rw,noatime,allow_other,_netdev,uid=$uid,gid=$gid,IdentityFile=/etc/ssh/ssh_host_ed25519_key,Port=23
+          "$storageUser@$storageUser.your-storagebox.de:/home/storage/${attrName}/${path}" \
+          "${mountPoint}" \
+          -o rw,noatime,allow_other,_netdev,uid="$uid",gid="$gid",IdentityFile=/etc/ssh/ssh_host_ed25519_key,Port=23
       '';
       ExecStop = "${pkgs.fuse}/bin/fusermount -u ${mountPoint}";
       RemainAfterExit = true;

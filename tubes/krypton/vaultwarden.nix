@@ -1,27 +1,27 @@
 {
-  config,
-  primary-domain,
   mylib,
+  config,
   proxy-ports,
   ...
-}: {
-  age.secrets.vaultwarden-env.file = ../../secrets/vaultwarden-env.age;
+}: let
+  domain = "vault.${config.networking.domain}";
+  backupPath = "/var/backup/vaultwarden";
+in {
+  age.secrets.vaultwarden-env.file = ../../secrets/vaultwarden/env.age;
 
   services.vaultwarden = {
     enable = true;
     environmentFile = config.age.secrets.vaultwarden-env.path;
-    backupDir = "/var/backup/vaultwarden";
+    backupDir = backupPath;
     config = {
       DATA_FOLDER = "/var/lib/vaultwarden";
-      DOMAIN = "https://vault.hammerclock.net";
+      DOMAIN = "https://${domain}";
       SIGNUPS_ALLOWED = false;
       ROCKET_ADDRESS = "0.0.0.0";
     };
   };
 
-  networking.firewall.allowedTCPPorts = [8000];
-
-  services.nginx.virtualHosts."vault.${primary-domain}" = {
+  services.nginx.virtualHosts.${domain} = {
     enableACME = true;
     forceSSL = true;
     quic = true;
@@ -31,4 +31,6 @@
       proxyPass = mylib.formatMappingHttp proxy-ports.vaultwarden;
     };
   };
+
+  networking.firewall.allowedTCPPorts = [8000];
 }
