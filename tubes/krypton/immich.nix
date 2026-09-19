@@ -2,7 +2,6 @@
   config,
   proxy-ports,
   unstable,
-  primary-domain,
   mylib,
   ...
 }: let
@@ -17,7 +16,6 @@ in {
     openFirewall = true;
     package = unstable.legacyPackages.x86_64-linux.immich;
     settings = {
-      server.externalDomain = domain;
       newVersionCheck.enabled = true;
     };
     port = proxy-ports.immich.port;

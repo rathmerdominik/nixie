@@ -13,9 +13,9 @@ in {
   age.secrets.pelican-env.file = "${secretsPath}/env.age";
 
   virtualisation.oci-containers.containers.pelican = {
-    image = "ghcr.io/pelican-dev/panel:${tag}";
+    image = "ghcr.io/pelican/panel:${tag}";
     ports = [
-      "9393:80"
+      "${toString proxy-ports.pelican.port}:80"
     ];
     volumes = [
       "/var/lib/pelican:/pelican-data"

@@ -8,7 +8,7 @@
   tag = "latest";
 in {
   virtualisation.oci-containers.containers.wings = {
-    image = "ghcr.io/pelican-dev/wings:${tag}";
+    image = "ghcr.io/pelican/wings:${tag}";
     ports = [
       "${toString proxy-ports.wings.port}:8080"
       "${toString proxy-ports.wings-sftp.port}:2022"
