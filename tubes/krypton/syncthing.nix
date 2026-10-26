@@ -20,7 +20,7 @@ in {
   };
 
   services.syncthing = {
-    enable = true;
+    enable = false;
     relay.enable = true;
     openDefaultPorts = true;
     dataDir = storagePath;

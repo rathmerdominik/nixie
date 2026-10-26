@@ -5,7 +5,7 @@
   domain,
   ...
 }: let
-  ignoredFiles = lib.fileset.unions [./default.nix];
+  ignoredFiles = lib.fileset.unions [./default.nix ./pelican.nix];
   acmeEmail = "postmaster@${config.networking.domain}";
   secretsPath = ../../secrets;
   secretsPathNetwork = "${secretsPath}/network";

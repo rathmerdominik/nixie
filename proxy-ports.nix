@@ -10,6 +10,6 @@ mylib.restructure {
     files = 8080;
     backrest = 9898;
     git = 8020;
-    remux = 6769;
+    jellyfin = 8096;
   };
 }
